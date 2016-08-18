@@ -10,7 +10,7 @@ github_username:  martinholub
 
 repository: martinholub/martin-holub.github.com
 
-gems: ["jekyll-paginate"]
+gems: ["jekyll-paginate", "jekyll-feed"]
 
 # Build settings
 markdown: kramdown

@@ -21,8 +21,9 @@ Progressively, I will update the <a href="/portfolio" target="blank">projects</a
 	<a href="https://www.linkedin.com/in/holubmartin" target="_blank"><i class="fa fa-linkedin-square"></i></a>
 	<a href="https://www.researchgate.net/profile/Martin_Holub2" target="_blank"><i class="ai ai-researchgate-square"></i></a>
 	<a href="https://github.com/martinholub" target="_blank"><i class="fa fa-github-square"></i></a>
+	<a href="/feed.xml" target="_blank"><i class="fa fa-rss-square"></i></a>
 </span>
 
 <div class="col three caption">
-	Various ways how to get in touch.
+	This site was created using <a href="https://jekyllrb.com/" target="blank">Jekyll</a> and building on <a href="https://github.com/bogoli/-folio" target="blank">*folio theme</a>. Hosted on <a href="https://github.com/" target="blank">GitHub</a>.
 </div>
