@@ -45,3 +45,14 @@ permalink: /portfolio/
 {% endif %}
 
 {% endfor %}
+<br/>
+<hr/>
+<br/>
+<span class="contacticon center">
+	<a href="mailto:martin-holub@outlook.com"><i class="fa fa-envelope-square"></i></a>
+	<a href="https://twitter.com/holub_martin" target="_blank"><i class="fa fa-twitter-square"></i></a>
+	<a href="https://www.linkedin.com/in/holubmartin" target="_blank"><i class="fa fa-linkedin-square"></i></a>
+	<a href="https://www.researchgate.net/profile/Martin_Holub2" target="_blank"><i class="ai ai-researchgate-square"></i></a>
+	<a href="https://github.com/martinholub" target="_blank"><i class="fa fa-github-square"></i></a>
+	<a href="/feed.xml" target="_blank"><i class="fa fa-rss-square"></i></a>
+</span>
