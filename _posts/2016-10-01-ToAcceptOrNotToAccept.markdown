@@ -36,6 +36,9 @@ Martin
 
 <hr>
 <br/>
+
+Here you can find out <a href="/about" target="blank">more about me</a>.
+
 *Footnote:*
 
 *The tag Tristium Turicum (“Zürich Sorrows”) is a reference to the collection of poems called Tristium Vindobona (“Vienna Sorrows”) written by Josef Svatopluk Machar at the end of 18th century. This Czech poet and essayist wrote them during his exile in Vienna, city which, when founded by Romans, was knonw as Vindobona. Similarly, Zürich, was named Turicum in Latin.*
