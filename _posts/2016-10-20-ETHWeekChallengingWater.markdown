@@ -47,6 +47,6 @@ Martin
 
 *Note:*
 
-*In the next blog post you can look forward to the impressions after my first month of studies at ETH. What makes one feel good here? Which things are annoying, and most importantly is it fun? *
+*In the next blog post you can look forward to the impressions after my first month of studies at ETH. What makes one feel good here? Which things are annoying, and most importantly is it fun?.*
 
 Here you can find out <a href="/about" target="blank">more about me</a>.
