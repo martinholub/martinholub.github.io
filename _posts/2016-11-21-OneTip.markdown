@@ -5,7 +5,7 @@ date: 2016-11-24 20:17
 description: Tristium Turicum  &#35 2
 ---
 <div class="img_row">
-	<img class="col three" src="{{ site.baseurl }}/img/education1.jpeg" alt="" title="Education"/>
+	<img class="col three" src="{{ site.baseurl }}/img/education.jpeg" alt="" title="Education"/>
 </div>
 <div class="col three caption"> 
 </div>
