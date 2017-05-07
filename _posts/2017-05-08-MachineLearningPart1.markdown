@@ -37,7 +37,7 @@ We were given great freedom in how to approach the problem as there was little t
 <br/>
 When one decides to tackle some problem with machine learning, arguably the first thing he must assure is access to data. The more of it he can get the better. Why? Well, imagine trying to complete a crossword puzzle that’s already half full versus a one that has only few words in it. In the former case, you can use the existing letters to support your thinking, whereas in the latter case you often need to do quite a lot of guesswork. Similarly, the more data you have as an input for your algorithm, the more confident will your final predictions be.
 In the case of our project, we were provided with roughly 400 3D MRI scans of human brain. Each image is a three dimensional, 176×208×176  array of pixel values. The value of each pixel ranges from 0 to 4096 (ie. 2<sup>12</sup>, corresponding to 12-bit images which are common in medical diagnostics). A slice through typical 3D image can be viewed here:
-<div class="img_row">
+<div class="img_row" style = "height: 100%;">
 	<img class="col three" src="{{ site.baseurl }}/img/mri_brain_scan_example.png" alt="" title="MRIexample" style='height: 100%; width: 100%'/>
 </div>
 <div class="col three caption"> Fig. 2: Three orthogonal cross sections from a typical image from our dataset </div>
