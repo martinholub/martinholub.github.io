@@ -13,7 +13,8 @@ repository: martinholub/martin-holub.github.io
 gems: ["jekyll-paginate", "jekyll-feed", "jekyll-github-metadata"]
 
 # Build settings
-markdown: kramdown
+# markdown: kramdown
+markdown: redcarpet
 
 highlighter: rouge
 
