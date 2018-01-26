@@ -2,15 +2,19 @@
 layout: post
 title: One Tip on How to Become More Satisfied With Your Studies
 date: 2016-11-24 20:17
-description: Tristium Turicum  &#35 2
+category: Tristium Turicum
+tags: ETH study
+description: |
+    We are nearing the end of November. For most of us this means that the Christmas mood is slowly finding way into our minds. And if you are so lucky to orient yourself still mainly by academic calendar, this also means that you are well into the second half of your autumn semester. The initial enthusiasm may be well extinguished by the sheer amount of workload. Things that were supposed to be fun are becoming an annoying routine and you are starting to wonder if you are interested in what you are supposed to learn in the first place.
+
 ---
 <div class="img_row">
 	<img class="col three" src="{{ site.baseurl }}/img/education.jpeg" alt="" title="Education"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 </div>
 
-We are nearing the end of November. For most of us this means that the Christmas mood is slowly finding way into our minds. And if you are so lucky to orient yourself still mainly by academic calendar, this also means that you are well into the second half of your autumn semester. The initial enthusiasm may be well extinguished by the sheer amount of workload. Things that were supposed to be fun are becoming an annoying routine and you are starting to wonder if you are interested in what you are supposed to learn in the first place. 
+We are nearing the end of November. For most of us this means that the Christmas mood is slowly finding way into our minds. And if you are so lucky to orient yourself still mainly by academic calendar, this also means that you are well into the second half of your autumn semester. The initial enthusiasm may be well extinguished by the sheer amount of workload. Things that were supposed to be fun are becoming an annoying routine and you are starting to wonder if you are interested in what you are supposed to learn in the first place.
 
 This doesn’t feel good so you rack your brains for possible solutions. The ones you come up with seem all too radical – taking a year off, changing course of your studies or even dropping out altogether so you do nothing, foolishly hoping that next semester things will change.
 
@@ -18,7 +22,7 @@ This doesn’t feel good so you rack your brains for possible solutions. The one
 
 ### Freedom to Explore
 <br/>
-Of course, this may not be the way you feel about your studies, but more often than not, it will be. This is how I usually felt and this is also one of the main reasons why I decided to give a studying at ETH a try. I wanted a change and this one appeared radical enough. Now you probably wish to hear that studying here is completely unlike to what I just described, that the courses are huge fun and hands-on and that lectures really help you to understand the topic. But this is not true. My studies here don’t differ too much from my studies back home. Except for one thing. And funnily enough, this one thing is nothing that couldn’t be adopted by practically any of you at any university. What I am talking about is the freedom I have in what I decide to study. 
+Of course, this may not be the way you feel about your studies, but more often than not, it will be. This is how I usually felt and this is also one of the main reasons why I decided to give a studying at ETH a try. I wanted a change and this one appeared radical enough. Now you probably wish to hear that studying here is completely unlike to what I just described, that the courses are huge fun and hands-on and that lectures really help you to understand the topic. But this is not true. My studies here don’t differ too much from my studies back home. Except for one thing. And funnily enough, this one thing is nothing that couldn’t be adopted by practically any of you at any university. What I am talking about is the freedom I have in what I decide to study.
 
 Most of us will go through higher studies being told which courses we have to take and in which semester to do so. Many pages could be probably written about whether this is a good or bad thing and I am by now means a qualified person to do that. I just know how it felt in my case. It mainly sucked. In the age of personalized education, when the internet abounds with online courses about thousands of topics, I felt I had no decisive power over what my curriculum will look like. It was only thanks to seeing things from different perspective that I realized that this feeling was erroneous.
 
@@ -26,17 +30,17 @@ At ETH my study program is surprisingly flexible. Take a look at it:
 <div class="img_row">
 	<img class="col three" src="{{ site.baseurl }}/img/program.PNG" alt="" title="MasterStudyProgram"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 Curriculum of Master in Mechanical Engineering Program at ETh.
 </div>
- 
+
 Yep it is right. It doesn’t have a single fixed course in it. Where will you do your project or an industrial internship? Up to you to decide. Do you want to write your thesis at a university abroad? Just do it. How long is your program going to be? Anything you wish as long as it doesn’t exceed 3 years. Which courses will you compose your program of? Any you and your tutor mutually agree upon. In which order you take those? The one that suits your preferences and schedule. And I personally totally enjoy this gamut of choices, the feeling of ownership of my studies. Never mind some sub-optimal choices that I will inevitably make, these would arise in in any case.
 
 
 
 ### From Being a Passenger to Becoming a Driver
 <br/>
-I dare to guess that the described freedom is somewhat attractive to you. And now here comes my point: You can have it. And there is no need for radical solutions to achieve it. Although it may seem there is a sharp contrast between studying at ETH and your university, most of this contrast can be smeared away by pure change of perspective. The only difference lies in what people tend to do. And your opportunity is in doing something bit different. 
+I dare to guess that the described freedom is somewhat attractive to you. And now here comes my point: You can have it. And there is no need for radical solutions to achieve it. Although it may seem there is a sharp contrast between studying at ETH and your university, most of this contrast can be smeared away by pure change of perspective. The only difference lies in what people tend to do. And your opportunity is in doing something bit different.
 
 <div class="img_row">
 	<img class="col one" src="{{ site.baseurl }}/img/passenger1.jpg">

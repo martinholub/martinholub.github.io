@@ -2,12 +2,15 @@
 layout: post
 title: ETHWeek - Challenging Water
 date: 2016-10-22 18:49
-description: Projects and Reflections &#35 1 
+categories: ETH
+tags: projects reflections eth
+description: |
+    How did you start your day this morning? First, I hope that well. Second, I guess that you did at least one of these: made yourself a coffee, brushed your teeth or took a shower. And to assume this, I don’t have to be particularly good in guessing. This is how millions of people start their day. But these activities have more in common. All of them would be either significantly different or even impossible without water running out of our taps. Luckily, clean drinking water is an infinite resource. Or isn’t it?
 ---
 <div class="img_row">
 	<img class="col three" src="{{ site.baseurl }}/img/shower.jpg" alt="" title="shower"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 </div>
 
 How did you start your day this morning? First, I hope that well. Second, I guess that you did at least one of these: made yourself a coffee, brushed your teeth or took a shower. And to assume this, I don’t have to be particularly good in guessing. This is how millions of people start their day. But these activities have more in common. All of them would be either significantly different or even impossible without water running out of our taps. Luckily, clean drinking water is an infinite resource. Or isn’t it?
@@ -29,13 +32,13 @@ These all are important hurdles, but there may be one even more significant. We 
 <div class="img_row">
 	<img class="col three" src="{{ site.baseurl }}/img/fountain.jpg" alt="" title="Fountain in Zürich"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 In Zürich there is more than 1200 public fountains and all of them offer drinking water during whole year.
 </div>
 
-The idea that technical progress is going to offer solutions to many of our problems is widely accepted. Of course we may not have the solutions right now, but they are well on their way! Don’t worry! This corresponds well with how much effort gets invested into pursuing technical innovations. And these are, more often than not, only very incremental. But when it comes to something so ordinary as our bathrooms we already have all the means to start rethinking it. But we don’t, because it is uncomfortable. In this case, more than new technical solutions, we need to find a new perspective. 
+The idea that technical progress is going to offer solutions to many of our problems is widely accepted. Of course we may not have the solutions right now, but they are well on their way! Don’t worry! This corresponds well with how much effort gets invested into pursuing technical innovations. And these are, more often than not, only very incremental. But when it comes to something so ordinary as our bathrooms we already have all the means to start rethinking it. But we don’t, because it is uncomfortable. In this case, more than new technical solutions, we need to find a new perspective.
 
-Being an engineering student, this was the most important personal outcome of the week. Something that will probably influence the way I think about where I put my time and effort in the future. And how about you? How much you are confident of engineering or scientific solutions? Do you have some doubts? And if you do, does this get to play out in your actions? 
+Being an engineering student, this was the most important personal outcome of the week. Something that will probably influence the way I think about where I put my time and effort in the future. And how about you? How much you are confident of engineering or scientific solutions? Do you have some doubts? And if you do, does this get to play out in your actions?
 
 I am not asking to make you feel awkward. Rather to spur your interest and get you thinking. It may very well be you who helps a needed new perspective to take off, be it in your family, among your friends or anywhere else.
 

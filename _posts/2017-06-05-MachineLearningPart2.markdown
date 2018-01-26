@@ -1,13 +1,16 @@
 ---
 layout: post
-title: Machine Learning - MRI Analysis Project (Part II)  
+title: Machine Learning - MRI Analysis Project (Part II)
 date: 2017-06-05 15:22
-description: Machine Learning, Projects, ETHZ
+tags: Machine-Learning Projects ETHZ
+categories: projects
+description: |
+    Although we have discussed quite few steps so far, they were only preparatory (albeit necessary and crucial) and it is only now, in model selection phase, that we actually get our hands on machine learning algorithms. We can further divide this phase into two steps – training and validation. Let’s look at training first.
 ---
 <div class="img_row" style = "height: 275px;">
 	<img class="col three" src="{{ site.baseurl }}/img/MachineLearningHeader.jpg" alt="" title="MachineLearningHeader"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 </div>
 
 <i>
@@ -19,7 +22,7 @@ description: Machine Learning, Projects, ETHZ
 <br/>
 Although we have discussed quite few steps so far, they were only preparatory (albeit necessary and crucial) and it is only now, in model selection phase, that we actually get our hands on machine learning algorithms. We can further divide this phase into two steps – training and validation. Let’s look at training first.
 In the scope of our project we needed to deal with both <a href="http://www.investopedia.com/terms/r/regression.asp">regression</a> and <a href="https://en.wikipedia.org/wiki/Statistical_classification">classification</a>, here I will describe the latter one as it is perhaps more intuitive and again, I will illustrate it on an example from our project. Recalling the task at hand – to disambiguate between mentally healthy and sick patients from an MRI scan, we can imagine a simplified scenario where each brain scan is described by single two-dimensional vector of features. Further, assume that they form two point-clouds that are perfectly linearly separable as show in the figure:
-
+<!---break--->
 <div class="img_row">
 	<img class = "col three" src="{{ site.baseurl }}/img/idealizedClassification.png" alt="" title="idealizedClassification" style='height: 100%; width: 100%; object-fit: contain'/>
 </div>
@@ -37,13 +40,13 @@ Now the situation is usually by far not that simple. First, recall that our feat
 In the most general terms, proceeding with the classification example, we look for a function that, given input vector, outputs a prediction, i.e. in this case either 0 or 1, which minimizes some objective. This function is defined by set of parameters. The common objective to minimize is so called <a href="https://en.wikipedia.org/wiki/Loss_function">loss function</a> which takes our prediction, true label and outputs a value that represents a penalization for misclassification. In mathematical notation, this is expressed as follows:
 $$ \mathbf{\theta^{*}} = argmin_{\theta}\mathcal{L}(f(\textbf{X}, \mathbf{\theta}); \textbf{t}), $$
 
-Where \\(\mathbf{\theta^{*}}\\) is the vector of optimal parameters, \\(\mathcal{L}(\cdot)\\) is a loss function, \\(f(\cdot)\\) is a function that gives us our prediction, \\(X\\) is a matrix of dimensions N×D, N and D being number of samples and features respectively, and \\(t\\) is a vector of true labels. 
+Where \\(\mathbf{\theta^{*}}\\) is the vector of optimal parameters, \\(\mathcal{L}(\cdot)\\) is a loss function, \\(f(\cdot)\\) is a function that gives us our prediction, \\(X\\) is a matrix of dimensions N×D, N and D being number of samples and features respectively, and \\(t\\) is a vector of true labels.
 
 Let’s look at an example to understand this better. If the patient is healthy and we predict 0 (0 meaning no sickness), then the loss will be zero. Contrary, when we would predict 1, meaning presence of sickness, then the loss will be some nonzero value. If we take a step back and look at the problem for a while, we will easily see that we are attempting no more than function-fitting here. Of course, the number of dimensions, accessory constraints, further elements of the pipeline and the richness of the machine learning field make it rather a fancy kind of function fitting. This is nevertheless to show, that one shouldn’t expect magic to happen when confronted with machine learning algorithms. It is just math that happens to receive a lot of hype.
 
 ### Validation
 <br/>
-Let’s proceed now to the second part of model selection phase – <a href="http://machinelearningmastery.com/how-to-evaluate-machine-learning-algorithms/">validation</a>. As you might have noticed, the ideal predictor function one would obtain from training phase is the one that gives 0 training loss, meaning that all samples were classified correctly. This appears desirable, but only to a point when one takes a look at decision boundaries of such a function. For illustration, let’s look how they may look like in such a case: 
+Let’s proceed now to the second part of model selection phase – <a href="http://machinelearningmastery.com/how-to-evaluate-machine-learning-algorithms/">validation</a>. As you might have noticed, the ideal predictor function one would obtain from training phase is the one that gives 0 training loss, meaning that all samples were classified correctly. This appears desirable, but only to a point when one takes a look at decision boundaries of such a function. For illustration, let’s look how they may look like in such a case:
 
 <div class="img_row">
 	<img class = "col three" src="{{ site.baseurl }}/img/overfitting.png" alt="" title="overfitting" style='height: 100%; width: 100%; object-fit: contain'/>
@@ -62,7 +65,7 @@ The GridSearch routine outputs a validation error for each model it is provided 
 ### Results and Submission
 <br/>
 At this point, we are basically finished with the task as described above. In the case of our project this means that we can save our predictions to a file and submit it to <a href="https://inclass.kaggle.com/">Kaggle</a> (an online platform for administering big machine learning projects and competitions that hosts also university projects) to obtain a score on how well did we fare.
- 
+
 Although this sounds trivial, there are still some things to keep an eye on. First, the score is computed based on another portion of dataset that one isn’t allowed to access. As we are allowed to submit the solution repeatedly, it is inevitable (the less experience one has the more likely so) to try to achieve the best score. This in practice means, that there is leakage of information from the ‘hidden’ data to the model being trained. And this in turn means that we are on the best track to overfit again. This is because Kaggle uses only one half of the held-out dataset to compute the score, and usually the more we try to optimize on the available half, the worse the final score, that is based on the other half, will be. In the first two parts of the project, we made exactly this mistake, and although our predictions scored well on public leaderboard, we did poorly on the private one. For the last part of the project, we increased the robustness of model selection procedure (for example by implementing the GridSearchCV, tracking standard deviation among runs of random permutation of data, etc…) and this allowed us to perform well above average.
 
 ### Remarks and Takeaway

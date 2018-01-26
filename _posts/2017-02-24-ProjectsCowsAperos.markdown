@@ -1,17 +1,20 @@
 ---
 layout: post
-title: Projects, Cows and Apéros. What Was the Semester at ETH Like? 
+title: Projects, Cows and Apéros. What Was the Semester at ETH Like?
 date: 2017-02-25 18:42
-description: Tristium Turicum  &#35 3
+tags: ETH study
+categories: Tristium Turicum
+description: |
+    Hello everybody, after more than a two-months break I am getting back to you with already fourth blog post. Do you know what this means? Don’t worry it doesn’t mean that I decided to bore you with a post of several times the normal length (although, truth be told, this one is bit meatier than the usual fare), rather it means that my exam period is over. It is exactly at this time that I want to share with you a concise summary of what a semester at ETH is like. A summary enriched by my personal impressions and experiences. And if you are not a student anymore, don’t worry, on top of offering you a view on Swiss education and ETH, I will give you a sneak-peak into what the Swiss are like and how does this play out in one’s day-to-day life.
 ---
 <div class="img_row">
 	<img class="col three" src="{{ site.baseurl }}/img/ETH_cow5.png" alt="" title="ETH_cow"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 </div>
 
 Hello everybody, after more than a two-months break I am getting back to you with already fourth blog post. Do you know what this means? Don’t worry it doesn’t mean that I decided to bore you with a post of several times the normal length (although, truth be told, this one is bit meatier than the usual fare), rather it means that my exam period is over. It is exactly at this time that I want to share with you a concise summary of what a semester at ETH is like. A summary enriched by my personal impressions and experiences. And if you are not a student anymore, don’t worry, on top of offering you a view on Swiss education and ETH, I will give you a sneak-peak into what the Swiss are like and how does this play out in one’s day-to-day life.
-
+<!---break--->
 The post is structured into three main sections: Studies, People and Place and after reading it, you should be able to assess the qualities of these three in comparison to where you happen to live and work or study. Are you ready for some generalizations and stereotypes? Let’s dive in then.
 
 ### Studies
@@ -32,14 +35,14 @@ Another two courses offered projects during semester, usually programming or com
 To get a quick and concise overview of major features of each course I took <a href="{{ site.baseurl }}/img/CoursesTableHTML.html" target="blank">just follow this link</a>.
 
 
-Notice that the tutorials in courses I attended were of two basic forms: 
+Notice that the tutorials in courses I attended were of two basic forms:
 
-  1. TA’s presentation of the content of lecture and exercise (which was then to be solved independently), 
+  1. TA’s presentation of the content of lecture and exercise (which was then to be solved independently),
   2. independent work in presence of TA(s).
-  
+
 In contrast, at my former university, most of the tutorials were basically rehearsals of problem-solving, something I would describe as ‘filling one’s cookbook with recipes’. All approaches will have their ups and downs, but my overall impression is that the ones practiced here at ETH are more effective in terms of acquiring understanding and independence in problem solving. Whereas the ones at my former university allow you to solve arguably more complex problems and drill you in flawless outputting of numbers. I personally appreciate the independent approach more, although I must admit that it can become quite frustrating (like if you don’t make one assumption which costs you several hours of time down the line).
 
-Last thing I bring to your attention is the form of performance assessment (aka exam) usually practiced here at ETH. From the linked table, you will notice that your final grades are usually determined solely by your final exam results. Taking into consideration that you have only one try per year to pass, this can make your exam period relatively stressful. Furthermore, you would most likely agree that one exam, (especially if it is oral one of 30 minutes) is quite a poor assessment of what you have learned and how you worked throughout the semester. Luckily, this is already something that ETH is 
+Last thing I bring to your attention is the form of performance assessment (aka exam) usually practiced here at ETH. From the linked table, you will notice that your final grades are usually determined solely by your final exam results. Taking into consideration that you have only one try per year to pass, this can make your exam period relatively stressful. Furthermore, you would most likely agree that one exam, (especially if it is oral one of 30 minutes) is quite a poor assessment of what you have learned and how you worked throughout the semester. Luckily, this is already something that ETH is
 <a href="https://www.ethz.ch/services/en/news-and-events/internal-news/archive/2016/12/a-future-without-attendance-certificates.html" target="blank">working on adjusting in the future</a>.
 
 ### People
@@ -49,16 +52,16 @@ No matter where you live and work or in which stage of life you are currently in
 
 First thing that comes to my mind is that they are all unexpectedly humble. In a good way. I never had a feeling that somebody needed to show off his superiority in knowledge or position to me. Even professors with great renown have no problems discussing with you on equal grounds. I recall one occasion that is a very good example of this. I had once very hard time following a lecture as the professor decided to put, at least what appeared to me, as way too much material into his slides. Me, being rather inpatient which often comes off as disrespect, I approached him during the break and almost accused him for teaching ineffectively. I suggested that focusing on what is really important would allow him to teach at slower pace and this in turn would make it possible for students to retain higher proportion of the knowledge he wants to transmit (look, I am not proud of doing that, but that’s what I did). Not only he immediately apologized for the amount of information, but he also explained why he decided to do so and agreed to try to make upcoming lectures less dense. It was only later that I found out that this guy was on Technology Review Magazine’s list <a href="http://www2.technologyreview.com/tr35/?year=2007" target="blank">'35 innovators under 35'</a> and has already received surprising amount of awards and grants for his work in several fields including microfluidics and neurotechnology. (Besides, during preparation for the exam, I found his slides to be the best, exactly because they had a lot of information and were thus easier to follow.)
 
-I face similar approach when interacting with other professors and TAs and this is definitely one of the things that makes my time spent at university and work enjoyable. It is mainly due to the fact that workplace culture here in Switzerland is extremely flat, almost lacking any kind of hierarchy. Swiss also tend to spend more time at their work and thus have found many ways how to make this time more enjoyable (some examples can be found under following keywords: <a href="https://answers.yahoo.com/question/index?qid=20100121042208AA9qFRs" target="blank">Znüni, Zvieri</a> and <a href="http://www.dicconbewes.com/2010/03/11/getting-to-know-you-the-swiss-way/" target="blank">Apéro</a>). 
+I face similar approach when interacting with other professors and TAs and this is definitely one of the things that makes my time spent at university and work enjoyable. It is mainly due to the fact that workplace culture here in Switzerland is extremely flat, almost lacking any kind of hierarchy. Swiss also tend to spend more time at their work and thus have found many ways how to make this time more enjoyable (some examples can be found under following keywords: <a href="https://answers.yahoo.com/question/index?qid=20100121042208AA9qFRs" target="blank">Znüni, Zvieri</a> and <a href="http://www.dicconbewes.com/2010/03/11/getting-to-know-you-the-swiss-way/" target="blank">Apéro</a>).
 
 
-While thinking about making one’s workplace (or study-place for that matter) more enjoyable, I also immediately think of <a href="https://www.amiv.ethz.ch/" target="blank">AMIV (Akademische Maschinen- und Elektro-Ingenieur Verein)</a>. Among many activities they do (career fairs, collecting study materials for downloads, issuing monthly newspaper, organizing social events, etc.), I was personally the most delighted by Weihnachtsmorgenessen (‘Christmas Breakfast). Just take a look at few pictures from the event while imagining that there are Christmas carols playing on top of that. 
+While thinking about making one’s workplace (or study-place for that matter) more enjoyable, I also immediately think of <a href="https://www.amiv.ethz.ch/" target="blank">AMIV (Akademische Maschinen- und Elektro-Ingenieur Verein)</a>. Among many activities they do (career fairs, collecting study materials for downloads, issuing monthly newspaper, organizing social events, etc.), I was personally the most delighted by Weihnachtsmorgenessen (‘Christmas Breakfast). Just take a look at few pictures from the event while imagining that there are Christmas carols playing on top of that.
 
 <div class="img_row">
 	<img class="col one" src="{{ site.baseurl }}/img/AMIV3.jpg">
 	<img class="col two" src="{{ site.baseurl }}/img/AMIV2.jpg">
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 Photos from Weihnachtsmorgenessen 2017 at Clausiusbar. (Excuse poor picture quality, taken by phone.)
 </div>
 Imagine morning just few days before holiday break and hundreds of students slowing down to eat a breakfast together. Getting into chat with people they don’t yet know and wishing each other Merry Christmas afterwards.  Wouldn’t this make for a great start of day?
@@ -74,7 +77,7 @@ ETH has two main locations in Zürich – Zentrum and Hönggerberg. The one in Z
 	<img class="col two" src="{{ site.baseurl }}/img/Honggerberg-view.jpg">
 	<img class="col one" src="{{ site.baseurl }}/img/ETH_cow1.png">
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 Views from ETH Hönggerberg campus. (Sources <a href="https://www.caitelliott.co.uk" target="blank">caitelliott.co.uk</a> and <a href="http://www.aw.ias.ethz.ch" target="blank">aw.ias.ethz.ch</a>.)
 </div>
 
@@ -91,7 +94,7 @@ That being said, ETH still manages, at least in my eyes, to act amazingly dynami
 
   - Opening of the <a href="https://www.ethz.ch/en/news-and-events/eth-news/news/2017/02/bridge-the-divide.html" target="blank">Swiss Data Science Center (SDSC)</a>,
   - ETH Board announcement of strategic plan for following three years. In line with the opening of the SDSC, one of its focal points is data science. The other major field of focus is medicine. This statement is supported by opening of a master track in  <a href="https://www.inf.ethz.ch/studies/master/master-ds.html" target="blank">Data Science</a> and <a href="https://www.ethz.ch/en/news-and-events/eth-news/news/2016/09/studying-medicine-at-eth.html" target="blank">bachelor track in Medicine</a> as of September 2017. (Yes, Federal Institute of Technology will educate doctors. My personal opinion is that this both bold and very smart step to take.)
-  -	Investment into continuing education programs, as acknowledgement that the future of work is quite different from what we have been used to 
+  -	Investment into continuing education programs, as acknowledgement that the future of work is quite different from what we have been used to
 <a href="https://www.ethz.ch/en/news-and-events/eth-news/news/2017/01/work-in-the-year-2050.html" target="blank">quite different from what we have been used to</a>.
 
 ### Wrap-up and Overall Impressions

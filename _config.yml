@@ -10,19 +10,27 @@ github_username:  martinholub
 
 repository: martinholub/martin-holub.github.io
 
-gems: ["jekyll-paginate", "jekyll-feed", "jekyll-github-metadata"]
+plugins:
+    - jekyll-paginate
+    - jekyll-feed
+    - jekyll-github-metadata
+    - jekyll-twitter-plugin
+    - github-pages
+
+plugins_dir: ./_plugins
+
 
 # Build settings
-# markdown: kramdown
-markdown: redcarpet
-
+markdown: kramdown #redcarpet
 highlighter: rouge
 
 # Pagination
-paginate: 15
+paginate: 3
 paginate_path: "/blog/page:num/"
 pagination_enabled?: 1
 
+# Teasers
+excerpt_separator: <!---break--->
 
 collections:
   portfolio:
@@ -32,12 +40,11 @@ collections:
 #   output: false
 #    permalink: /poetry/:path/
 
-
 JB :
   version : 0.3.0
   BASE_PATH : false
   ASSET_PATH : false
-  
+
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
   # Set 'provider' to false to turn commenting off globally.
@@ -45,6 +52,8 @@ JB :
   comments :
     provider : disqus
     disqus :
+      layout: default
+      comments: true
       short_name :
     livefyre :
       site_id : 123
@@ -60,40 +69,40 @@ JB :
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
   # Set 'provider' to false to turn analytics off globally.
-  #        
+  #
   analytics :
     provider : google
     gauges :
         site_id : 'SITE ID'
-    google : 
+    google :
         tracking_id : 'UA-123-12'
     getclicky :
-      site_id : 
+      site_id :
     mixpanel :
         token : '_MIXPANEL_TOKEN_'
     piwik :
         baseURL : 'myserver.tld/piwik' # Piwik installation address (without protocol)
         idsite : '1'                   # the id of the site on Piwik
 
-  # Settings for sharing helper. 
+  # Settings for sharing helper.
   # Sharing is for things like tweet, plusone, like, reddit buttons etc.
   # Set 'provider' to the sharing provider you want to use.
   # Set 'provider' to false to turn sharing off globally.
   #
   sharing :
     provider : false
-    
-  # Settings for all other include helpers can be defined by creating 
+
+  # Settings for all other include helpers can be defined by creating
   # a hash with key named for the given helper. ex:
   #
   #   pages_list :
-  #     provider : "custom"   
+  #     provider : "custom"
   #
   # Setting any helper's provider to 'custom' will bypass the helper code
   # and include your custom code. Your custom file must be defined at:
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
-  
+
   # RSS Feed
 name: Martin Holub Blog
 description: Personal Blog

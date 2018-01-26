@@ -2,12 +2,15 @@
 layout: post
 title: To accept or not to accept, that is the question
 date: 2016-10-01 19:49
-description: Tristium Turicum &#35 1 
+category: Tristium Turicum
+tags: ETH study
+description: |
+    Imagine that one day someone knocks on your door. A stranger. And at his feet, there lies a package. A package so big that he had to put it down to free his hands to knock. It is wrapped to impress - in bright colors with a shiny ribbon. You immediately wonder about the contents. And the stranger says to you: “I offer you this present but I don’t know what is inside. It is possible that it will be entirely good for you, it may also be entirely bad. But most likely there is both of those, mixed at unknown ratio.” Would you be tempted to open this package? Almost certainly you would. And would you open it?
 ---
 <div class="img_row">
 	<img class="col three" src="{{ site.baseurl }}/img/package.jpg" alt="" title="package"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 </div>
 
 Imagine that one day someone knocks on your door. A stranger. And at his feet, there lies a package. A package so big that he had to put it down to free his hands to knock. It is wrapped to impress - in bright colors with a shiny ribbon. You immediately wonder about the contents. And the stranger says to you: “I offer you this present but I don’t know what is inside. It is possible that it will be entirely good for you, it may also be entirely bad. But most likely there is both of those, mixed at unknown ratio.” Would you be tempted to open this package? Almost certainly you would. And would you open it?
@@ -25,12 +28,12 @@ Whole new hoist of opportunities opens up ETH. For example, the projects I can p
 <div class="img_row">
 	<img class="col three" src="{{ site.baseurl }}/img/eth_gebaeude.jpg" alt="" title="die ETH"/>
 </div>
-<div class="col three caption"> 
+<div class="col three caption">
 ETH main building in the center of Zürich (&copy; ethz.ch)
 </div>
 
 I have few friends that were offered a similar or even more impressively packed present and decided to refuse it. They turned down offers from the best US universities. I used to have very little understanding for them but now, once I lived through similar decision process myself, I see their point. Their mixture just appeared to have too much of a bad stuff. But, I decided, and I hope that luckily, to accept the present and open the package.
-On this blog I will share with you what I find inside. Which of my expectations will prove right and which utterly wrong? What surprises await me? And at what ratio are the good and bad things in the present really mixed? Stay tuned for answers to those questions and much more! 
+On this blog I will share with you what I find inside. Which of my expectations will prove right and which utterly wrong? What surprises await me? And at what ratio are the good and bad things in the present really mixed? Stay tuned for answers to those questions and much more!
 
 Martin
 

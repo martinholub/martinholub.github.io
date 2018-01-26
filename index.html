@@ -10,15 +10,59 @@ layout: default
   <br/>
 </div>
 
-
 <ul class="post-list">
     {% for post in paginator.posts %}
       <li>
         <h2><a class="post-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
         <p class="post-meta">{{ post.date | date: '%B %-d, %Y — %H:%M' }}</p>
-        <p>{{ post.description }}</p>
+        {% if post.tags %}
+        <p class="post-meta">Tags: {{ post.tags | join: ', '}} </p>
+        {% endif %}
+        {% if post.category %}
+        <p class="post-meta">Category: {{ post.category | join: ', ' }} </p>
+        {% endif %}
+        <p>{{ post.description | strip_html | truncate : 300 }}</p>
+        {% if post.description != post.content %}
+        <a class="right-link" href="{{ site.baseurl }}{{ post.url }}">... Continue reading</a>
+        {% endif %}
+        <p></p>
         <br/>
         <hr/>
       </li>
     {% endfor %}
 </ul>
+
+<!-- Pagination links -->
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
+  {% else %}
+    <span>&laquo; Prev</span>
+  {% endif %}
+
+  {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+      <em>{{ page }}</em>
+    {% elsif page == 1 %}
+      <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+    {% else %}
+      <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
+  {% else %}
+    <span>Next &raquo;</span>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class='jekyll-twitter-plugin'>
+    {% twitter https://twitter.com/holub_martin maxwidth=300 maxheight=500
+        chrome=noheader%20nofooter%20transparent%20noborders"
+        limit=6 link_color=#11D68B border_color=#fdfdfd dnt=true %}
+
+    <!--- comment --->
+</div>
