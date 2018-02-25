@@ -104,6 +104,7 @@ pre > code { border: 0; padding-right: 0; padding-left: 0; }
 .post-title { font-size: 42px; letter-spacing: -1px; line-height: 1; }
 @media screen and (max-width: 800px) { .post-title { font-size: 36px; } }
 
+.post-content { text-align: justify; }
 .post-content h2 { font-size: 42px; }
 @media screen and (max-width: 800px) { .post-content h2 { font-size: 28px; } }
 .post-content h3 { font-size: 30px; }
@@ -141,7 +142,7 @@ pre > code { border: 0; padding-right: 0; padding-left: 0; }
 */
 .blankbox { background: #11D68B; }
 
-.img_row { height: auto; width: 100%; overflow: hidden; box-sizing: border-box; padding: 5px; }
+.img_row { height: auto; width: 100%; overflow: hidden; box-sizing: border-box; text-align: center; margin: auto; padding: 5px; }
 
 .col { width: 100%; height: 100%; float: left; object-fit: cover; box-sizing: border-box; padding: 5px; }
 
@@ -158,6 +159,36 @@ pre > code { border: 0; padding-right: 0; padding-left: 0; }
 /** Twitter plugin **********************************************************
 */
 .jekyll-twitter-plugin { text-align: center; }
+
+/** Sharing buttons **********************************************************
+*/
+.share-box a { display: inline-block; -webkit-box-shadow: 0 0 1px #777; box-shadow: 0 0 1px #777; padding: 5px 12px; margin-right: 5px; margin-bottom: 5px; text-decoration: none; }
+
+.share-box a:hover { text-decoration: none; -webkit-transition: background-color 200ms linear; -ms-transition: background-color 200ms linear; transition: background-color 200ms linear; }
+
+.f { color: #3b5998; }
+
+.f:hover { color: #fff; background-color: #3b5998; }
+
+.t { color: #4099FF; }
+
+.t:hover { color: #fff; background-color: #4099FF; }
+
+.g { color: #d34836; }
+
+.g:hover { color: #fff; background-color: #d34836; }
+
+.r { color: #ff5700; }
+
+.r:hover { color: #fff; background-color: #ff5700; }
+
+.l { color: #0077b5; }
+
+.l:hover { color: #fff; background-color: #0077b5; }
+
+.e { color: #444444; }
+
+.e:hover { color: #fff; background-color: #444444; }
 
 /** Syntax highlighting styles */
 .highlight { background: #fff; }
