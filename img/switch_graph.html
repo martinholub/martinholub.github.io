@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="d3viz\css/d3viz.css"/>
+	<link rel="stylesheet" href="d3viz\css/d3-context-menu.css"/>
+	<script type="text/javascript" src="d3viz\js/d3viz.js"></script>
+	<script type="text/javascript" src="d3viz\js/d3.v3.min.js"></script>
+	<script type="text/javascript" src="d3viz\js/dagre-d3.min.js"></script>
+	<script type="text/javascript" src="d3viz\js/graphlib-dot.min.js"></script>
+	<script type="text/javascript" src="d3viz\js/d3-context-menu.js"></script>
+</head>
+<body>
+	<div id='menu' class='menuBar'>
+	    <input name="resetNodes" 
+	           type="button" 
+	           value="Reset nodes"
+	           onclick="resetNodes()"/>
+	    <input name="releaseNodes" 
+	           type="button" 
+	           value="Release nodes"
+	           onclick="releaseNodes()"/>
+	</div>
+
+	<script type="text/javascript">
+		// Backend graph in DOT format
+		var dotGraph = graphlibDot.read("digraph G {\r\n\tgraph [bb=\"0,0,1202.8,471\"];\r\n\tnode [label=\"\\N\"];\r\n\tn1\t [apply_op=DimShuffle,\r\n\t\theight=0.5,\r\n\t\tlabel=DimShuffle,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"1083.8,279\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\twidth=1.4443];\r\n\tn20\t [apply_op=Elemwise,\r\n\t\tfillcolor=\"#FFAABB\",\r\n\t\theight=0.5,\r\n\t\tlabel=Elemwise,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"969.85,192\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\tstyle=filled,\r\n\t\ttype=colored,\r\n\t\twidth=1.2457];\r\n\tn1 -> n20\t [label=\"1 fmatrix\",\r\n\t\tlp=\"1052.8,235.5\",\r\n\t\tpos=\"e,986.79,208.82 1058.2,263.12 1048.5,257.18 1037.4,250.07 1027.8,243 1016.4,234.6 1004.5,224.53 994.42,215.64\"];\r\n\tn34\t [apply_op=Scan,\r\n\t\tfillcolor=yellow,\r\n\t\theight=0.5,\r\n\t\tlabel=Scan,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"634.85,105\",\r\n\t\tprofile=\"3.0816218852996826\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\tstyle=filled,\r\n\t\ttype=colored,\r\n\t\twidth=0.79437];\r\n\tn1 -> n34\t [label=\"6 RandomStateType\",\r\n\t\tlp=\"1144.8,192\",\r\n\t\tpos=\"e,663.57,106.51 1086.2,260.83 1089.1,231.13 1090.1,170.52 1054.8,141 1026,116.82 772.22,108.9 673.7,106.72\"];\r\n\tn2\t [dtype=fscalar,\r\n\t\tfillcolor=limegreen,\r\n\t\theight=0.5,\r\n\t\tlabel=n,\r\n\t\tnode_type=input,\r\n\t\tpos=\"1083.8,366\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.75];\r\n\tn2 -> n1\t [color=dodgerblue,\r\n\t\tlabel=fscalar,\r\n\t\tlp=\"1102.3,322.5\",\r\n\t\tpos=\"e,1083.8,297.18 1083.8,347.8 1083.8,336.16 1083.8,320.55 1083.8,307.24\"];\r\n\tn4\t [apply_op=DimShuffle,\r\n\t\theight=0.5,\r\n\t\tlabel=DimShuffle,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"953.85,279\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\twidth=1.4443];\r\n\tn4 -> n20\t [label=\"0 fmatrix\",\r\n\t\tlp=\"979.85,235.5\",\r\n\t\tpos=\"e,961,210.01 952.57,260.69 952.26,250.97 952.54,238.69 954.85,228 955.46,225.15 956.31,222.25 957.29,219.39\"];\r\n\tn5\t [dtype=fscalar,\r\n\t\tfillcolor=limegreen,\r\n\t\theight=0.5,\r\n\t\tlabel=k,\r\n\t\tnode_type=input,\r\n\t\tpos=\"953.85,366\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.75];\r\n\tn5 -> n4\t [color=dodgerblue,\r\n\t\tlabel=fscalar,\r\n\t\tlp=\"972.35,322.5\",\r\n\t\tpos=\"e,953.85,297.18 953.85,347.8 953.85,336.16 953.85,320.55 953.85,307.24\"];\r\n\tn7\t [apply_op=DimShuffle,\r\n\t\theight=0.5,\r\n\t\tlabel=DimShuffle,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"94.846,279\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\twidth=1.4443];\r\n\tn22\t [apply_op=Elemwise,\r\n\t\tfillcolor=\"#FFAABB\",\r\n\t\theight=0.5,\r\n\t\tlabel=Elemwise,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"44.846,192\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\tstyle=filled,\r\n\t\ttype=colored,\r\n\t\twidth=1.2457];\r\n\tn7 -> n22\t [label=fmatrix,\r\n\t\tlp=\"92.846,235.5\",\r\n\t\tpos=\"e,54.704,209.76 84.968,261.21 77.846,249.1 68.101,232.53 59.998,218.76\"];\r\n\tn7 -> n34\t [label=\"4 RandomStateType\",\r\n\t\tlp=\"226.85,192\",\r\n\t\tpos=\"e,606.24,106.96 105.91,261.12 124.36,233.19 160.23,179.85 168.85,174 238.45,126.78 497.19,111.54 596.08,107.37\"];\r\n\tn8\t [dtype=fscalar,\r\n\t\tfillcolor=limegreen,\r\n\t\theight=0.5,\r\n\t\tlabel=dt,\r\n\t\tnode_type=input,\r\n\t\tpos=\"94.846,366\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.75];\r\n\tn8 -> n7\t [color=dodgerblue,\r\n\t\tlabel=fscalar,\r\n\t\tlp=\"113.35,322.5\",\r\n\t\tpos=\"e,94.846,297.18 94.846,347.8 94.846,336.16 94.846,320.55 94.846,307.24\"];\r\n\tn10\t [apply_op=DimShuffle,\r\n\t\theight=0.5,\r\n\t\tlabel=DimShuffle,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"345.85,192\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\twidth=1.4443];\r\n\tn10 -> n34\t [label=\"5 RandomStateType\",\r\n\t\tlp=\"368.85,148.5\",\r\n\t\tpos=\"e,606.2,106.95 323.9,175.63 311.85,165.36 301.15,151.8 310.85,141 329.61,120.1 514.16,110.57 596.05,107.34\"];\r\n\tn11\t [dtype=fscalar,\r\n\t\tfillcolor=limegreen,\r\n\t\theight=0.5,\r\n\t\tlabel=gamma,\r\n\t\tnode_type=input,\r\n\t\tpos=\"338.85,279\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.77778];\r\n\tn11 -> n10\t [color=dodgerblue,\r\n\t\tlabel=fscalar,\r\n\t\tlp=\"361.35,235.5\",\r\n\t\tpos=\"e,344.43,210.18 340.26,260.8 341.22,249.16 342.51,233.55 343.6,220.24\"];\r\n\tn13\t [apply_op=Shape_i,\r\n\t\tfillcolor=cyan,\r\n\t\theight=0.5,\r\n\t\tlabel=Shape_i,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"416.85,366\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\tstyle=filled,\r\n\t\ttype=colored,\r\n\t\twidth=1.1193];\r\n\tn24\t [apply_op=MakeVector,\r\n\t\theight=0.5,\r\n\t\tlabel=MakeVector,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"440.85,279\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\twidth=1.5526];\r\n\tn13 -> n24\t [label=\"1 fmatrix\",\r\n\t\tlp=\"369.85,322.5\",\r\n\t\tpos=\"e,397.73,290.52 383.3,356 358.73,347.65 331.76,333.7 344.85,315 350.41,307.04 368.78,299.49 387.98,293.45\"];\r\n\tn26\t [apply_op=AllocEmpty,\r\n\t\tfillcolor=\"#FFAA22\",\r\n\t\theight=0.5,\r\n\t\tlabel=AllocEmpty,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"568.85,279\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\tstyle=filled,\r\n\t\ttype=colored,\r\n\t\twidth=1.4985];\r\n\tn13 -> n26\t [label=\"2 lscalar\",\r\n\t\tlp=\"452.85,322.5\",\r\n\t\tpos=\"e,528.56,291.07 416.99,347.96 418,337.11 421.13,323.53 429.85,315 454.66,290.72 472.2,305.52 505.85,297 509.98,295.95 514.27,294.84 \\\r\n518.57,293.72\"];\r\n\tn14\t [dtype=fmatrix,\r\n\t\tfillcolor=YellowGreen,\r\n\t\theight=0.5,\r\n\t\tlabel=fmatrix,\r\n\t\tnode_type=shared_input,\r\n\t\tpos=\"528.85,453\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.77778];\r\n\tn14 -> n13\t [label=fmatrix,\r\n\t\tlp=\"499.85,409.5\",\r\n\t\tpos=\"e,436.48,381.9 506.18,434.8 488.36,421.28 463.47,402.38 444.48,387.97\"];\r\n\tn16\t [apply_op=Shape_i,\r\n\t\tfillcolor=cyan,\r\n\t\theight=0.5,\r\n\t\tlabel=Shape_i,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"528.85,366\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\tstyle=filled,\r\n\t\ttype=colored,\r\n\t\twidth=1.1193];\r\n\tn14 -> n16\t [label=fmatrix,\r\n\t\tlp=\"548.85,409.5\",\r\n\t\tpos=\"e,528.85,384.18 528.85,434.8 528.85,423.16 528.85,407.55 528.85,394.24\"];\r\n\tn18\t [apply_op=DimShuffle,\r\n\t\theight=0.5,\r\n\t\tlabel=DimShuffle,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"717.85,366\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\twidth=1.4443];\r\n\tn14 -> n18\t [color=dodgerblue,\r\n\t\tlabel=fmatrix,\r\n\t\tlp=\"654.85,409.5\",\r\n\t\tpos=\"e,687.48,380.66 557.14,439.27 589.28,424.82 641.95,401.13 678.18,384.84\"];\r\n\tn16 -> n24\t [label=\"0 fmatrix\",\r\n\t\tlp=\"515.85,322.5\",\r\n\t\tpos=\"e,457.78,296.36 512.71,349.41 499.44,336.59 480.43,318.23 465.29,303.61\"];\r\n\tn16 -> n26\t [label=\"1 lscalar\",\r\n\t\tlp=\"574.85,322.5\",\r\n\t\tpos=\"e,560.82,297.05 536.75,348.21 542.36,336.29 549.99,320.06 556.41,306.42\"];\r\n\tn29\t [apply_op=Rebroadcast,\r\n\t\theight=0.5,\r\n\t\tlabel=Rebroadcast,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"697.85,279\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\twidth=1.5887];\r\n\tn18 -> n29\t [color=dodgerblue,\r\n\t\tlabel=lscalar,\r\n\t\tlp=\"727.85,322.5\",\r\n\t\tpos=\"e,701.89,297.18 713.8,347.8 711.06,336.16 707.39,320.55 704.25,307.24\"];\r\n\tn20 -> n34\t [label=\"8 RandomStateType\",\r\n\t\tlp=\"992.85,148.5\",\r\n\t\tpos=\"e,663.26,107.55 955.55,174.65 944.54,163.22 928.3,148.68 910.85,141 869.18,122.66 739.22,112.35 673.6,108.19\"];\r\n\tn22 -> n34\t [label=\"7 RandomStateType\",\r\n\t\tlp=\"87.846,148.5\",\r\n\t\tpos=\"e,606.33,106.57 32.472,174.25 26.148,163.51 21.386,149.96 29.846,141 49.316,120.37 465.44,109.66 596.01,106.8\"];\r\n\tn24 -> n34\t [label=\"3 RandomStateType\",\r\n\t\tlp=\"507.85,192\",\r\n\t\tpos=\"e,606.2,107.42 437.2,260.92 433.46,238.55 430.59,199.2 449.85,174 484.59,128.53 552.87,113.45 596.06,108.46\"];\r\n\tn31\t [apply_op=IncSubtensor,\r\n\t\tfillcolor=\"#FFAAFF\",\r\n\t\theight=0.5,\r\n\t\tlabel=IncSubtensor,\r\n\t\tnode_type=apply,\r\n\t\tpos=\"634.85,192\",\r\n\t\tprofile=\"0.0\t3.08162260055542\",\r\n\t\tshape=ellipse,\r\n\t\tstyle=filled,\r\n\t\ttype=colored,\r\n\t\twidth=1.661];\r\n\tn26 -> n31\t [color=red,\r\n\t\tlabel=\"0 lscalar\",\r\n\t\tlp=\"628.85,235.5\",\r\n\t\tpos=\"e,621.83,209.76 581.89,261.21 591.47,248.87 604.65,231.89 615.46,217.97\"];\r\n\tn27\t [dtype=lscalar,\r\n\t\tfillcolor=SpringGreen,\r\n\t\theight=0.5,\r\n\t\tlabel=90,\r\n\t\tnode_type=constant_input,\r\n\t\tpos=\"620.85,366\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.75];\r\n\tn27 -> n26\t [label=\"0 lscalar\",\r\n\t\tlp=\"632.85,322.5\",\r\n\t\tpos=\"e,586.76,296.32 616.08,347.56 612.91,337.57 608.16,325.07 601.85,315 599.44,311.15 596.56,307.36 593.53,303.78\"];\r\n\tn29 -> n31\t [label=\"1 lscalar\",\r\n\t\tlp=\"693.85,235.5\",\r\n\t\tpos=\"e,647.27,209.76 685.4,261.21 676.25,248.87 663.67,231.89 653.35,217.97\"];\r\n\tn31 -> n34\t [color=red,\r\n\t\tlabel=\"1 bscalar\",\r\n\t\tlp=\"660.35,148.5\",\r\n\t\tpos=\"e,634.85,123.18 634.85,173.8 634.85,162.16 634.85,146.55 634.85,133.24\"];\r\n\tn32\t [dtype=int64,\r\n\t\tfillcolor=SpringGreen,\r\n\t\theight=0.5,\r\n\t\tlabel=1,\r\n\t\tnode_type=constant_input,\r\n\t\tpos=\"799.85,279\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.75];\r\n\tn32 -> n31\t [label=\"2 int64\",\r\n\t\tlp=\"764.85,235.5\",\r\n\t\tpos=\"e,671.47,206.25 775.26,260.84 760,250.6 739.75,237.73 720.85,228 708.16,221.47 693.96,215.27 680.82,209.96\"];\r\n\tn37\t [dtype=float32,\r\n\t\tfillcolor=dodgerblue,\r\n\t\theight=0.5,\r\n\t\tlabel=float32,\r\n\t\tnode_type=output,\r\n\t\tpos=\"581.85,18\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.76389];\r\n\tn34 -> n37\t [label=float32,\r\n\t\tlp=\"631.35,61.5\",\r\n\t\tpos=\"e,592.5,36.083 624.88,88.012 617.3,75.862 606.72,58.898 597.95,44.83\"];\r\n\tn38\t [dtype=RandomStateType,\r\n\t\tfillcolor=dodgerblue,\r\n\t\theight=0.5,\r\n\t\tlabel=RandomStateType,\r\n\t\tnode_type=output,\r\n\t\tpos=\"688.85,18\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=1.6944];\r\n\tn34 -> n38\t [label=RandomStateType,\r\n\t\tlp=\"718.85,61.5\",\r\n\t\tpos=\"e,677.99,36.083 645,88.012 652.72,75.862 663.5,58.898 672.44,44.83\"];\r\n\tn35\t [dtype=bscalar,\r\n\t\tfillcolor=SpringGreen,\r\n\t\theight=0.5,\r\n\t\tlabel=90,\r\n\t\tnode_type=constant_input,\r\n\t\tpos=\"739.85,192\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=0.75];\r\n\tn35 -> n34\t [label=\"0 bscalar\",\r\n\t\tlp=\"732.35,148.5\",\r\n\t\tpos=\"e,655.42,117.63 724.48,173.84 714.99,163.72 702.29,150.99 689.85,141 681.85,134.59 672.63,128.33 664.05,122.93\"];\r\n\tn36\t [dtype=RandomStateType,\r\n\t\tfillcolor=limegreen,\r\n\t\theight=0.5,\r\n\t\tlabel=RandomStateType,\r\n\t\tnode_type=input,\r\n\t\tpos=\"845.85,192\",\r\n\t\tshape=box,\r\n\t\tstyle=filled,\r\n\t\twidth=1.6944];\r\n\tn36 -> n34\t [label=\"2 RandomStateType\",\r\n\t\tlp=\"848.85,148.5\",\r\n\t\tpos=\"e,661.82,111.23 821.05,173.83 804.8,163.2 782.77,149.92 761.85,141 732.5,128.49 697.43,119.22 671.59,113.38\"];\r\n}\r\n");
+		// Frontend graph for visualization
+		var graph = {};
+		
+		var forceLayout;
+		var isProfiled = false; // true if profiling information available
+		var useProfileColors = false;
+		var fixOnInit = true; // fix nodes on initialization
+		var maxProfilePer = 0;
+		var profileColors = ["#fff5f0","#fee0d2","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#cb181d","#a50f15"];
+		var pad = 10;
+		var isEditNode = false; // true if node is edited
+		var menuItems = [
+			{
+				title: 'Edit',
+				action: function(elm, d, i) { editNode(elm, d); }
+			},
+			{
+				title: 'Release',
+				action: function(elm, d, i) { releaseNode(d); }
+			}
+		];
+
+		// Create main panel
+		d3.select('body').select('svg').remove();
+		var svg = d3.select('body').append('svg')
+			.attr('width', '100%')
+			.attr('height', '95%');
+		var pane = svg.append('g');
+		
+		// Zoom behaviour
+		var zoom = d3.behavior.zoom()
+			.scaleExtent([0.2, 8])
+			.on('zoom', function(d) {
+				var trans = d3.event.translate;
+				trans[0] += 300;
+				trans[1] += 100;
+				pane.attr('transform', 'translate(' + trans + ') scale(' + d3.event.scale + ')');
+			});
+		svg.call(zoom);
+		zoom.event(svg);
+		svg.on("dblclick.zoom", null);
+		
+		// Edges
+		var edgeDiv = d3.select('body').append('div')
+			.attr('class', 'edgeTooltip')
+			.style('opacity', 0.0);
+		
+		// Div for node details	
+		var nodeInfo = d3.select('body').append('div')
+			.attr('class', 'nodeInfo')
+			.style('opacity', 0.0);
+		
+		// Definition head of edges
+		var markerData = [
+			{'id': 'n', 'color': 'black'},
+			{'id': 'r', 'color': 'red'},
+			{'id': 'b', 'color': 'dodgerblue'}];
+		svg.append("defs").selectAll('marker').data(markerData).enter().append("marker")
+		    .attr("id", function(d) { return 'edgeArrow_' + d.id;})
+		    .attr("markerWidth", 4)
+		    .attr("markerHeight", 4)
+		    .attr("refX", 2)
+		    .attr("refY", 2)
+		    .attr("orient", "auto")
+		  	.append("path")
+		    .attr("d", "M0,0 L4,2 L0,4 Z")
+		    .attr('fill', function(d) { return d.color;});
+	
+		// Initialize graph
+		processDotGraph(dotGraph);		
+		graph = frontEndGraph(dotGraph);
+		drawGraph();
+	</script>
+</body>
+</html>

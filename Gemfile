@@ -8,3 +8,4 @@ gem 'jekyll-github-metadata', group: :jekyll_plugins
 gem 'redcarpet'
 gem 'jekyll-twitter-plugin', group: :jekyll_plugins
 gem 'jekyll-paginate', group: :jekyll_plugins
+gem "jekyll-jupyter-notebook", group: :jekyll_plugins
