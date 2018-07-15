@@ -39,15 +39,15 @@
         <a class="page-link" href="/">blog</a>
 
         <!-- ( for page in site.pages )  was previously-->
-
-
+        
+          
           <a class="page-link" href="/about">about</a>
-
-
-
+          
+        
+          
           <a class="page-link" href="/portfolio">projects</a>
-
-
+          
+        
 
       </div>
     </nav>
@@ -66,7 +66,7 @@
     <h1 class="post-title">Reinforcement Learning, Teaching AI to Play</h1>
     <p class="post-meta">July 14, 2018 — 10:42 • <a href="https://martinholub.github.io/eth/code/2018/07/14/ReinforcementLearning.html#disqus_thread">0 Comments</a></p>
   </header>
-
+  
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
     tex2jax: {
@@ -93,18 +93,24 @@
 
 
   <article class="post-content">
-
     <div class="img_row" style="width: 90%;">
-      <img class="col three" src="/img/rl/breakout_head.jpg" alt="" title="Header" />
-    </div>
+  <img class="col three" src="/img/rl/breakout_head.jpg" alt="" title="Header" />
+</div>
 
-    <p>In this post, I will demonstrate and explain <a href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement Learning</a> code I developed. You will learn how one can train an AI agent to master Atari games and understand the technology behind <a href="https://deepmind.com/research/alphago/">DeepMind’s AlphaGo</a>, the first computer program to defeat professional human Go player. This will be fun and, surprisingly, simple, so let’s dive in.</p>
+<p>In this post, I will demonstrate and explain <a href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement Learning</a> code I developed. You will learn how one can train an AI agent to master Atari games and understand the technology behind <a href="https://deepmind.com/research/alphago/">DeepMind’s AlphaGo</a>, the first computer program to defeat professional human Go player. This will be fun and, surprisingly, simple, so let’s dive in.</p>
 
 <h2 id="openai-gym">OpenAI Gym</h2>
 
 <p><a href="https://github.com/openai/gym">OpenAI’s <code class="language-html highlighter-rouge">gym</code></a> is a toolkit for developing and comparing reinforcement learning algorithms. <a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine_learning_research">Big standardized datasets</a> have proven pivotal in development of deep learning algorithms. Similarly, collection of test problems, environments, as provided by <code class="language-html highlighter-rouge">gym</code> aids in evaluation of reinforcement learning algorithms when an agent learns to take actions in response to observations from environment to “solve it”. All that comes below is enabled by the work of guys at OpenAI. Hat tip to them.</p>
 
 <h2 id="the-cartpole-problem">The CartPole Problem</h2>
+
+<div class="img_row" style="width: 75%;">
+  <img class="col three" src="/img/rl/cartpole.gif" alt="" title="CartPole Agent" />
+</div>
+<div class="col three caption">
+Trained agent skillfully balancing the pole on the cart
+</div>
 
 <p>The <code class="language-html highlighter-rouge">CartPole-v0</code> environment is a reinforcement learning (RL) equivalent of <em>Hello World!</em>. As such, it is sufficiently simple to get us started. It is a form of the classic control problem of inverted pendulum where we balance a pole by moving a cart it is attached to either left or right. The environment is considered solved when the average reward is greater than or equal to 195.0 over 100 consecutive trials. You can check the environment’s spec’s at its <a href="https://github.com/openai/gym/wiki/CartPole-v0">wiki</a>.</p>
 
@@ -237,7 +243,7 @@ Independent AI agent playing BreakOut after 3000 episodes of training
 
   </article>
 
-
+  
 <!---
 Call Fontawesome in the head section or in the location where you place the share bar
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -269,7 +275,7 @@ Call Fontawesome in the head section or in the location where you place the shar
 <hr>
 
 
-
+  
 
 <div id="disqus_thread"></div>
     <script type="text/javascript">
