@@ -10,7 +10,7 @@
     <meta name="description" content="Personal Blog">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://www.martinholub.com//eth/code/2018/04/15/stochsim.html">
+    <link rel="canonical" href="http://localhost:4000/eth/code/2018/04/15/stochsim.html">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/academicons.css"/>
@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="/css/zenburn.css"/>
 
-	<link type="application/atom+xml" rel="alternate" href="http://www.martinholub.com//feed.xml" title="martin-holub.github.io" />
+	<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Martin Holub Blog" />
 </head>
 
 
@@ -35,7 +35,7 @@
     <nav class="site-nav">
 
       <div class="trigger">
-        <!-- martin-holub.github.io instead of blog -->
+        <!--  instead of blog -->
         <a class="page-link" href="/">about</a>
 
         <!-- ( for page in site.pages )  was previously-->
@@ -276,8 +276,8 @@ Implementation in code is again quite simple:</p>
     is_success: bool, flag indicating if simulation ran to completion
     """</span>
 
-    <span class="c">#Initialize arrays to store states, tick times</span>
-    <span class="n">time</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#Initialize arrays to store states, tick times
+</span>    <span class="n">time</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
@@ -286,17 +286,17 @@ Implementation in code is again quite simple:</p>
     <span class="n">Q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
     <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">t_end</span><span class="p">:</span>
-        <span class="c"># Calculate propensities for current state</span>
-        <span class="n">propensities</span><span class="p">,</span> <span class="n">total_prop</span> <span class="o">=</span> <span class="n">get_propensities</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
+        <span class="c1"># Calculate propensities for current state
+</span>        <span class="n">propensities</span><span class="p">,</span> <span class="n">total_prop</span> <span class="o">=</span> <span class="n">get_propensities</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
 
-        <span class="c"># Draw random samples for update of state and time step</span>
-        <span class="n">idx</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="n">draw_ssa</span><span class="p">(</span><span class="n">propensities</span><span class="p">,</span> <span class="n">total_prop</span><span class="p">)</span>
+        <span class="c1"># Draw random samples for update of state and time step
+</span>        <span class="n">idx</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="n">draw_ssa</span><span class="p">(</span><span class="n">propensities</span><span class="p">,</span> <span class="n">total_prop</span><span class="p">)</span>
 
-        <span class="c">## Find random change in state - see theory</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="n">state</span> <span class="o">+</span> <span class="n">nu</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="c1">## Find random change in state - see theory
+</span>        <span class="n">state</span> <span class="o">=</span> <span class="n">state</span> <span class="o">+</span> <span class="n">nu</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span>
 
-        <span class="c">## Find random time step size - see theory</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">tau</span>
+        <span class="c1">## Find random time step size - see theory
+</span>        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">tau</span>
 
     <span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">time</span>
 </code></pre></div></div>
@@ -317,8 +317,8 @@ Implementation in code is again quite simple:</p>
     total_propensity: float, sum of all propensiites
     """</span>
 
-    <span class="c"># See model description</span>
-    <span class="n">propensities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="c1"># See model description
+</span>    <span class="n">propensities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">populations</span> <span class="o">**</span> <span class="n">psi</span><span class="p">[</span><span class="n">r</span><span class="p">,:]</span>
         <span class="n">propensities</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span> <span class="o">*</span> <span class="n">rates</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
@@ -378,8 +378,8 @@ To make this discussion more concrete, let’s look at the minimal example of <a
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c"># use "ggplot" style for graphs</span>
-<span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
+</span><span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
              <span class="s">'xtick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'ytick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'figure.figsize'</span><span class="p">:(</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">7.5</span><span class="p">),}</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
 </code></pre></div></div>
@@ -440,7 +440,7 @@ We set the initial conditions as following:</p>
 
 <p>We will also simulate multiple independent evolutions (paths) such that we can obtain mean evolution.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mp</span> <span class="o">=</span> <span class="n">ssa</span><span class="o">.</span><span class="n">modelParameters</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">4</span><span class="p">]),</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mp</span> <span class="o">=</span> <span class="n">ssa</span><span class="o">.</span><span class="n">modelParameters</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">.4</span><span class="p">]),</span>
                          <span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])),</span>
                          <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
                          <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
@@ -685,8 +685,8 @@ N_A$ and $k_i = [M \cdot min^{-1}]$. $N_A$ is the old familiar $6.022\cdot10^{23
 <p><br />
 As the code in previous example was written with to be generalizable, we will be able to almost entirely reuse it, we just need to update the model parameters as follows:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Model Parameters</span>
-<span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Model Parameters
+</span><span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">V</span> <span class="o">=</span> <span class="mf">1.5e-14</span>
 <span class="n">to_nanomolar</span> <span class="o">=</span> <span class="mf">1e-9</span>
 <span class="n">omega</span> <span class="o">=</span> <span class="mf">6.02214086e23</span><span class="o">*</span><span class="n">V</span><span class="o">*</span><span class="n">to_nanomolar</span>
@@ -696,20 +696,20 @@ As the code in previous example was written with to be generalizable, we will be
 <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">r'$G_1$'</span><span class="p">,</span> <span class="s">r'$P_1$'</span><span class="p">,</span> <span class="s">r'$G_2$'</span><span class="p">,</span> <span class="s">r'$P_2$'</span><span class="p">,</span>
          <span class="s">r'$\xi_1^{I}$'</span><span class="p">,</span> <span class="s">r'$\xi_2^{I_1}$'</span><span class="p">,</span> <span class="s">r'$\xi_2^{I_2}$'</span><span class="p">]</span>
 <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="s">"none"</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
-<span class="c">## State change matrix associated with each reaction</span>
-<span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#G1    -&gt; G1+P1</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#G2    -&gt; G2+P2</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#P1    -&gt; _</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#P2    -&gt; _</span>
-                <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#G1+P2 -&gt; C1</span>
-                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#C1    -&gt; G1+P2</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#P1+G2 -&gt; C2a</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c">#C2a   -&gt; P1+G2</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c">#P1+C2a-&gt; C2b</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c">#C2b   -&gt; P1+C2a</span>
-              <span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">int</span><span class="p">)</span>
-<span class="c">## Molecularity of species entering each reaction</span>
-<span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="c1">## State change matrix associated with each reaction
+</span><span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#G1    -&gt; G1+P1
+</span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#G2    -&gt; G2+P2
+</span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#P1    -&gt; _
+</span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#P2    -&gt; _
+</span>                <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#G1+P2 -&gt; C1
+</span>                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#C1    -&gt; G1+P2
+</span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#P1+G2 -&gt; C2a
+</span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#C2a   -&gt; P1+G2
+</span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c1">#P1+C2a-&gt; C2b
+</span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1">#C2b   -&gt; P1+C2a
+</span>              <span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">int</span><span class="p">)</span>
+<span class="c1">## Molecularity of species entering each reaction
+</span><span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -722,11 +722,11 @@ As the code in previous example was written with to be generalizable, we will be
 
 <span class="n">mp_toggle</span> <span class="o">=</span> <span class="n">ssa</span><span class="o">.</span><span class="n">modelParameters</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
 
-<span class="c">#Simulation Parameters</span>
-<span class="n">n_paths</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">do_load</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># default 0</span>
-<span class="n">do_save</span> <span class="o">=</span> <span class="mi">1</span> <span class="c"># default 1</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="c1">#Simulation Parameters
+</span><span class="n">n_paths</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">do_load</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># default 0
+</span><span class="n">do_save</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># default 1
+</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssa</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">mp_toggle</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">,</span> <span class="n">do_load</span> <span class="p">,</span><span class="n">do_save</span><span class="p">)</span>
@@ -912,10 +912,10 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     92                                           def ssa_routine(k, t_end, q0, nu):
 
     119     20580        71930      3.5      1.0      while t <span class="nt">&lt;</span> <span class="nt">t</span><span class="na">_end:</span>
-    <span class="na">120</span>     <span class="na">20579</span>      <span class="na">2325960</span>    <span class="na">113</span><span class="err">.</span><span class="na">0</span>     <span class="na">31</span><span class="err">.</span><span class="na">8</span>          <span class="na">propensities</span><span class="err">,</span> <span class="na">total_prop =</span><span class="err"> </span><span class="s">get_propensities(k,</span> <span class="na">state</span><span class="err">)</span>
+    <span class="na">120</span>     <span class="na">20579</span>      <span class="na">2325960</span>    <span class="na">113</span><span class="err">.</span><span class="na">0</span>     <span class="na">31</span><span class="err">.</span><span class="na">8</span>          <span class="na">propensities</span><span class="err">,</span> <span class="na">total_prop = </span><span class="s">get_propensities(k,</span> <span class="na">state</span><span class="err">)</span>
 
-    <span class="na">125</span>                                                   <span class="err">#</span> <span class="na">Draw</span> <span class="na">random</span> <span class="na">samples</span> <span class="na">for</span> <span class="na">update</span> <span class="na">of</span> <span class="na">state</span> <span class="na">and</span> <span class="na">time</span> <span class="na">step</span>
-    <span class="na">126</span>     <span class="na">20579</span>      <span class="na">3574266</span>    <span class="na">173</span><span class="err">.</span><span class="na">7</span>     <span class="na">48</span><span class="err">.</span><span class="na">9</span>          <span class="na">idx</span><span class="err">,</span> <span class="na">tau =</span><span class="err"> </span><span class="s">draw_ssa(propensities,</span> <span class="na">total_prop</span><span class="err">)</span>
+    <span class="na">125</span>                                                   <span class="na">#</span> <span class="na">Draw</span> <span class="na">random</span> <span class="na">samples</span> <span class="na">for</span> <span class="na">update</span> <span class="na">of</span> <span class="na">state</span> <span class="na">and</span> <span class="na">time</span> <span class="na">step</span>
+    <span class="na">126</span>     <span class="na">20579</span>      <span class="na">3574266</span>    <span class="na">173</span><span class="err">.</span><span class="na">7</span>     <span class="na">48</span><span class="err">.</span><span class="na">9</span>          <span class="na">idx</span><span class="err">,</span> <span class="na">tau = </span><span class="s">draw_ssa(propensities,</span> <span class="na">total_prop</span><span class="err">)</span>
 
     <span class="na">141</span>         <span class="na">1</span>            <span class="na">3</span>      <span class="na">3</span><span class="err">.</span><span class="na">0</span>      <span class="na">0</span><span class="err">.</span><span class="na">0</span>      <span class="na">return</span> <span class="na">Q</span><span class="err">,</span> <span class="na">time</span>
 </code></pre></div></div>
@@ -924,7 +924,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 <p><br />
 We have found out that absolute majority of the time is spent in computing propensities and drawing samples for update with a respective reaction in given time interval. Unsurprisingly, as these occur on each and every time-step. Clearly, we can get the most ‘bang for the buck’ by making these two steps faster. To this end, we place them into individual functions and use <a href="https://numba.pydata.org/"><code class="language-html highlighter-rouge">numba</code>’s</a> <code class="language-html highlighter-rouge">@jit</code> decorator for just-in-time (JIT) compilation. This allows us to get about five-fold speed-up in calculations which I think is fair given the simplicity of implementation. This boils down to <a href="https://wiki.python.org/moin/PythonDecorators">decorating</a> the function as:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@numba.jit</span><span class="p">(</span><span class="n">nopython</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">numba</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">some_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </code></pre></div></div>
@@ -932,8 +932,8 @@ We have found out that absolute majority of the time is spent in computing prope
 <p>Here is the speed comparison:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">set_env</span> <span class="n">NUMBA_DISABLE_JIT</span><span class="o">=</span><span class="mi">1</span>
-<span class="c">#os.environ["NUMBA_DISABLE_JIT"] = "1"</span>
-<span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
+<span class="c1">#os.environ["NUMBA_DISABLE_JIT"] = "1"
+</span><span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div>
@@ -1060,8 +1060,8 @@ We have found out that absolute majority of the time is spent in computing prope
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">set_env</span> <span class="n">NUMBA_DISABLE_JIT</span><span class="o">=</span><span class="mi">0</span>
-<span class="c">#os.environ["NUMBA_DISABLE_JIT"] = "0"</span>
-<span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
+<span class="c1">#os.environ["NUMBA_DISABLE_JIT"] = "0"
+</span><span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div>
@@ -1218,22 +1218,22 @@ Call Fontawesome in the head section or in the location where you place the shar
 <h2 class="center">Share this:</h2>
 <br/>
 
-<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=http://www.martinholub.com//eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
+<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook-official fa"></i><span> facebook</span></a>
 
-<a class="t" href="https://twitter.com/intent/tweet?text=Stochastic Modeling in Biology&url=http://www.martinholub.com//eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
+<a class="t" href="https://twitter.com/intent/tweet?text=Stochastic Modeling in Biology&url=http://localhost:4000/eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter fa"></i><span> twitter</span></a>
 <!---
-<a class="g" href="https://plus.google.com/share?url=http://www.martinholub.com//eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
+<a class="g" href="https://plus.google.com/share?url=http://localhost:4000/eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-google-plus fa"></i><span> google</span></a>
 
-<a class="r" href="http://www.reddit.com/submit?url=http://www.martinholub.com//eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
+<a class="r" href="http://www.reddit.com/submit?url=http://localhost:4000/eth/code/2018/04/15/stochsim.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa"></i><span> reddit</span></a>
 --->
-<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.martinholub.com//eth/code/2018/04/15/stochsim.html&title=Stochastic Modeling in Biology&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
+<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/eth/code/2018/04/15/stochsim.html&title=Stochastic Modeling in Biology&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin fa"></i><span> linkedin</span></a>
 
-<a class="e" href="mailto:?subject=Stochastic Modeling in Biology&amp;body=Check out this site http://www.martinholub.com//eth/code/2018/04/15/stochsim.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
+<a class="e" href="mailto:?subject=Stochastic Modeling in Biology&amp;body=Check out this site http://localhost:4000/eth/code/2018/04/15/stochsim.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
 </div>
 <br/>
 <hr>

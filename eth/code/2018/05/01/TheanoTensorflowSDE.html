@@ -10,7 +10,7 @@
     <meta name="description" content="Personal Blog">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://www.martinholub.com//eth/code/2018/05/01/TheanoTensorflowSDE.html">
+    <link rel="canonical" href="http://localhost:4000/eth/code/2018/05/01/TheanoTensorflowSDE.html">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/academicons.css"/>
@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="/css/zenburn.css"/>
 
-	<link type="application/atom+xml" rel="alternate" href="http://www.martinholub.com//feed.xml" title="martin-holub.github.io" />
+	<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Martin Holub Blog" />
 </head>
 
 
@@ -35,7 +35,7 @@
     <nav class="site-nav">
 
       <div class="trigger">
-        <!-- martin-holub.github.io instead of blog -->
+        <!--  instead of blog -->
         <a class="page-link" href="/">about</a>
 
         <!-- ( for page in site.pages )  was previously-->
@@ -212,8 +212,8 @@ First, I import the modules, including custom classes <code class="language-html
 <span class="kn">from</span> <span class="nn">sde_theano</span> <span class="kn">import</span> <span class="n">Simulator</span><span class="p">,</span> <span class="n">ModelParameters</span>
 <span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="n">gridspec</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c"># use "ggplot" style for graphs</span>
-<span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
+</span><span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
              <span class="s">'xtick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'ytick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'figure.figsize'</span><span class="p">:(</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">7.5</span><span class="p">),}</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
 
@@ -234,22 +234,22 @@ First, I import the modules, including custom classes <code class="language-html
 
 <p>As introduced above, I first build a computational graph of the mathematical operations using <a href="http://deeplearning.net/software/theano/library/scan.html"><code class="language-html highlighter-rouge">theano.scan</code></a> that is used for defining looping-like operations in the graph. Next, I compile it into a Python callable <code class="language-html highlighter-rouge">sim</code> with <a href="http://deeplearning.net/software/theano/library/compile/function.html"><code class="language-html highlighter-rouge">theano.function</code></a> such that I can call it as any other function.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Define loop: symbolic description of the result and how to obtain it</span>
-<span class="c"># x_out ... 3D Tensor, updates ... dict ,</span>
-<span class="p">(</span><span class="n">x_out</span><span class="p">,</span><span class="n">updates</span><span class="p">)</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rk4_sde</span><span class="p">,</span>   <span class="c">#stepping function</span>
-                            <span class="n">outputs_info</span> <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">x</span><span class="p">],</span>     <span class="c">#output shape</span>
-                            <span class="c"># set taps to [-1], dont specify IC</span>
-                            <span class="n">non_sequences</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="c">#fixed parameters</span>
-                            <span class="n">n_steps</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="p">)</span>       <span class="c"># number of iterations</span>
-
-<span class="c"># Compile symbolic graph representation into callable function</span>
-<span class="n">sim</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>     <span class="c"># args to function</span>
-                    <span class="n">outputs</span><span class="o">=</span><span class="n">x_out</span><span class="p">,</span>        <span class="c"># symbolic outputs</span>
-                    <span class="n">givens</span><span class="o">=</span><span class="p">{</span><span class="n">mp</span><span class="o">.</span><span class="n">x</span><span class="p">:</span><span class="n">mp</span><span class="o">.</span><span class="n">x0</span><span class="p">},</span>  <span class="c"># set initial value</span>
-                    <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">,</span>      <span class="c"># how to obtain the outputs</span>
-                    <span class="n">allow_input_downcast</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                    <span class="n">profile</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>         <span class="c"># get time spent in ops</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define loop: symbolic description of the result and how to obtain it
+# x_out ... 3D Tensor, updates ... dict ,
+</span><span class="p">(</span><span class="n">x_out</span><span class="p">,</span><span class="n">updates</span><span class="p">)</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rk4_sde</span><span class="p">,</span>   <span class="c1">#stepping function
+</span>                            <span class="n">outputs_info</span> <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">x</span><span class="p">],</span>     <span class="c1">#output shape
+</span>                            <span class="c1"># set taps to [-1], dont specify IC
+</span>                            <span class="n">non_sequences</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="c1">#fixed parameters
+</span>                            <span class="n">n_steps</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="p">)</span>       <span class="c1"># number of iterations
+</span>
+<span class="c1"># Compile symbolic graph representation into callable function
+</span><span class="n">sim</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>     <span class="c1"># args to function
+</span>                    <span class="n">outputs</span><span class="o">=</span><span class="n">x_out</span><span class="p">,</span>        <span class="c1"># symbolic outputs
+</span>                    <span class="n">givens</span><span class="o">=</span><span class="p">{</span><span class="n">mp</span><span class="o">.</span><span class="n">x</span><span class="p">:</span><span class="n">mp</span><span class="o">.</span><span class="n">x0</span><span class="p">},</span>  <span class="c1"># set initial value
+</span>                    <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">,</span>      <span class="c1"># how to obtain the outputs
+</span>                    <span class="n">allow_input_downcast</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                    <span class="n">profile</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>         <span class="c1"># get time spent in ops
+</span></code></pre></div></div>
 
 <p>Subsequently, I can execute the compiled graph as usual. I also use <a href="http://www.graphviz.org/"><code class="language-html highlighter-rouge">graphviz</code></a> to obtain nice visual rendering of the nodes and edges in the graph and even the results of profiling the code execution.</p>
 
@@ -286,17 +286,17 @@ Image of the computational graph with nodes representing mathematical operations
 
 <p>Next, let’s plot the results:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">## for model SWITCH , nspecies = 2</span>
-
-<span class="n">downsample_factor_t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span><span class="o">/</span><span class="n">dt0</span><span class="p">)</span> <span class="c"># show 10 points per time unit, here no downs.</span>
-<span class="n">downsample_factor_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_samples</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span> <span class="c">## show every 50th path</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="o">//</span><span class="n">downsample_factor_t</span><span class="p">)</span> <span class="c"># time axis</span>
-
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## for model SWITCH , nspecies = 2
+</span>
+<span class="n">downsample_factor_t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span><span class="o">/</span><span class="n">dt0</span><span class="p">)</span> <span class="c1"># show 10 points per time unit, here no downs.
+</span><span class="n">downsample_factor_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_samples</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span> <span class="c1">## show every 50th path
+</span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="o">//</span><span class="n">downsample_factor_t</span><span class="p">)</span> <span class="c1"># time axis
+</span>
 <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="c"># plot just first of the two species</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="c1"># plot just first of the two species
+</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
@@ -335,8 +335,8 @@ First, we again import the required modules. Note that here I have replaced the 
 <span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="n">gridspec</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c"># use "ggplot" style for graphs</span>
-<span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
+</span><span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
              <span class="s">'xtick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'ytick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'figure.figsize'</span><span class="p">:(</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">7.5</span><span class="p">),}</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
 
@@ -357,11 +357,11 @@ First, we again import the required modules. Note that here I have replaced the 
 
 <p>Next, I build the computational graph and let <code class="language-html highlighter-rouge">TensorFlow</code> optimize its structure. As I am using similar functionality as <code class="language-html highlighter-rouge">Theano</code> the call does not differ much. I supply the function to evaluate at each execution, initial state and elements to loop over.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Define loop: symbolic description of the result and how to obtain it</span>
-<span class="n">x_scan</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rk4_sde</span><span class="p">,</span>        <span class="c"># stepping function</span>
-                    <span class="n">elems</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rv_n</span><span class="p">,</span>     <span class="c"># inputs for all steps</span>
-                    <span class="n">initializer</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span> <span class="c"># initial condition</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define loop: symbolic description of the result and how to obtain it
+</span><span class="n">x_scan</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rk4_sde</span><span class="p">,</span>        <span class="c1"># stepping function
+</span>                    <span class="n">elems</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rv_n</span><span class="p">,</span>     <span class="c1"># inputs for all steps
+</span>                    <span class="n">initializer</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span> <span class="c1"># initial condition
+</span></code></pre></div></div>
 
 <p>With the graph built, I proceed to its execution (the forward pass through it). In <code class="language-html highlighter-rouge">TensorFlow</code>, you run a graph in a <a href="https://www.tensorflow.org/programmers_guide/graphs#executing_a_graph_in_a_wzxhzdk132wzxhzdk133tfsessionwzxhzdk134wzxhzdk135"><code class="language-html highlighter-rouge">tf.Session()</code></a> that encapsulates the environment the operations and tensors live in. Since a <code class="language-html highlighter-rouge">tf.Session</code> owns a physical  resources, it is recommendable to use it as a context manager (in a <code class="language-html highlighter-rouge">with</code> block) that automatically closes the session at the exit of the block.</p>
 
@@ -370,12 +370,12 @@ First, we again import the required modules. Note that here I have replaced the 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"running sim..."</span><span class="p">)</span>
 <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
 
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span> <span class="c"># open a Session</span>
-    <span class="c"># Write the graph to file</span>
-    <span class="n">writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="s">"log/"</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
-    <span class="n">x_out</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x_scan</span><span class="p">)</span> <span class="c"># execute the graph</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># close the FileWriter</span>
-
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span> <span class="c1"># open a Session
+</span>    <span class="c1"># Write the graph to file
+</span>    <span class="n">writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="s">"log/"</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">x_out</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x_scan</span><span class="p">)</span> <span class="c1"># execute the graph
+</span>    <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close the FileWriter
+</span>
 <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"done in"</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="s">"s at "</span><span class="p">,</span> <span class="n">diff</span><span class="o">/</span><span class="n">num_samples</span><span class="p">,</span> <span class="s">"s per path"</span><span class="p">)</span>
 </code></pre></div></div>
@@ -384,10 +384,10 @@ First, we again import the required modules. Note that here I have replaced the 
 done in 3.599450070369931 s at  0.00014397800281479723 s per path
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">## for model REPRESILLATOR</span>
-
-<span class="n">downsample_factor_t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span><span class="o">/</span><span class="n">dt0</span><span class="p">)</span> <span class="c">#always show 10 points per time unit</span>
-<span class="n">downsample_factor_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_samples</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## for model REPRESILLATOR
+</span>
+<span class="n">downsample_factor_t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span><span class="o">/</span><span class="n">dt0</span><span class="p">)</span> <span class="c1">#always show 10 points per time unit
+</span><span class="n">downsample_factor_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_samples</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="o">//</span><span class="n">downsample_factor_t</span><span class="p">)</span>
 
 <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
@@ -419,8 +419,8 @@ done in 3.599450070369931 s at  0.00014397800281479723 s per path
 
 <p>Here are the results. You can nicely see the oscillatory pattern that however slowly degrades in time (this makes sense as the noise makes the paths more different). The paths for individual species are phase shifted such that each of the three reaches its maximum at different time. You can even save the histograms at couple of time steps and create an animation like this:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">## Save plots for animation</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Save plots for animation
+</span><span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
 <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span> <span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="n">i</span><span class="p">,:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span>
@@ -474,22 +474,22 @@ Call Fontawesome in the head section or in the location where you place the shar
 <h2 class="center">Share this:</h2>
 <br/>
 
-<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=http://www.martinholub.com//eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
+<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook-official fa"></i><span> facebook</span></a>
 
-<a class="t" href="https://twitter.com/intent/tweet?text=Using Deep Learning Libraries to Solve Stochastic Differential Equations&url=http://www.martinholub.com//eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
+<a class="t" href="https://twitter.com/intent/tweet?text=Using Deep Learning Libraries to Solve Stochastic Differential Equations&url=http://localhost:4000/eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter fa"></i><span> twitter</span></a>
 <!---
-<a class="g" href="https://plus.google.com/share?url=http://www.martinholub.com//eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
+<a class="g" href="https://plus.google.com/share?url=http://localhost:4000/eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-google-plus fa"></i><span> google</span></a>
 
-<a class="r" href="http://www.reddit.com/submit?url=http://www.martinholub.com//eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
+<a class="r" href="http://www.reddit.com/submit?url=http://localhost:4000/eth/code/2018/05/01/TheanoTensorflowSDE.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa"></i><span> reddit</span></a>
 --->
-<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.martinholub.com//eth/code/2018/05/01/TheanoTensorflowSDE.html&title=Using Deep Learning Libraries to Solve Stochastic Differential Equations&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
+<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/eth/code/2018/05/01/TheanoTensorflowSDE.html&title=Using Deep Learning Libraries to Solve Stochastic Differential Equations&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin fa"></i><span> linkedin</span></a>
 
-<a class="e" href="mailto:?subject=Using Deep Learning Libraries to Solve Stochastic Differential Equations&amp;body=Check out this site http://www.martinholub.com//eth/code/2018/05/01/TheanoTensorflowSDE.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
+<a class="e" href="mailto:?subject=Using Deep Learning Libraries to Solve Stochastic Differential Equations&amp;body=Check out this site http://localhost:4000/eth/code/2018/05/01/TheanoTensorflowSDE.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
 </div>
 <br/>
 <hr>
