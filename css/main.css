@@ -121,8 +121,10 @@ table tr th :last-child, table tr td :last-child { margin-bottom: 0; border-bott
 @media screen and (max-width: 800px) { .post-title { font-size: 36px; } }
 
 .post-content { text-align: justify; }
-.post-content h2 { font-size: 42px; line-height: 1.25; }
-@media screen and (max-width: 800px) { .post-content h2 { font-size: 28px; } }
+.post-content h1 { font-size: 42px; font-weight: bold; line-height: 1.25; }
+@media screen and (max-width: 800px) { .post-content h1 { font-size: 28px; } }
+.post-content h2 { font-size: 36px; line-height: 1.25; }
+@media screen and (max-width: 800px) { .post-content h2 { font-size: 26px; } }
 .post-content h3 { font-size: 30px; line-height: 1.25; }
 @media screen and (max-width: 800px) { .post-content h3 { font-size: 22px; } }
 .post-content h4 { font-size: 20px; }
@@ -174,7 +176,12 @@ table tr th :last-child, table tr td :last-child { margin-bottom: 0; border-bott
 
 /** Twitter plugin **********************************************************
 */
-.jekyll-twitter-plugin { text-align: center; }
+.jekyll-twitter-plugin { text-align: center; flex-grow: 1; }
+
+/*Positioning of Tags*/
+.undeposts-wrapper { display: flex; width: 100%; }
+
+.underpost-archive { width: 30%; }
 
 /** Sharing buttons **********************************************************
 */
@@ -205,6 +212,12 @@ table tr th :last-child, table tr td :last-child { margin-bottom: 0; border-bott
 .e { color: #444444; }
 
 .e:hover { color: #fff; background-color: #444444; }
+
+/** Spotify **********************************************************
+*/
+.embed-spotify { position: relative; padding-bottom: 75px; height: 0; overflow: hidden; max-width: 100%; margin-left: auto; margin-right: auto; }
+
+.embed-spotify iframe, .embed-spotify object, .embed-spotify embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 /** Syntax highlighting styles */
 .highlight { background: #fff; }
