@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Installing LabVIEW on Debian Linux</title>
+    <title>Geometric principles underlying the proliferation of a model cell system</title>
     <meta name="description" content="Personal Blog">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html">
+    <link rel="canonical" href="http://www.martinholub.com//science/2020/05/07/GeometricPrinciplesModelCellPrelight.html">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" href="/css/academicons.css"/>
@@ -88,15 +88,15 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Installing LabVIEW on Debian Linux</h1>
-    <p class="post-meta">April 28, 2019 — 11:02 • <a href="https://martinholub.github.io/code/2019/04/28/InsatllingLabVIEW.html#disqus_thread">0 Comments</a></p>
+    <h1 class="post-title">Geometric principles underlying the proliferation of a model cell system</h1>
+    <p class="post-meta">May 7, 2020 — 18:02 • <a href="https://martinholub.github.io/science/2020/05/07/GeometricPrinciplesModelCellPrelight.html#disqus_thread">0 Comments</a></p>
     <span class="post-meta">[
       
         
-          <a href="/tag/code"><code class="highligher-rouge"><nobr>code</nobr></code>&nbsp;</a>
+          <a href="/tag/prelight"><code class="highligher-rouge"><nobr>prelight</nobr></code>&nbsp;</a>
       
         
-          <a href="/tag/linux"><code class="highligher-rouge"><nobr>linux</nobr></code>&nbsp;</a>
+          <a href="/tag/science"><code class="highligher-rouge"><nobr>science</nobr></code>&nbsp;</a>
       
     ]</span>
   </header>
@@ -127,40 +127,7 @@
 
 
   <article class="post-content">
-    <p>I am no fan of LabVIEW for multiple reasons, but the truth is, it is hard to replace when it comes to instrument control. Installing it on a Debian machine (e.g. Ubuntu) is possible despite not being officially supported by National Instruments. Here is how to do it.</p>
-
-<p>Comment out the line in <code class="language-html highlighter-rouge">./INSTALL</code> script that makes installation of <code class="language-html highlighter-rouge">niwebpipeline</code> necessary for success:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#webpipepkg="$webpipebase-$NIWEBPIPELINEVERS.i386.rpm"</span>
-</code></pre></div></div>
-
-<p>Install <code class="language-html highlighter-rouge">nisyscfg-runtime</code> manually:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ./dists/nisyscfg-runtime-18.0.0f0
-<span class="nb">sudo </span>bash ./INSTALL <span class="s2">"--no-prompt --accept-license --nodeps"</span>
-</code></pre></div></div>
-
-<p>Comment out corresponding section in <code class="language-html highlighter-rouge">./INSTALL</code> script (<em>l. 1025-1030</em>):</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Installing NI System Configuration Runtime..."</span>
-<span class="nb">pushd</span> <span class="s2">"</span><span class="nv">$CDPATH</span><span class="s2">/dists/</span><span class="nv">$nisyscfgdist</span><span class="s2">"</span> <span class="o">&gt;</span> /dev/null 2&gt;&amp;1
-<span class="c">#/bin/sh ./INSTALL "--no-prompt --accept-license"</span>
-<span class="c">#InstallStatus=$?</span>
-<span class="nv">InstallStatus</span><span class="o">=</span>0
-<span class="nb">popd</span> <span class="o">&gt;</span>/dev/null 2&gt;&amp;1
-</code></pre></div></div>
-<p>Finally, install LabVIEW:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>bash ./INSTALL
-</code></pre></div></div>
-<p>and make an alias:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">labview</span><span class="o">=</span><span class="s1">'/usr/local/natinst/LabVIEW-2018-64/labview'</span>
-</code></pre></div></div>
-
-<p>If anything goes wrong, you can try to inspect the execution with:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>bash <span class="nt">-x</span> ./INSTALL
-</code></pre></div></div>
-
-<p>Good luck!</p>
+    <p>I have joined preLights and now will be highlighting a new exciting preprint now and then! For my first article, I have chosen a Bioarxiv paper by Wu et al. where they study cell-wall compromised bacteria and show that chromosome positioning and segregation is controlled by their geometry. You will find my post <a target="_blank" href="https://prelights.biologists.com/highlights/geometric-principles-underlying-the-proliferation-of-a-model-cell-system/">here</a>. Please leave a comment if you find it a good read.</p>
 
   </article>
 
@@ -175,22 +142,22 @@ Call Fontawesome in the head section or in the location where you place the shar
 <h2 class="center">Share this:</h2>
 <br/>
 
-<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=http://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=http://www.martinholub.com//science/2020/05/07/GeometricPrinciplesModelCellPrelight.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook-official fa"></i><span> facebook</span></a>
 
-<a class="t" href="https://twitter.com/intent/tweet?text=Installing LabVIEW on Debian Linux&url=http://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="t" href="https://twitter.com/intent/tweet?text=Geometric principles underlying the proliferation of a model cell system&url=http://www.martinholub.com//science/2020/05/07/GeometricPrinciplesModelCellPrelight.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter fa"></i><span> twitter</span></a>
 <!---
-<a class="g" href="https://plus.google.com/share?url=http://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="g" href="https://plus.google.com/share?url=http://www.martinholub.com//science/2020/05/07/GeometricPrinciplesModelCellPrelight.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-google-plus fa"></i><span> google</span></a>
 
-<a class="r" href="http://www.reddit.com/submit?url=http://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="r" href="http://www.reddit.com/submit?url=http://www.martinholub.com//science/2020/05/07/GeometricPrinciplesModelCellPrelight.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa"></i><span> reddit</span></a>
 --->
-<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html&title=Installing LabVIEW on Debian Linux&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
+<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.martinholub.com//science/2020/05/07/GeometricPrinciplesModelCellPrelight.html&title=Geometric principles underlying the proliferation of a model cell system&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin fa"></i><span> linkedin</span></a>
 
-<a class="e" href="mailto:?subject=Installing LabVIEW on Debian Linux&amp;body=Check out this site http://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
+<a class="e" href="mailto:?subject=Geometric principles underlying the proliferation of a model cell system&amp;body=Check out this site http://www.martinholub.com//science/2020/05/07/GeometricPrinciplesModelCellPrelight.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
 </div>
 <br/>
 <hr>
@@ -203,7 +170,7 @@ Call Fontawesome in the head section or in the location where you place the shar
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'martinholub'; // required: replace example with your forum shortname
         /*var disqus_developer = 1; // Comment out when the site is live */
-        var disqus_identifier = "/code/2019/04/28/InsatllingLabVIEW.html";
+        var disqus_identifier = "/science/2020/05/07/GeometricPrinciplesModelCellPrelight.html";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
