@@ -48,7 +48,7 @@
     <nav class="site-nav">
 
       <div class="trigger">
-        <!--  instead of blog -->
+        <!-- Martin Holub Blog instead of blog -->
         <a class="page-link" href="/">about</a>
 
         <!-- ( for page in site.pages )  was previously-->
@@ -142,7 +142,7 @@
 <p><br />
 In systems biology, quantitative finance, statistical physics and beyond, one often needs to solve a <em>stochastic differential equation (SDE)</em> to obtain a trustworthy model of the dynamics of studied system. This equation often takes the form of a generalized diffusion process:</p>
 
-<script type="math/tex; mode=display">dX(t) = A\big(X(t)\big) \cdot dt + B\big(X(t)\big) \cdot W(t) \tag{1}</script>
+\[dX(t) = A\big(X(t)\big) \cdot dt + B\big(X(t)\big) \cdot W(t) \tag{1}\]
 
 <p>where the first term on the right-hand side is <em>drift term</em> and the second term is <em>diffusion term</em>. You can think about this as pouring few drops of dyed liquid into a river stream. The color will both be carried along with the current (drift) and, to great delight of all witnessing environmental activists, gradually spread across the river width (diffusion). Diffusion is a random process and this is why the model term includes \(W(t)\), <a href="https://en.wikipedia.org/wiki/Wiener_process"><em>Wiener process</em></a> which follows normal distribution with mean \(0\) and variance \(\Delta t\) (white noise).</p>
 
@@ -156,11 +156,11 @@ Solution to such type of equations can be found analytically only in rare (and u
 <p><br />
 The <strong>Euler</strong> method (also <a href="https://en.wikipedia.org/wiki/Euler%E2%80%93Maruyama_method"><strong>Euler-Maruyama</strong></a>) is straightforward extension of the deterministic variant that you have likely already heard of. Namely, given initial state \(x(0)\) it obtains consecutive states with the following rule:</p>
 
-<script type="math/tex; mode=display">x(t+1) - x(t) = A\big(x(t)\big) \delta t + B\big(x(t)\big) \xi \delta t \tag{2}</script>
+\[x(t+1) - x(t) = A\big(x(t)\big) \delta t + B\big(x(t)\big) \xi \delta t \tag{2}\]
 
 <p>with \(\delta t\)</p>
 
-<script type="math/tex; mode=display">\delta t = \frac{t_{total}}{n_{steps}}</script>
+\[\delta t = \frac{t_{total}}{n_{steps}}\]
 
 <p>being size of the time interval and \(\xi \) standard normal random numbers.</p>
 
@@ -187,10 +187,10 @@ Let’s consider a system composed of two genes that express transcription facto
 
 <p>The system is described by following pair of equations:</p>
 
-<script type="math/tex; mode=display">\frac{x_1}{dt} = \frac{\beta_1}{1+(x_2 / K_2)^n} - \gamma x_1
+\[\frac{x_1}{dt} = \frac{\beta_1}{1+(x_2 / K_2)^n} - \gamma x_1
 \qquad
 \frac{x_2}{dt} = \frac{\beta_2}{1+(x_1 / K_1)^n} - \gamma x_2
-\tag{3}</script>
+\tag{3}\]
 
 <p>where \(\beta_i\), \(K_i\) and \(\gamma\) are some constants (which values are not really important as long as they provide for \(\dot{x}_i \approx 0\) around the the unstable equilibrium) and \(n\) is the <em>Hill coefficient</em>. I will set \(n \geq 2\) which assures <em>cooperativity</em> of binding sites (which serves the purpose of making the response of the system faster).</p>
 
@@ -202,10 +202,10 @@ The “<em>repressilator</em>” is the simplest model of genetic circuit that p
 
 <p>The model itself is not anyhow more complex than the one for bistable gene circuit. In fact, the repressilator (only one of multiple setups that permit oscillations), can be obtained from the bistable genetic circuit just by adding third repressing element. This gives the following set of equations:</p>
 
-<script type="math/tex; mode=display">\frac{x_i}{dt} = \frac{\beta_i}{1+(x_j / K_j)^n} - \gamma x_i
+\[\frac{x_i}{dt} = \frac{\beta_i}{1+(x_j / K_j)^n} - \gamma x_i
 \qquad
 i = {1,2,3},\quad j = (i + 1)~\%~3
-\tag{4}</script>
+\tag{4}\]
 
 <div class="img_row">
 	<img class="col three" src="/img/repressilator_full2.png" alt="" title="The Represillator Circuit" />
@@ -249,12 +249,12 @@ First, I import the modules, including custom classes <code class="language-html
 <span class="kn">from</span> <span class="nn">sde_theano</span> <span class="kn">import</span> <span class="n">Simulator</span><span class="p">,</span> <span class="n">ModelParameters</span>
 <span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="n">gridspec</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
+<span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
 </span><span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
              <span class="s">'xtick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'ytick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'figure.figsize'</span><span class="p">:(</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">7.5</span><span class="p">),}</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
 
-<span class="n">theano</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"-"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">theano</span><span class="p">.</span><span class="n">__version__</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"-"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </code></pre></div></div>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'0.9.0.dev'
@@ -266,23 +266,23 @@ First, I import the modules, including custom classes <code class="language-html
 <span class="n">model</span> <span class="o">=</span> <span class="s">"switch"</span>
 <span class="n">mp</span> <span class="o">=</span> <span class="n">ModelParameters</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">model_type</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">dt0</span> <span class="o">=</span> <span class="n">dt0</span><span class="p">,</span>
                      <span class="n">t_end</span> <span class="o">=</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">nspecies</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">sde_solver</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">56</span><span class="p">,</span> <span class="n">rv_shape</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">x0</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">sde_solver</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">56</span><span class="p">,</span> <span class="n">rv_shape</span> <span class="o">=</span> <span class="n">mp</span><span class="p">.</span><span class="n">x0</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>As introduced above, I first build a computational graph of the mathematical operations using <a href="http://deeplearning.net/software/theano/library/scan.html"><code class="language-html highlighter-rouge">theano.scan</code></a> that is used for defining looping-like operations in the graph. Next, I compile it into a Python callable <code class="language-html highlighter-rouge">sim</code> with <a href="http://deeplearning.net/software/theano/library/compile/function.html"><code class="language-html highlighter-rouge">theano.function</code></a> such that I can call it as any other function.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define loop: symbolic description of the result and how to obtain it
 # x_out ... 3D Tensor, updates ... dict ,
-</span><span class="p">(</span><span class="n">x_out</span><span class="p">,</span><span class="n">updates</span><span class="p">)</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rk4_sde</span><span class="p">,</span>   <span class="c1">#stepping function
-</span>                            <span class="n">outputs_info</span> <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">x</span><span class="p">],</span>     <span class="c1">#output shape
+</span><span class="p">(</span><span class="n">x_out</span><span class="p">,</span><span class="n">updates</span><span class="p">)</span><span class="o">=</span><span class="n">theano</span><span class="p">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="p">.</span><span class="n">rk4_sde</span><span class="p">,</span>   <span class="c1">#stepping function
+</span>                            <span class="n">outputs_info</span> <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="p">.</span><span class="n">x</span><span class="p">],</span>     <span class="c1">#output shape
 </span>                            <span class="c1"># set taps to [-1], dont specify IC
-</span>                            <span class="n">non_sequences</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="c1">#fixed parameters
-</span>                            <span class="n">n_steps</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="p">)</span>       <span class="c1"># number of iterations
+</span>                            <span class="n">non_sequences</span> <span class="o">=</span> <span class="n">mp</span><span class="p">.</span><span class="n">params</span><span class="p">,</span> <span class="c1">#fixed parameters
+</span>                            <span class="n">n_steps</span> <span class="o">=</span> <span class="n">mp</span><span class="p">.</span><span class="n">nsteps</span><span class="p">)</span>       <span class="c1"># number of iterations
 </span>
 <span class="c1"># Compile symbolic graph representation into callable function
-</span><span class="n">sim</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>     <span class="c1"># args to function
+</span><span class="n">sim</span><span class="o">=</span><span class="n">theano</span><span class="p">.</span><span class="n">function</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">mp</span><span class="p">.</span><span class="n">params</span><span class="p">,</span>     <span class="c1"># args to function
 </span>                    <span class="n">outputs</span><span class="o">=</span><span class="n">x_out</span><span class="p">,</span>        <span class="c1"># symbolic outputs
-</span>                    <span class="n">givens</span><span class="o">=</span><span class="p">{</span><span class="n">mp</span><span class="o">.</span><span class="n">x</span><span class="p">:</span><span class="n">mp</span><span class="o">.</span><span class="n">x0</span><span class="p">},</span>  <span class="c1"># set initial value
+</span>                    <span class="n">givens</span><span class="o">=</span><span class="p">{</span><span class="n">mp</span><span class="p">.</span><span class="n">x</span><span class="p">:</span><span class="n">mp</span><span class="p">.</span><span class="n">x0</span><span class="p">},</span>  <span class="c1"># set initial value
 </span>                    <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">,</span>      <span class="c1"># how to obtain the outputs
 </span>                    <span class="n">allow_input_downcast</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
                     <span class="n">profile</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>         <span class="c1"># get time spent in ops
@@ -291,9 +291,9 @@ First, I import the modules, including custom classes <code class="language-html
 <p>Subsequently, I can execute the compiled graph as usual. I also use <a href="http://www.graphviz.org/"><code class="language-html highlighter-rouge">graphviz</code></a> to obtain nice visual rendering of the nodes and edges in the graph and even the results of profiling the code execution.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"running sim..."</span><span class="p">)</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
-<span class="n">x_out</span> <span class="o">=</span> <span class="n">sim</span><span class="p">(</span><span class="o">*</span><span class="n">mp</span><span class="o">.</span><span class="n">params0</span><span class="p">)</span>
-<span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">clock</span><span class="p">()</span>
+<span class="n">x_out</span> <span class="o">=</span> <span class="n">sim</span><span class="p">(</span><span class="o">*</span><span class="n">mp</span><span class="p">.</span><span class="n">params0</span><span class="p">)</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"done in"</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="s">"s at "</span><span class="p">,</span> <span class="n">diff</span><span class="o">/</span><span class="n">num_samples</span><span class="p">,</span> <span class="s">"s per path"</span><span class="p">)</span>
 </code></pre></div></div>
 
@@ -327,27 +327,27 @@ Image of the computational graph with nodes representing mathematical operations
 </span>
 <span class="n">downsample_factor_t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span><span class="o">/</span><span class="n">dt0</span><span class="p">)</span> <span class="c1"># show 10 points per time unit, here no downs.
 </span><span class="n">downsample_factor_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_samples</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span> <span class="c1">## show every 50th path
-</span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="o">//</span><span class="n">downsample_factor_t</span><span class="p">)</span> <span class="c1"># time axis
+</span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">mp</span><span class="p">.</span><span class="n">nsteps</span><span class="o">//</span><span class="n">downsample_factor_t</span><span class="p">)</span> <span class="c1"># time axis
 </span>
-<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="p">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="c1"># plot just first of the two species
-</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dt0</span><span class="p">),</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dt0</span><span class="p">),</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">'bar'</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">'t = 1'</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">dt0</span><span class="p">),</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">dt0</span><span class="p">),</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">'bar'</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">'t = 2'</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">'bar'</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">'t = 9'</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
 <div class="img_row" style="width: 80%;">
@@ -372,12 +372,12 @@ First, we again import the required modules. Note that here I have replaced the 
 <span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="n">gridspec</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
+<span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
 </span><span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
              <span class="s">'xtick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'ytick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'figure.figsize'</span><span class="p">:(</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">7.5</span><span class="p">),}</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
 
-<span class="n">tf</span><span class="o">.</span><span class="n">__version__</span>
+<span class="n">tf</span><span class="p">.</span><span class="n">__version__</span>
 </code></pre></div></div>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'1.5.1'
@@ -395,9 +395,9 @@ First, we again import the required modules. Note that here I have replaced the 
 <p>Next, I build the computational graph and let <code class="language-html highlighter-rouge">TensorFlow</code> optimize its structure. As I am using similar functionality as <code class="language-html highlighter-rouge">Theano</code> the call does not differ much. I supply the function to evaluate at each execution, initial state and elements to loop over.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define loop: symbolic description of the result and how to obtain it
-</span><span class="n">x_scan</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rk4_sde</span><span class="p">,</span>        <span class="c1"># stepping function
-</span>                    <span class="n">elems</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">rv_n</span><span class="p">,</span>     <span class="c1"># inputs for all steps
-</span>                    <span class="n">initializer</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span> <span class="c1"># initial condition
+</span><span class="n">x_scan</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="p">.</span><span class="n">rk4_sde</span><span class="p">,</span>        <span class="c1"># stepping function
+</span>                    <span class="n">elems</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="p">.</span><span class="n">rv_n</span><span class="p">,</span>     <span class="c1"># inputs for all steps
+</span>                    <span class="n">initializer</span> <span class="o">=</span> <span class="n">sde_solver</span><span class="p">.</span><span class="n">x0</span><span class="p">)</span> <span class="c1"># initial condition
 </span></code></pre></div></div>
 
 <p>With the graph built, I proceed to its execution (the forward pass through it). In <code class="language-html highlighter-rouge">TensorFlow</code>, you run a graph in a <a href="https://www.tensorflow.org/programmers_guide/graphs#executing_a_graph_in_a_wzxhzdk132wzxhzdk133tfsessionwzxhzdk134wzxhzdk135"><code class="language-html highlighter-rouge">tf.Session()</code></a> that encapsulates the environment the operations and tensors live in. Since a <code class="language-html highlighter-rouge">tf.Session</code> owns a physical  resources, it is recommendable to use it as a context manager (in a <code class="language-html highlighter-rouge">with</code> block) that automatically closes the session at the exit of the block.</p>
@@ -405,15 +405,15 @@ First, we again import the required modules. Note that here I have replaced the 
 <p>Note that I also write the graph that is run in the session to a file in <code class="language-html highlighter-rouge">log</code> folder. This graph can then be interactively visualized with <a href="https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard"><code class="language-html highlighter-rouge">TensorBoard</code></a>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"running sim..."</span><span class="p">)</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">clock</span><span class="p">()</span>
 
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span> <span class="c1"># open a Session
+<span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span> <span class="c1"># open a Session
 </span>    <span class="c1"># Write the graph to file
-</span>    <span class="n">writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="s">"log/"</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
-    <span class="n">x_out</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x_scan</span><span class="p">)</span> <span class="c1"># execute the graph
-</span>    <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close the FileWriter
+</span>    <span class="n">writer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">summary</span><span class="p">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="s">"log/"</span><span class="p">,</span> <span class="n">sess</span><span class="p">.</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">x_out</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">x_scan</span><span class="p">)</span> <span class="c1"># execute the graph
+</span>    <span class="n">writer</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close the FileWriter
 </span>
-<span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"done in"</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="s">"s at "</span><span class="p">,</span> <span class="n">diff</span><span class="o">/</span><span class="n">num_samples</span><span class="p">,</span> <span class="s">"s per path"</span><span class="p">)</span>
 </code></pre></div></div>
 
@@ -425,27 +425,27 @@ done in 3.599450070369931 s at  0.00014397800281479723 s per path
 </span>
 <span class="n">downsample_factor_t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span><span class="o">/</span><span class="n">dt0</span><span class="p">)</span> <span class="c1">#always show 10 points per time unit
 </span><span class="n">downsample_factor_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_samples</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">nsteps</span><span class="o">//</span><span class="n">downsample_factor_t</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_time</span><span class="p">,</span> <span class="n">mp</span><span class="p">.</span><span class="n">nsteps</span><span class="o">//</span><span class="n">downsample_factor_t</span><span class="p">)</span>
 
-<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="p">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_out</span><span class="p">[::</span><span class="n">downsample_factor_t</span><span class="p">,</span> <span class="p">::</span><span class="n">downsample_factor_p</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:,</span><span class="mi">1</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:,</span><span class="mi">1</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:,</span><span class="mi">2</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:,</span><span class="mi">2</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
 <div class="img_row" style="width: 80%;">
@@ -457,15 +457,15 @@ done in 3.599450070369931 s at  0.00014397800281479723 s per path
 <p>Here are the results. You can nicely see the oscillatory pattern that however slowly degrades in time (this makes sense as the noise makes the paths more different). The paths for individual species are phase shifted such that each of the three reaches its maximum at different time. You can even save the histograms at couple of time steps and create an animation like this:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Save plots for animation
-</span><span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
-<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span> <span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="n">i</span><span class="p">,:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span>
+</span><span class="n">plt</span><span class="p">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span> <span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_out</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x_out</span><span class="p">[</span><span class="n">i</span><span class="p">,:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">"pics/tf/rep"</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">".png"</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">"pics/tf/rep"</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">".png"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">clf</span><span class="p">()</span>
 </code></pre></div></div>
 
 <div class="img_row" style="width: 80%;">

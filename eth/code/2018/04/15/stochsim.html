@@ -48,7 +48,7 @@
     <nav class="site-nav">
 
       <div class="trigger">
-        <!--  instead of blog -->
+        <!-- Martin Holub Blog instead of blog -->
         <a class="page-link" href="/">about</a>
 
         <!-- ( for page in site.pages )  was previously-->
@@ -185,20 +185,19 @@ Conceptual modeling framework for biochemical reaction systems. <it>TX</it> and 
 
 <p>The above definitions allow us to calculate the change of the probability distribution function over an interval $dt$:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{array}{lcl}
-P(\mathbf{q}, t + dt ~|~ \mathbf{q}_0, t_0) & = &
+\[\begin{array}{lcl}
+P(\mathbf{q}, t + dt ~|~ \mathbf{q}_0, t_0) &amp; = &amp;
 P(\mathbf{q}, t ~|~ \mathbf{q}_0, t_0)\prod_{j=1}^{M}{(1-a_j(\mathbf{q})dt)} \\
-& + & \prod_{j=1}^{M}{P(\mathbf{q} - \boldsymbol{\nu}_j, t ~|~\mathbf{q}_0, t_0)(a_j(\mathbf{q} -\boldsymbol{\nu}_j)dt)} \\
-& = & P(\mathbf{q}, t ~|~ \mathbf{q}_0, t_0) \\
-& + & \sum_{j=1}^{M}{\bigg(P(\mathbf{q} - \boldsymbol{\nu}_j, t ~|~\mathbf{q}_0, t_0)a_j(\mathbf{q} -\boldsymbol{\nu}_j) - P(\mathbf{q}, t ~|~ \mathbf{q}_0, t_0)a_j(\mathbf{q})\bigg)dt} \\
-& + & \mathscr{O}(dt^{2})\\
-\end{array} %]]></script>
+&amp; + &amp; \prod_{j=1}^{M}{P(\mathbf{q} - \boldsymbol{\nu}_j, t ~|~\mathbf{q}_0, t_0)(a_j(\mathbf{q} -\boldsymbol{\nu}_j)dt)} \\
+&amp; = &amp; P(\mathbf{q}, t ~|~ \mathbf{q}_0, t_0) \\
+&amp; + &amp; \sum_{j=1}^{M}{\bigg(P(\mathbf{q} - \boldsymbol{\nu}_j, t ~|~\mathbf{q}_0, t_0)a_j(\mathbf{q} -\boldsymbol{\nu}_j) - P(\mathbf{q}, t ~|~ \mathbf{q}_0, t_0)a_j(\mathbf{q})\bigg)dt} \\
+&amp; + &amp; \mathscr{O}(dt^{2})\\
+\end{array}\]
 
 <p>This may look scary but it really just states that the probability to get to state $\mathbf{q}$ is equal to probability that we are already in that state + the probability that we are one reaction away from that state and the matching reaction fires in the interval $dt$.
 After dropping higher order terms in $dt$ and simplifying the notation we get:</p>
 
-<script type="math/tex; mode=display">\frac{\partial P}{\partial t} (\mathbf{q}, t) = \sum_{j=1}^{M}{\bigg(P(\mathbf{q} - \boldsymbol{\nu}_j, t)a_j(\mathbf{q} -\boldsymbol{\nu}_j) - P(\mathbf{q}, t)a_j(\mathbf{q})\bigg)}.</script>
+\[\frac{\partial P}{\partial t} (\mathbf{q}, t) = \sum_{j=1}^{M}{\bigg(P(\mathbf{q} - \boldsymbol{\nu}_j, t)a_j(\mathbf{q} -\boldsymbol{\nu}_j) - P(\mathbf{q}, t)a_j(\mathbf{q})\bigg)}.\]
 
 <p>This is the <em>chemical master equation (CME)</em>, which is an example of <em>forward Kolmogorov equation</em> for a discrete state, continuous time random process (phew, quite some terminology here). The discrete state here is described by the vector $\mathbf{q}$ with numbers of molecules of species in the system. To be able to calculate anything with it we will need to specify the initial condition $P(\mathbf{q}_0, t_0)$. To help you put this into bigger picture, see the two following figures that show where the CME is positioned with respect to other (more approximate) approaches to model biological system dynamics.</p>
 
@@ -229,7 +228,7 @@ We have already mentioned that <em>CME</em> doesn’t have analytical soltion. T
 <p><br />
 To implement this in code, we will follow approach as developed by <a href="https://en.wikipedia.org/wiki/Daniel_Gillespie">Daniel Gillespie</a>, i.e. the <em>stochastic simulation algorithm (SSA)</em>. Given an arbitrary state $\mathbf{q} = (n_1, n_2, …)$, for computation of the next state we need an index of next reaction that occurs (“fires”) and $\Delta t$ in which this happens. The probability that the next reaction to fire is the reaction $j$ is directly proportional to the corresponding propensity $a_j$ (intuitively, reactions with high reaction rates will occur more often). Therefore finding an index $j$ of such reaction is just matter of drawing a random integer from a weighted distribution on $[1, M]$ where the weights are given as:</p>
 
-<script type="math/tex; mode=display">\frac{a_j}{\sum_{i}^{M} a_i} \qquad j = 1, ..., M.</script>
+\[\frac{a_j}{\sum_{i}^{M} a_i} \qquad j = 1, ..., M.\]
 
 <p>Note that this is equivalent to drawing a uniform random number on $[0,1]$, scaling it by the total propensity $a = \sum_{i}^{M}a_i$ and finding the first integer $j$ for which this scaled random number is less then $\sum_{i}^{j}a_i$.</p>
 
@@ -237,11 +236,11 @@ To implement this in code, we will follow approach as developed by <a href="http
 <p><br />
 Finding a $\Delta t$ in which this reaction occurs is more involved. You can find the derivation at the <a href="#Time-step-size-derivation-for-SSA">end of this post</a>, but for now we will take for granted that the <em>cumulative distribution function (CDF)</em> for $\Delta t$ is:</p>
 
-<script type="math/tex; mode=display">\int_{0}^{\Delta t} \mathrm{f}_T(\tau) d\tau = \int_{0}^{\Delta t} a \mathrm{e}^{-a\tau}d \tau = 1 - \mathrm{e}^{-a\Delta t}.</script>
+\[\int_{0}^{\Delta t} \mathrm{f}_T(\tau) d\tau = \int_{0}^{\Delta t} a \mathrm{e}^{-a\tau}d \tau = 1 - \mathrm{e}^{-a\Delta t}.\]
 
 <p>This is nice because we draw samples from this distribution by drawing a random number $\xi$ on $[0, 1]$ and <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling">inverse-sampling</a> from the CDF. In this case, the CDF can be even inverted analytically to obtain:</p>
 
-<script type="math/tex; mode=display">\Delta t = \frac{1}{a} \mathrm{ln}\bigg(\frac{1}{1 - \xi}\bigg).</script>
+\[\Delta t = \frac{1}{a} \mathrm{ln}\bigg(\frac{1}{1 - \xi}\bigg).\]
 
 <h4 id="python-code">Python code</h4>
 <p><br />
@@ -262,12 +261,12 @@ If the previous two sections sounded complicated to you, have no worry, it is ac
     tau: float, time step size
     """</span>
 
-    <span class="n">xi1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">prop_rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">propensities</span><span class="p">)</span><span class="o">/</span><span class="n">total_prop</span><span class="p">)</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prop_rank</span> <span class="o">&gt;</span> <span class="n">xi1</span><span class="p">))</span>
+    <span class="n">xi1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">prop_rank</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">propensities</span><span class="p">)</span><span class="o">/</span><span class="n">total_prop</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prop_rank</span> <span class="o">&gt;</span> <span class="n">xi1</span><span class="p">))</span>
 
-    <span class="n">xi2</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">total_prop</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">xi2</span><span class="p">)))</span>
+    <span class="n">xi2</span> <span class="o">=</span>  <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">total_prop</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">xi2</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">idx</span><span class="p">,</span> <span class="n">tau</span>
 </code></pre></div></div>
 
@@ -275,16 +274,15 @@ If the previous two sections sounded complicated to you, have no worry, it is ac
 <p><br />
 Now we are armed for the stochastic simulation algorithm that proceeds as follows:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{alignat}{0}
+\[\begin{alignat}{0}
 \textbf{initialize} \\
 \qquad \textrm{choose}\ \mathbf{q}_0,\ \textrm{e.g.}\ (n_{mRNA,0}, n_{protein, 0})\\
-\textbf{while}\ t\ < \ t_{stop}:\\
+\textbf{while}\ t\ &lt; \ t_{stop}:\\
 \qquad \textrm{calculate}\ a_i(\mathbf{q}),\ \forall\ i = 1, ..., M \\
 \qquad \textrm{draw}\ \xi_1 \in [0, 1]\ \textrm{and compute}\ \Delta t \\
 \qquad \textrm{draw}\ \xi_2 \in [0, 1]\ \textrm{and find index}\ j \\
 \qquad \textrm{update}\ \mathbf{q}\\
-\end{alignat} %]]></script>
+\end{alignat}\]
 
 <p>This algorithm is also called <a href="https://www.sciencedirect.com/science/article/pii/0021999176900413?via%3Dihub">Gillespie’s direct method</a> as it was D.T. Gillespie who proved that this method samples from the probability distribution governed by the CME. The method is derived based on <a href="http://cmt.dur.ac.uk/sjc/thesis_mcg/node6.html">first principles</a>. This makes it an exact approach to stochastic simulation, consequently, time step $\tau$ is not mere finite approximation (as in ODE models).</p>
 
@@ -316,11 +314,11 @@ Implementation in code is again quite simple:</p>
     <span class="c1">#Initialize arrays to store states, tick times
 </span>    <span class="n">time</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
     <span class="n">Q</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">q0</span>
-    <span class="n">Q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">Q</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
     <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">t_end</span><span class="p">:</span>
         <span class="c1"># Calculate propensities for current state
@@ -355,12 +353,12 @@ Implementation in code is again quite simple:</p>
     """</span>
 
     <span class="c1"># See model description
-</span>    <span class="n">propensities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+</span>    <span class="n">propensities</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="n">psi</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">psi</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">populations</span> <span class="o">**</span> <span class="n">psi</span><span class="p">[</span><span class="n">r</span><span class="p">,:]</span>
-        <span class="n">propensities</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span> <span class="o">*</span> <span class="n">rates</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+        <span class="n">propensities</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">prod</span><span class="p">()</span> <span class="o">*</span> <span class="n">rates</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
 
-    <span class="n">total_propensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">propensities</span><span class="o">.</span><span class="nb">sum</span><span class="p">())</span>
+    <span class="n">total_propensity</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">(</span><span class="n">propensities</span><span class="p">.</span><span class="nb">sum</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">propensities</span><span class="p">,</span> <span class="n">total_propensity</span>
 </code></pre></div></div>
@@ -371,38 +369,36 @@ Implementation in code is again quite simple:</p>
 <p><br />
 To make this discussion more concrete, let’s look at the minimal example of <a href="https://www.dnalc.org/resources/3d/central-dogma.html"><em>central dogma of molecular biology</em></a>. This can be concisely represented as:</p>
 
-<script type="math/tex; mode=display">\require{AMScd}
+\[\require{AMScd}
 \begin{CD}
-    DNA @>\beta_m>> mRNA @>{\beta_p \cdot n_m(t)}>> protein\\
+    DNA @&gt;\beta_m&gt;&gt; mRNA @&gt;{\beta_p \cdot n_m(t)}&gt;&gt; protein\\
     @. @VV{\gamma_m \cdot n_m(t)}V @VV{\gamma_p \cdot n_p(t)}V\\
     @. \varnothing @. \varnothing
-\end{CD}</script>
+\end{CD}\]
 
 <p>Here the microstate is simply the vector $\mathbf{q} = (1, n_m, n_p)$, where $n_m$ and $n_p$ are the copy numbers of transcripts and proteins respectively that depend on time. The DNA is present in single copy throughout (as such, we do not need to include it in our calculations, but will do so for consistency). The propensities (or <em>transition probabilities</em>) are:</p>
 
-<script type="math/tex; mode=display">a_1 = \beta_m \qquad a_2 = \gamma_m \cdot n_m \qquad a_3 = \beta_p \cdot n_m \qquad a_4 = \gamma_p \cdot n_p,</script>
+\[a_1 = \beta_m \qquad a_2 = \gamma_m \cdot n_m \qquad a_3 = \beta_p \cdot n_m \qquad a_4 = \gamma_p \cdot n_p,\]
 
 <p>where $\beta_i$ corresponds to <em>production</em> and $\gamma_i$ to <em>degradation</em>. We can see that propensity, in case of unimolecular reaction ($A \rightarrow B$) directly corresponds to the reaction rate constant (Things get only bit more complicated for bimolecular reactions as you will see later).</p>
 
 <p>Each state change vector corresponds to one reaction in the system and together they are concatenated as columns of <em>stoichiometric matrix</em> $\mathbf{N}$:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\mathbf{N}= (\boldsymbol{\nu}_1^T, \boldsymbol{\nu}_2^T, \boldsymbol{\nu}_3^T, \boldsymbol{\nu}_4^T) =
+\[\mathbf{N}= (\boldsymbol{\nu}_1^T, \boldsymbol{\nu}_2^T, \boldsymbol{\nu}_3^T, \boldsymbol{\nu}_4^T) =
 \begin{bmatrix}
-0 & 0 & ~0 & ~0 \\
-1 & 0 & -1 & ~0 \\
-0 & 1 & ~0 & -1
-\end{bmatrix} %]]></script>
+0 &amp; 0 &amp; ~0 &amp; ~0 \\
+1 &amp; 0 &amp; -1 &amp; ~0 \\
+0 &amp; 1 &amp; ~0 &amp; -1
+\end{bmatrix}\]
 
 <p>The dynamics of the system are described by <em>Chemical master equation (CME)</em> for probability $P\big((n_m, n_p), t\big)$:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{array}{lcl}
-\frac{\partial P}{\partial t}\big((n_m, n_p), t\big) & = & P\big((n_m-1, n_p\big), t)\beta_m - P\big((n_m, n_p), t\big)\beta_m \\
-& + & P\big((n_m+1, n_p), t\big)\gamma_m (n_m+1) - P\big((n_m, n_p), t\big)\gamma_m n_m \\
-& + & P\big((n_m, n_p-1), t\big)\beta_p (n_m) - P\big((n_m, n_p), t\big)\beta_p n_m \\
-& + & P\big((n_m, n_p+1), t\big)\gamma_p (n_p+1) - P\big((n_m, n_p), t\big)\gamma_p n_p \\
-\end{array} %]]></script>
+\[\begin{array}{lcl}
+\frac{\partial P}{\partial t}\big((n_m, n_p), t\big) &amp; = &amp; P\big((n_m-1, n_p\big), t)\beta_m - P\big((n_m, n_p), t\big)\beta_m \\
+&amp; + &amp; P\big((n_m+1, n_p), t\big)\gamma_m (n_m+1) - P\big((n_m, n_p), t\big)\gamma_m n_m \\
+&amp; + &amp; P\big((n_m, n_p-1), t\big)\beta_p (n_m) - P\big((n_m, n_p), t\big)\beta_p n_m \\
+&amp; + &amp; P\big((n_m, n_p+1), t\big)\gamma_p (n_p+1) - P\big((n_m, n_p), t\big)\gamma_p n_p \\
+\end{array}\]
 
 <p>Phew! This has been quite some theory we have covered, let’s now take a look how we can translate all this into code to simulate a real biological system.</p>
 
@@ -415,10 +411,10 @@ To make this discussion more concrete, let’s look at the minimal example of <a
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
+<span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span> <span class="c1"># use "ggplot" style for graphs
 </span><span class="n">pltparams</span> <span class="o">=</span> <span class="p">{</span><span class="s">'legend.fontsize'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="s">'axes.labelsize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s">'axes.titlesize'</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
              <span class="s">'xtick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'ytick.labelsize'</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="s">'figure.figsize'</span><span class="p">:(</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">7.5</span><span class="p">),}</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">pltparams</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h4 id="model-parameters">Model Parameters</h4>
@@ -467,28 +463,27 @@ We set the initial conditions as following:</p>
 
 <p>Additionally we define matrix of reactant (species entering each reaction) molecularity $\mathbf{\psi}$:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\mathbf{\psi}=
+\[\mathbf{\psi}=
 \begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 1 & 1 & 0 \\
-0 & 0 & 0 & 1
-\end{bmatrix}. %]]></script>
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}.\]
 
 <p>We will also simulate multiple independent evolutions (paths) such that we can obtain mean evolution.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mp</span> <span class="o">=</span> <span class="n">ssa</span><span class="o">.</span><span class="n">modelParameters</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">.4</span><span class="p">]),</span>
-                         <span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])),</span>
-                         <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
-                         <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mp</span> <span class="o">=</span> <span class="n">ssa</span><span class="p">.</span><span class="n">modelParameters</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">.</span><span class="mi">4</span><span class="p">]),</span>
+                         <span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])),</span>
+                         <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
+                         <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
                          <span class="n">t_end</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
                          <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"gene"</span><span class="p">,</span> <span class="s">"mRNA"</span><span class="p">,</span> <span class="s">"protein"</span><span class="p">],</span>
                          <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="s">"none"</span><span class="p">,</span> <span class="s">"poiss"</span><span class="p">,</span> <span class="s">"gauss"</span><span class="p">]</span> <span class="p">)</span>
 <span class="n">n_paths</span> <span class="o">=</span> <span class="mi">30</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
-<span class="n">ssa</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">,</span> <span class="n">do_load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">do_save</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">ssa</span><span class="p">.</span><span class="n">main</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">,</span> <span class="n">do_load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">do_save</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2018-04-15 09:33:39,299:ssa_routine:INFO: Starting simulation with n_paths=30
 2018-04-15 09:34:14,563:ssa_routine:INFO: Calculating statistics for all species.
@@ -566,19 +561,16 @@ OK, once we have the simulation and visualization functions ready and once we ca
 
 <h3 id="the-model">The model</h3>
 <p><br />
-<script type="math/tex">G_1 \xrightarrow{\beta_1} G_1 + P_1 \qquad \qquad P_1 \xrightarrow{\gamma_1} \varnothing \tag{1a, 1b}</script></p>
+\(G_1 \xrightarrow{\beta_1} G_1 + P_1 \qquad \qquad P_1 \xrightarrow{\gamma_1} \varnothing \tag{1a, 1b}\)</p>
 
-<script type="math/tex; mode=display">G_2 \xrightarrow{\beta_2} G_2 + 2\,P_2 \qquad \qquad P_2 \xrightarrow{\gamma_1} \varnothing \tag{2a, 2b}</script>
+\[G_2 \xrightarrow{\beta_2} G_2 + 2\,P_2 \qquad \qquad P_2 \xrightarrow{\gamma_1} \varnothing \tag{2a, 2b}\]
 
-<script type="math/tex; mode=display">% <![CDATA[
-\require{mhchem}
-\ce{G1 + P2 <=>[{\kappa_{c1}^{+}}][{\kappa_{c1}^{-}}] \xi_{1}^{I}} \tag{3} %]]></script>
+\[\require{mhchem}
+\ce{G1 + P2 &lt;=&gt;[{\kappa_{c1}^{+}}][{\kappa_{c1}^{-}}] \xi_{1}^{I}} \tag{3}\]
 
-<script type="math/tex; mode=display">% <![CDATA[
-\ce{G2 + P1 <=>[{\kappa_{c2}^{+}}][{\kappa_{c2}^{-}}] \xi_{2}^{I_1}} \tag{4} %]]></script>
+\[\ce{G2 + P1 &lt;=&gt;[{\kappa_{c2}^{+}}][{\kappa_{c2}^{-}}] \xi_{2}^{I_1}} \tag{4}\]
 
-<script type="math/tex; mode=display">% <![CDATA[
-\ce{\xi_{2}^{I_1} + P1 <=>[{\kappa_{c3}^{+}}][{\kappa_{c3}^{-}}] \xi_{2}^{I_2}} \tag{5} %]]></script>
+\[\ce{\xi_{2}^{I_1} + P1 &lt;=&gt;[{\kappa_{c3}^{+}}][{\kappa_{c3}^{-}}] \xi_{2}^{I_2}} \tag{5}\]
 
 <ul>
   <li>
@@ -600,7 +592,7 @@ OK, once we have the simulation and visualization functions ready and once we ca
 
 <p>We will model <a href="https://en.wikipedia.org/wiki/Cooperativity">cooperativity</a> of the enzyme binding sites with:</p>
 
-<script type="math/tex; mode=display">\kappa_{c3}^{+} = \sigma \kappa_{c2}^{+} \qquad \sigma >> 1.</script>
+\[\kappa_{c3}^{+} = \sigma \kappa_{c2}^{+} \qquad \sigma &gt;&gt; 1.\]
 
 <p>This essentially says that the inhibitory binding to $P_1$ becomes easier after the first complexation reaction. This, at the first sight not very interesting feature of the system, is actually essential in our simulation. Repression with cooperativity is namely <a href="https://www.sciencedirect.com/science/article/pii/S0022519300910683">one of ways how to achieve switch-like behavior</a> in biological systems.</p>
 
@@ -616,7 +608,7 @@ As previously we will define an array of stochastic reaction rates $k$. We will 
 
 <p>For <em>bimolecular</em> (two species) reactions, the stochastic reaction rate relates to the reaction rate of deterministic model by scaling with inverse volume $\Omega$.</p>
 
-<script type="math/tex; mode=display">\hat{k}_i = \frac{k_i}{\Omega}.</script>
+\[\hat{k}_i = \frac{k_i}{\Omega}.\]
 
 <p>To obtain same units as in the case of <em>unimolecular</em> reaction, we include also scaling by Avogardo’s number $N_A [mol^{-1}]$, such that $\Omega = V\,
 N_A$ and $k_i = [M \cdot min^{-1}]$. $N_A$ is the old familiar $6.022\cdot10^{23} mol^{-1}.$ For the volume, we make a <a href="http://book.bionumbers.org/how-big-is-an-e-coli-cell-and-what-is-its-mass/">ballpark estimate</a> for <em>E.coli</em> as a cylinder with diameter $1\mu m$ and length $2\mu m$ yielding $V \approx 1.5 \mu m^3 = 1.5\cdot 10^{-14} dm^3$.</p>
@@ -728,13 +720,13 @@ As the code in previous example was written with to be generalizable, we will be
 <span class="n">to_nanomolar</span> <span class="o">=</span> <span class="mf">1e-9</span>
 <span class="n">omega</span> <span class="o">=</span> <span class="mf">6.02214086e23</span><span class="o">*</span><span class="n">V</span><span class="o">*</span><span class="n">to_nanomolar</span>
 <span class="n">t_end</span> <span class="o">=</span> <span class="mi">30000</span>
-<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">r'$G_1$'</span><span class="p">,</span> <span class="s">r'$P_1$'</span><span class="p">,</span> <span class="s">r'$G_2$'</span><span class="p">,</span> <span class="s">r'$P_2$'</span><span class="p">,</span>
-         <span class="s">r'$\xi_1^{I}$'</span><span class="p">,</span> <span class="s">r'$\xi_2^{I_1}$'</span><span class="p">,</span> <span class="s">r'$\xi_2^{I_2}$'</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s">'$G_1$'</span><span class="p">,</span> <span class="sa">r</span><span class="s">'$P_1$'</span><span class="p">,</span> <span class="sa">r</span><span class="s">'$G_2$'</span><span class="p">,</span> <span class="sa">r</span><span class="s">'$P_2$'</span><span class="p">,</span>
+         <span class="sa">r</span><span class="s">'$\xi_1^{I}$'</span><span class="p">,</span> <span class="sa">r</span><span class="s">'$\xi_2^{I_1}$'</span><span class="p">,</span> <span class="sa">r</span><span class="s">'$\xi_2^{I_2}$'</span><span class="p">]</span>
 <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="s">"none"</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
 <span class="c1">## State change matrix associated with each reaction
-</span><span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#G1    -&gt; G1+P1
+</span><span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#G1    -&gt; G1+P1
 </span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#G2    -&gt; G2+P2
 </span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#P1    -&gt; _
 </span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#P2    -&gt; _
@@ -744,9 +736,9 @@ As the code in previous example was written with to be generalizable, we will be
 </span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1">#C2a   -&gt; P1+G2
 </span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c1">#P1+C2a-&gt; C2b
 </span>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1">#C2b   -&gt; P1+C2a
-</span>              <span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">int</span><span class="p">)</span>
+</span>              <span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">int</span><span class="p">)</span>
 <span class="c1">## Molecularity of species entering each reaction
-</span><span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -755,18 +747,18 @@ As the code in previous example was written with to be generalizable, we will be
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">int</span><span class="p">)</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">int</span><span class="p">)</span>
 
-<span class="n">mp_toggle</span> <span class="o">=</span> <span class="n">ssa</span><span class="o">.</span><span class="n">modelParameters</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
+<span class="n">mp_toggle</span> <span class="o">=</span> <span class="n">ssa</span><span class="p">.</span><span class="n">modelParameters</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
 
 <span class="c1">#Simulation Parameters
 </span><span class="n">n_paths</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">do_load</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># default 0
 </span><span class="n">do_save</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># default 1
-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssa</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">mp_toggle</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">,</span> <span class="n">do_load</span> <span class="p">,</span><span class="n">do_save</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssa</span><span class="p">.</span><span class="n">main</span><span class="p">(</span><span class="n">mp_toggle</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">,</span> <span class="n">do_load</span> <span class="p">,</span><span class="n">do_save</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2018-04-15 09:43:40,516:ssa_routine:INFO: Starting simulation with n_paths=1
@@ -885,42 +877,42 @@ If you have made it all the way here, pat yourself on the back. It has been quit
 
 <p>Define $p(\tau, j |\mathbf{q}, t)d\tau$ as the probability that the reaction $j$ occurs in the time interval $[t + \tau, t + \tau + d\tau]$, then we have:</p>
 
-<script type="math/tex; mode=display">p(\tau, j ~|~ \mathbf{q}, t)d\tau = P_0 (\tau ~|~ \mathbf{q}, t) \cdot a_j(\mathbf{q})d\tau,</script>
+\[p(\tau, j ~|~ \mathbf{q}, t)d\tau = P_0 (\tau ~|~ \mathbf{q}, t) \cdot a_j(\mathbf{q})d\tau,\]
 
 <p>where $P_0 (\tau ~|~ \mathbf{q}, t)$ is the probability that <em>no</em> reaction fires on time interval $[t, \tau + t]$. We note that starting time $t$ is arbitrary and we may set it to zero.
 Corresponding probability that <em>no</em> reaction occurs in time interval $[t + \tau, t + \tau + d\tau]$:</p>
 
-<script type="math/tex; mode=display">P_0 (\tau + d\tau\ |\ \mathbf{q}, t) = P_0 (\tau\ |\ \mathbf{q}, t) \cdot (1-ad\tau),</script>
+\[P_0 (\tau + d\tau\ |\ \mathbf{q}, t) = P_0 (\tau\ |\ \mathbf{q}, t) \cdot (1-ad\tau),\]
 
 <p>where $a = \sum_{i}^{M}a_i.$</p>
 
 <p>It then immediately follows that:</p>
 
-<script type="math/tex; mode=display">\frac{d P_0}{d \tau} (\tau\ |\ \mathbf{q}, t) = -P_0 (\tau\ |\ \mathbf{q}, t) \cdot a.</script>
+\[\frac{d P_0}{d \tau} (\tau\ |\ \mathbf{q}, t) = -P_0 (\tau\ |\ \mathbf{q}, t) \cdot a.\]
 
 <p>Solving this differential equation with initial condition $P_0 (0\ | \mathbf{q}, t) = 1$ yields:</p>
 
-<script type="math/tex; mode=display">P_0 (\tau\ | \mathbf{q}, t) = \mathrm{exp}(-a\tau).</script>
+\[P_0 (\tau\ | \mathbf{q}, t) = \mathrm{exp}(-a\tau).\]
 
 <p>Going back to previous definition, this gives us:</p>
 
-<script type="math/tex; mode=display">p(\tau, j\ |\ \mathbf{q}, t) =  \mathrm{exp}(-a\tau) \cdot a_j(\mathbf{q}).</script>
+\[p(\tau, j\ |\ \mathbf{q}, t) =  \mathrm{exp}(-a\tau) \cdot a_j(\mathbf{q}).\]
 
 <p>To obtain index of next reaction $j$ we <em>marginalize</em> over all $\tau$ and obtain:</p>
 
-<script type="math/tex; mode=display">\int_{0}^{\infty}p(\tau, j\ |\ \mathbf{q}, t) d\tau = a_j(\mathbf{q}) \int_{0}^{\infty} \mathrm{exp}(-a\tau)d\tau = \frac{a_j(\mathbf{q})}{a}.</script>
+\[\int_{0}^{\infty}p(\tau, j\ |\ \mathbf{q}, t) d\tau = a_j(\mathbf{q}) \int_{0}^{\infty} \mathrm{exp}(-a\tau)d\tau = \frac{a_j(\mathbf{q})}{a}.\]
 
 <p>Similarly, to find time that next reaction occurs, we integrate over all reactions $j$ and obtain:</p>
 
-<script type="math/tex; mode=display">p(\tau\ |\ \mathbf{q}, t) =  \mathrm{exp}(-a\tau) \cdot a.</script>
+\[p(\tau\ |\ \mathbf{q}, t) =  \mathrm{exp}(-a\tau) \cdot a.\]
 
 <p>The probability that the reaction occurs on time interval $[0, \Delta t]$ is then given by the <em>cumulative distribution function (CDF)</em>:</p>
 
-<script type="math/tex; mode=display">\int_{0}^{\Delta t}p(\tau\ | \mathbf{q}, t) d\tau = a \int_{0}^{\Delta t} \mathrm{exp}(-a\tau)d\tau = 1 - \mathrm{exp}(-a\Delta t).</script>
+\[\int_{0}^{\Delta t}p(\tau\ | \mathbf{q}, t) d\tau = a \int_{0}^{\Delta t} \mathrm{exp}(-a\tau)d\tau = 1 - \mathrm{exp}(-a\Delta t).\]
 
 <p>The CDF is bounded on $[0, 1]$ and we can easily generate samples from corresponding PDF by inverse-sampling when we draw uniformly distributed numbers $\xi$ which finally yields:</p>
 
-<script type="math/tex; mode=display">\Delta t = \frac{1}{a} \mathrm{ln}\bigg(\frac{1}{1 - \xi}\bigg),</script>
+\[\Delta t = \frac{1}{a} \mathrm{ln}\bigg(\frac{1}{1 - \xi}\bigg),\]
 
 <p>as stated before.</p>
 
@@ -935,7 +927,7 @@ First, we profile our code to see where the most time is being spend.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">load_ext</span> <span class="n">line_profiler</span>
 <span class="kn">import</span> <span class="nn">ssa_routine</span> <span class="k">as</span> <span class="n">ssa</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="o">%</span><span class="n">lprun</span> <span class="o">-</span><span class="n">T</span> <span class="n">profiler</span><span class="o">.</span><span class="n">out</span> <span class="o">-</span><span class="n">f</span> <span class="n">ssa</span><span class="o">.</span><span class="n">ssa_routine</span> <span class="n">ssa</span><span class="o">.</span><span class="n">ssa_routine</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">t_end</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">q0</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">nu</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">psi</span><span class="p">)</span>
+<span class="o">%</span><span class="n">lprun</span> <span class="o">-</span><span class="n">T</span> <span class="n">profiler</span><span class="p">.</span><span class="n">out</span> <span class="o">-</span><span class="n">f</span> <span class="n">ssa</span><span class="p">.</span><span class="n">ssa_routine</span> <span class="n">ssa</span><span class="p">.</span><span class="n">ssa_routine</span><span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="n">mp</span><span class="p">.</span><span class="n">t_end</span><span class="p">,</span> <span class="n">mp</span><span class="p">.</span><span class="n">q0</span><span class="p">,</span> <span class="n">mp</span><span class="p">.</span><span class="n">nu</span><span class="p">,</span> <span class="n">mp</span><span class="p">.</span><span class="n">psi</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>\*\*\* Profile printout saved to text file 'profiler.out'.
@@ -948,20 +940,20 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
     92                                           def ssa_routine(k, t_end, q0, nu):
 
-    119     20580        71930      3.5      1.0      while t <span class="nt">&lt;</span> <span class="nt">t</span><span class="na">_end:</span>
-    <span class="na">120</span>     <span class="na">20579</span>      <span class="na">2325960</span>    <span class="na">113</span><span class="err">.</span><span class="na">0</span>     <span class="na">31</span><span class="err">.</span><span class="na">8</span>          <span class="na">propensities</span><span class="err">,</span> <span class="na">total_prop = </span><span class="s">get_propensities(k,</span> <span class="na">state</span><span class="err">)</span>
+    119     20580        71930      3.5      1.0      while t <span class="nt">&lt;</span> <span class="nt">t_end:</span>
+    <span class="err">120</span>     <span class="err">20579</span>      <span class="err">2325960</span>    <span class="err">113.0</span>     <span class="err">31.8</span>          <span class="na">propensities</span><span class="err">,</span> <span class="na">total_prop = </span><span class="s">get_propensities(k,</span> <span class="na">state</span><span class="err">)</span>
 
-    <span class="na">125</span>                                                   <span class="na">#</span> <span class="na">Draw</span> <span class="na">random</span> <span class="na">samples</span> <span class="na">for</span> <span class="na">update</span> <span class="na">of</span> <span class="na">state</span> <span class="na">and</span> <span class="na">time</span> <span class="na">step</span>
-    <span class="na">126</span>     <span class="na">20579</span>      <span class="na">3574266</span>    <span class="na">173</span><span class="err">.</span><span class="na">7</span>     <span class="na">48</span><span class="err">.</span><span class="na">9</span>          <span class="na">idx</span><span class="err">,</span> <span class="na">tau = </span><span class="s">draw_ssa(propensities,</span> <span class="na">total_prop</span><span class="err">)</span>
+    <span class="err">125</span>                                                   <span class="na">#</span> <span class="na">Draw</span> <span class="na">random</span> <span class="na">samples</span> <span class="na">for</span> <span class="na">update</span> <span class="na">of</span> <span class="na">state</span> <span class="na">and</span> <span class="na">time</span> <span class="na">step</span>
+    <span class="err">126</span>     <span class="err">20579</span>      <span class="err">3574266</span>    <span class="err">173.7</span>     <span class="err">48.9</span>          <span class="na">idx</span><span class="err">,</span> <span class="na">tau = </span><span class="s">draw_ssa(propensities,</span> <span class="na">total_prop</span><span class="err">)</span>
 
-    <span class="na">141</span>         <span class="na">1</span>            <span class="na">3</span>      <span class="na">3</span><span class="err">.</span><span class="na">0</span>      <span class="na">0</span><span class="err">.</span><span class="na">0</span>      <span class="na">return</span> <span class="na">Q</span><span class="err">,</span> <span class="na">time</span>
+    <span class="err">141</span>         <span class="err">1</span>            <span class="err">3</span>      <span class="err">3.0</span>      <span class="err">0.0</span>      <span class="na">return</span> <span class="na">Q</span><span class="err">,</span> <span class="na">time</span>
 </code></pre></div></div>
 
 <h4 id="use-numba-to-speed-up-the-calculations">Use numba to speed up the calculations</h4>
 <p><br />
 We have found out that absolute majority of the time is spent in computing propensities and drawing samples for update with a respective reaction in given time interval. Unsurprisingly, as these occur on each and every time-step. Clearly, we can get the most ‘bang for the buck’ by making these two steps faster. To this end, we place them into individual functions and use <a href="https://numba.pydata.org/"><code class="language-html highlighter-rouge">numba</code>’s</a> <code class="language-html highlighter-rouge">@jit</code> decorator for just-in-time (JIT) compilation. This allows us to get about five-fold speed-up in calculations which I think is fair given the simplicity of implementation. This boils down to <a href="https://wiki.python.org/moin/PythonDecorators">decorating</a> the function as:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">numba</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">numba</span><span class="p">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">some_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </code></pre></div></div>
@@ -970,7 +962,7 @@ We have found out that absolute majority of the time is spent in computing prope
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">set_env</span> <span class="n">NUMBA_DISABLE_JIT</span><span class="o">=</span><span class="mi">1</span>
 <span class="c1">#os.environ["NUMBA_DISABLE_JIT"] = "1"
-</span><span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
+</span><span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="p">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div>
@@ -1098,7 +1090,7 @@ We have found out that absolute majority of the time is spent in computing prope
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">set_env</span> <span class="n">NUMBA_DISABLE_JIT</span><span class="o">=</span><span class="mi">0</span>
 <span class="c1">#os.environ["NUMBA_DISABLE_JIT"] = "0"
-</span><span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
+</span><span class="o">%</span><span class="n">timeit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">r</span> <span class="mi">3</span> <span class="n">ssa</span><span class="p">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div>

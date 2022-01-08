@@ -48,7 +48,7 @@
     <nav class="site-nav">
 
       <div class="trigger">
-        <!--  instead of blog -->
+        <!-- Martin Holub Blog instead of blog -->
         <a class="page-link" href="/">about</a>
 
         <!-- ( for page in site.pages )  was previously-->
@@ -160,15 +160,15 @@ Trained agent skillfully balancing the pole on the cart
 <!-- https://stats.stackexchange.com/questions/326788/when-to-choose-sarsa-vs-q-learning -->
 <!-- https://datascience.stackexchange.com/questions/9832/what-is-the-q-function-and-what-is-the-v-function-in-reinforcement-learning/31791#31791 -->
 
-<script type="math/tex; mode=display">V^{\pi}(s) = E[R(s_0)+\gamma R(s_1)+\gamma^2 R(s_2) + ... | s_0=s,\pi].</script>
+\[V^{\pi}(s) = E[R(s_0)+\gamma R(s_1)+\gamma^2 R(s_2) + ... | s_0=s,\pi].\]
 
 <p>$R(\cdot)$ gives the immediate value of reward and the discount factor $\gamma$ expresses how much we care about past values of it. <em>Q-value</em> function is then just <em>V</em> function for a particular action $a_t$ for each state $s_t$. They are related with:</p>
 
-<script type="math/tex; mode=display">V^\pi(s) = \sum_{a \in A} \pi (a|s)  * Q^\pi(a,s).</script>
+\[V^\pi(s) = \sum_{a \in A} \pi (a|s)  * Q^\pi(a,s).\]
 
 <p>Given the above definitions, the SARSA algorithm updates the <em>Q-value</em> by an error-term adjusted by the learning rate $\alpha$ as follows:</p>
 
-<script type="math/tex; mode=display">Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})-Q(s_t,a_t)]</script>
+\[Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})-Q(s_t,a_t)]\]
 
 <p>In my implementation I <a href="http://artint.info/2e/html/ArtInt2e.Ch12.S9.SS1.html">approximate</a> the <em>Q-values</em> for each action with a linear function and select an action with $argmax(w^Ts)$.</p>
 
