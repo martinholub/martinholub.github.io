@@ -76,6 +76,28 @@ table tr th :first-child, table tr td :first-child { margin-top: 0; }
 
 table tr th :last-child, table tr td :last-child { margin-bottom: 0; border-bottom: none; }
 
+.button { font-family: Helvetica, Arial, sans-serif; color: #fdfdfd; background-color: #666; }
+
+.button, .button-small { display: inline-block; white-space: nowrap; height: 40px; line-height: 42px; margin: 0 5px 0 0; padding: 0 22px; text-decoration: none; text-transform: uppercase; text-align: center; font-weight: bold; font-style: normal; font-size: 14px; cursor: pointer; border: 0; -moz-border-radius: 4px; border-radius: 4px; -webkit-border-radius: 4px; vertical-align: top; -webkit-font-smoothing: antialiased; font-smoothing: antialiased; }
+
+.button-small { float: none; display: inline-block; height: auto; line-height: 18px !important; padding: 2px 15px !important; font-size: 11px !important; }
+
+.button:hover, .button-small:hover { opacity: .8; background-color: #11D68B; }
+
+form { font: 16px/20px "Helvetica", Arial, sans-serif; display: block; padding: 6px 0 10px 0; }
+
+label { clear: both; display: block; margin: 8px 0; font-weight: bold; position: relative; line-height: 150%; font-family: Helvetica; font-size: 14px; color: #333333; }
+
+.email-group input { display: block; float: left; width: 60%; margin: 0 10px 0 0; min-width: 200px; padding: 12px 10px 11px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-shadow: none; }
+
+.email-group .button { width: 30%; margin: 0; min-width: 75px; }
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+/* Hide for all but screen readers */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+
 /** Site header   ********************************************************** */
 .site-header { border-bottom: 1px solid #ddd; background-color: #fff; opacity: 0.75; position: fixed; left: 0px; top: 0px; height: 56px; width: 100%; z-index: 50; }
 
