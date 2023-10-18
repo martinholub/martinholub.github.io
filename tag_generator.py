@@ -8,18 +8,24 @@ Contact: lqian8@jhu.edu
 
 This script creates tags for your Jekyll blog hosted by Github page.
 No plugins required.
+
+Run this before pushing to git:
+python tag_generator.py
 '''
 
 import glob
 import os
 
+def flatten(l):
+    return [item for sublist in l for item in sublist]
+
 post_dir = '_posts/'
 tag_dir = 'tag/'
 
-filenames = glob.glob(post_dir + '*md')
+filenames = [glob.glob(post_dir + e) for e in ['*.md', '*.markdown']]
 
 total_tags = []
-for filename in filenames:
+for filename in flatten(filenames):
     f = open(filename, 'r', encoding='utf8')
     crawl = False
     for line in f:
