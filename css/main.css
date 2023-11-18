@@ -36,9 +36,9 @@ a { color: #666; text-decoration: none; /*
 &:visited { color: darken($brand-color, 15%);
 }
 */ }
-a:hover { color: #11D68B; text-decoration: none; }
+a:hover { color: #3333cc; text-decoration: none; }
 
-article a { color: #11D68B; font-weight: 100; }
+article a { color: #3333cc; font-weight: 100; }
 article a:hover { text-decoration: none; }
 
 /** Blockquotes */
@@ -82,7 +82,7 @@ table tr th :last-child, table tr td :last-child { margin-bottom: 0; border-bott
 
 .button-small { float: none; display: inline-block; height: auto; line-height: 18px !important; padding: 2px 15px !important; font-size: 11px !important; }
 
-.button:hover, .button-small:hover { opacity: .8; background-color: #11D68B; }
+.button:hover, .button-small:hover { opacity: .8; background-color: #3333cc; }
 
 form { font: 16px/20px "Helvetica", Arial, sans-serif; display: block; padding: 6px 0 10px 0; }
 
@@ -102,7 +102,7 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
 .site-header { border-bottom: 1px solid #ddd; background-color: #fff; opacity: 0.75; position: fixed; left: 0px; top: 0px; height: 56px; width: 100%; z-index: 50; }
 
 .site-title { font-size: 20px; line-height: 56px; letter-spacing: -1px; margin-bottom: 0; }
-.site-title:hover { text-decoration: none; color: #11D68B; }
+.site-title:hover { text-decoration: none; color: #3333cc; }
 
 .site-nav { float: right; line-height: 56px; }
 .site-nav .page-link { line-height: 1.5em; }
@@ -112,7 +112,7 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
   .site-nav .page-link { display: line; } }
 
 .header-bar { left: 0px; top: 0px; position: relative; font-size: 20px; display: block; opacity: 0.75; width: 100%; text-align: center; padding-top: 25px; line-height: 3em; z-index: 25; }
-.header-bar h1 { color: #11D68B; font-size: 75px; }
+.header-bar h1 { color: #3333cc; font-size: 75px; }
 .header-bar h2 { font-size: 25px; line-height: 1.75; }
 
 /** Site footer  ********************************************************** */
@@ -122,7 +122,7 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
 .pagination { max-width: -webkit-calc(800px - (50px * 2)); text-align: center; width: 100%; position: relative; top: 1px; bottom: 5px; }
 
 .paginationicon { font-size: 50px; }
-.paginationicon a { color: #11D68B; }
+.paginationicon a { color: #3333cc; }
 
 /** Page content   ********************************************************** */
 .page-content { padding: 100px 0; /* VERTICAL PADDING FOR TITLE ON EVERY PAGE */ }
@@ -166,11 +166,11 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
 
 .clearfix:after { clear: both; }
 
-.project { width: 33.33%; height: 250px; float: left; vertical-align: middle; box-sizing: border-box; padding: 10px; }
+.project { width: 50.0%; aspect-ratio: 1; float: left; vertical-align: middle; box-sizing: border-box; padding: 10px; }
 
 .thumbnail { width: 100%; height: 230px; overflow: hidden; font-size: 14px; }
 
-.thumbnail img { width: 500px; height: auto; position: relative; left: -25%; top: -5%; }
+.thumbnail img { width: 100%; height: auto; position: relative; vertical-align: middle; margin: auto; }
 
 .thumbnail a { float: left; position: relative; width: 100%; height: 230px; }
 
@@ -180,7 +180,7 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
 
 /** Portfolio pages **********************************************************
 */
-.blankbox { background: #11D68B; }
+.blankbox { background: #3333cc; }
 
 .img_row { height: auto; width: 100%; overflow: hidden; box-sizing: border-box; text-align: center; margin: auto; padding: 5px; }
 
