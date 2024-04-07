@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Installing LabVIEW on Debian Linux</title>
+    <title>Three Common Methods for Pre-Revenue Startup Valuation</title>
     <meta name="description" content="Personal Blog">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html">
+    <link rel="canonical" href="https://www.martinholub.com//business/startup/2024/04/07/MethodsOfStartupValuation.html">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" href="/css/academicons.css"/>
@@ -84,79 +84,115 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Installing LabVIEW on Debian Linux</h1>
-    <p class="post-meta">April 28, 2019 — 11:02 • <a href="https://martinholub.github.io/code/2019/04/28/InsatllingLabVIEW.html#disqus_thread">0 Comments</a></p>
+    <h1 class="post-title">Three Common Methods for Pre-Revenue Startup Valuation</h1>
+    <p class="post-meta">April 7, 2024 — 09:56 • <a href="https://martinholub.github.io/business/startup/2024/04/07/MethodsOfStartupValuation.html#disqus_thread">0 Comments</a></p>
     <span class="post-meta">[
       
         
-          <a href="/tag/code"><code class="highligher-rouge"><nobr>code</nobr></code>&nbsp;</a>
-      
-        
-          <a href="/tag/linux"><code class="highligher-rouge"><nobr>linux</nobr></code>&nbsp;</a>
+          <a href="/tag/business"><code class="highligher-rouge"><nobr>business</nobr></code>&nbsp;</a>
       
     ]</span>
   </header>
   
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'] ],
-      processEscapes: false,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    messageStyle: "normal",
-    "HTML-CSS": {
-      preferredFont: null
-    },
-    TeX: {
-      extensions: ["AMSmath.js", "AMSsymbols.js","AMScd.js", "autobold.js", "begingroup.js", "mhchem.js"]
-    }
-  });
-</script>
-<script
-  type="text/javascript"
-  charset="utf-8"
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
->
-</script>
-
 
   <article class="post-content">
-    <p>I am no fan of LabVIEW for multiple reasons, but the truth is, it is hard to replace when it comes to instrument control. Installing it on a Debian machine (e.g. Ubuntu) is possible despite not being officially supported by National Instruments. Here is how to do it.</p>
+    <div class="img_row">
+<img class="col three" src="/img/startupvaluation.jpg" alt="" title="Header" />
+</div>
+<div class="col three caption">
+A photo by <a href=" https://unsplash.com/@austindistel?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Austin Distel</a> on Unsplash.
+</div>
 
-<p>Comment out the line in <code class="language-html highlighter-rouge">./INSTALL</code> script that makes installation of <code class="language-html highlighter-rouge">niwebpipeline</code> necessary for success:</p>
+<p>Pre-revenue start-up valuation needn’t be a mystery!  🚀 💲 Here are the three most common start-up pre-money valuation methods:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#webpipepkg="$webpipebase-$NIWEBPIPELINEVERS.i386.rpm"</span>
-</code></pre></div></div>
+<h2 id="-the-scorecard-aka-bill-payne-method">💰 The Scorecard (aka Bill Payne) method</h2>
 
-<p>Install <code class="language-html highlighter-rouge">nisyscfg-runtime</code> manually:</p>
+<p>Starts from average start-up valuation (for comparable stage, industry, size, …), and multiples it by a subjective weighted factor that considers team, timing, size of the opportunity, technology/product (e.g. IP, network effects, …), competitive environment (e.g. barriers to entry), partnerships/sales/rollout, … (and sometimes a bit more)</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ./dists/nisyscfg-runtime-18.0.0f0
-<span class="nb">sudo </span>bash ./INSTALL <span class="s2">"--no-prompt --accept-license --nodeps"</span>
-</code></pre></div></div>
+<h3 id="an-example-">An example 🔎:</h3>
 
-<p>Comment out corresponding section in <code class="language-html highlighter-rouge">./INSTALL</code> script (<em>l. 1025-1030</em>):</p>
+<p>Pre-revenue startups similar to startup A are valued on average at $1.86M. We subjectively assign the following weights (must sum up to 100%) to the following factors: team (35%), timing &amp; size of the opportunity (25%), technology/product (20%), competitive environment (10%), partnerships (10%).</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Installing NI System Configuration Runtime..."</span>
-<span class="nb">pushd</span> <span class="s2">"</span><span class="nv">$CDPATH</span><span class="s2">/dists/</span><span class="nv">$nisyscfgdist</span><span class="s2">"</span> <span class="o">&gt;</span> /dev/null 2&gt;&amp;1
-<span class="c">#/bin/sh ./INSTALL "--no-prompt --accept-license"</span>
-<span class="c">#InstallStatus=$?</span>
-<span class="nv">InstallStatus</span><span class="o">=</span>0
-<span class="nb">popd</span> <span class="o">&gt;</span>/dev/null 2&gt;&amp;1
-</code></pre></div></div>
-<p>Finally, install LabVIEW:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>bash ./INSTALL
-</code></pre></div></div>
-<p>and make an alias:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">labview</span><span class="o">=</span><span class="s1">'/usr/local/natinst/LabVIEW-2018-64/labview'</span>
-</code></pre></div></div>
+<p>We then score the startup on these metrics relative to the industry average:  team (140%), timing &amp; size of the opportunity (150%), technology/product (89%), competitive environment (67%), partnerships (81%).</p>
 
-<p>If anything goes wrong, you can try to inspect the execution with:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>bash <span class="nt">-x</span> ./INSTALL
-</code></pre></div></div>
+<p>Weighting these scores and summing up, we obtain a multiplier for the pre-money valuation relative to industry average: 140%*35% + 150%*25% + 89%*20% + 67%*10% + 81%*10% = 1.191. Finally, the pre-money valuation for this startup is: 1.86*1.191 = $2.215M.</p>
 
-<p>Good luck!</p>
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Weights</th>
+      <th>Score</th>
+      <th>Weights * Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Team</td>
+      <td>.35</td>
+      <td>1.40</td>
+      <td>.35*1.40=.49</td>
+    </tr>
+    <tr>
+      <td>Timing &amp; Opportunity</td>
+      <td>.25</td>
+      <td>1.50</td>
+      <td>.25*1.50=.375</td>
+    </tr>
+    <tr>
+      <td>Technology</td>
+      <td>.20</td>
+      <td>.89</td>
+      <td>.20*.89=.178</td>
+    </tr>
+    <tr>
+      <td>Competitive Environment</td>
+      <td>.10</td>
+      <td>.67</td>
+      <td>.10*.67=.067</td>
+    </tr>
+    <tr>
+      <td>Partnerships</td>
+      <td>.10</td>
+      <td>.81</td>
+      <td>.10*.81=.081</td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><strong>1.0</strong></td>
+      <td> </td>
+      <td><strong>1.191</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="col three caption">
+An example of startup valuation using the Scorecard method.
+</div>
+
+<h2 id="-the-vc-method">💰 The “VC” method</h2>
+
+<p>First determines the post-money valuation as terminal value / expected ROI. The pre-money valuation is then post-money valuation - investment.</p>
+
+<h3 id="an-example--1">An example 🔎:</h3>
+
+<p>Startup B anticipates exit in 5 years at $60M (based on current market data and future projections). VCs anticipate an ROI of 15x (this is commonly 10-30x, sometimes up to 100x for early stage investments). The post-money valuation is then 60/15 = $4M. Given a sought investment of $1M, the pre-money valuation of this startup is $3M.</p>
+
+<h2 id="-the-berkus-method">💰 The Berkus method</h2>
+
+<p>Assigns value between 0 and $500k for the following five factors: team, idea, working prototype, board/strategic relationships/partnerships, rollout/sales.</p>
+
+<h3 id="an-example--2">An example 🔎:</h3>
+
+<p>Startup C has a very good and fast team ($400k), compelling idea ($300k), working prototype and a demo ($500k), has not established marketing/supplier relationships, but has sound board ($250k), and has not rolled out a product or receive first sale yet ($0). The pre-money valuation of this startup is 0.4 + 0.3 + 0.5 + 0.25 = $1.45M.</p>
+
+<h2 id="resources-">Resources 📖:</h2>
+
+<ul>
+  <li><a href="https://www.venionaire.com/startup-valuation-payne-scorecard-method/">The Scorecard method</a></li>
+  <li><a href="https://sharpsheets.io/blog/venture-capital-valuation-method/">The VC method</a></li>
+  <li><a href="https://medium.com/humble-ventures/how-investors-value-pre-revenue-startups-part-ii-6bec0307145a">The Berkus method</a></li>
+</ul>
 
   </article>
 
@@ -171,22 +207,22 @@ Call Fontawesome in the head section or in the location where you place the shar
 <h2 class="center">Share this:</h2>
 <br/>
 
-<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=https://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=https://www.martinholub.com//business/startup/2024/04/07/MethodsOfStartupValuation.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook-official fa"></i><span> facebook</span></a>
 
-<a class="t" href="https://twitter.com/intent/tweet?text=Installing LabVIEW on Debian Linux&url=https://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="t" href="https://twitter.com/intent/tweet?text=Three Common Methods for Pre-Revenue Startup Valuation&url=https://www.martinholub.com//business/startup/2024/04/07/MethodsOfStartupValuation.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter fa"></i><span> twitter</span></a>
 <!---
-<a class="g" href="https://plus.google.com/share?url=https://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="g" href="https://plus.google.com/share?url=https://www.martinholub.com//business/startup/2024/04/07/MethodsOfStartupValuation.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-google-plus fa"></i><span> google</span></a>
 
-<a class="r" href="http://www.reddit.com/submit?url=https://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html" onclick="window.open(this.href, 'mywin',
+<a class="r" href="http://www.reddit.com/submit?url=https://www.martinholub.com//business/startup/2024/04/07/MethodsOfStartupValuation.html" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa"></i><span> reddit</span></a>
 --->
-<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html&title=Installing LabVIEW on Debian Linux&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
+<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.martinholub.com//business/startup/2024/04/07/MethodsOfStartupValuation.html&title=Three Common Methods for Pre-Revenue Startup Valuation&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin fa"></i><span> linkedin</span></a>
 
-<a class="e" href="mailto:?subject=Installing LabVIEW on Debian Linux&amp;body=Check out this site https://www.martinholub.com//code/2019/04/28/InsatllingLabVIEW.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
+<a class="e" href="mailto:?subject=Three Common Methods for Pre-Revenue Startup Valuation&amp;body=Check out this site https://www.martinholub.com//business/startup/2024/04/07/MethodsOfStartupValuation.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
 </div>
 <br/>
 <hr>
@@ -199,7 +235,7 @@ Call Fontawesome in the head section or in the location where you place the shar
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'martinholub'; // required: replace example with your forum shortname
         /*var disqus_developer = 1; // Comment out when the site is live */
-        var disqus_identifier = "/code/2019/04/28/InsatllingLabVIEW.html";
+        var disqus_identifier = "/business/startup/2024/04/07/MethodsOfStartupValuation.html";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
