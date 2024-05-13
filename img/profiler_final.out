@@ -1,0 +1,97 @@
+Timer unit: 4.46228e-07 s
+
+Total time: 4.81208 s
+File: C:\Users\marti\Documents\Uni_ETH\FS18\StochSim\ssa_routine.py
+Function: ssa_routine at line 115
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+   115                                           def ssa_routine(k, t_end, q0, nu, psi):
+   116                                               """ Stochastic Simulation Algorithm
+   117                                           
+   118                                               Performs sampling from distribution governed by chemical master equation.
+   119                                           
+   120                                               Parameters
+   121                                               --------------
+   122                                               k: array, vector stochastic reaction constants
+   123                                               t_end: int, number of steps for the simulation
+   124                                               q0: array, initial number of molecules for each species
+   125                                               nu: ndarray, stochiometric matrix, with state change vectors in columns
+   126                                               psi: ndarray, reactant molecularity matrix
+   127                                               
+   128                                               Returns
+   129                                               --------------
+   130                                               Q: array, all states q at times t
+   131                                               time: array, vector of times t
+   132                                               tot_props: array, total propensities at times t
+   133                                               is_success: bool, flag indicating if simulation ran to completion
+   134                                               """
+   135         1            8      8.0      0.0      is_success = 1
+   136         1           21     21.0      0.0      time_int_tracker = (t_end/5)
+   137         1            4      4.0      0.0      time_int_incr = (t_end/5)
+   138         1            3      3.0      0.0      counter = 0
+   139         1            3      3.0      0.0      keep_every = 1 #int(len(k)*t_end / 3)
+   140                                               
+   141                                               #Initialize arrays to store states, tick times and total_prop values  
+   142         1            3      3.0      0.0      time = []
+   143         1            3      3.0      0.0      t = 0
+   144         1            5      5.0      0.0      time.append(t)
+   145                                               
+   146         1            3      3.0      0.0      Q = []
+   147         1            3      3.0      0.0      state = q0
+   148         1            3      3.0      0.0      Q.append(state)
+   149                                               
+   150         1            3      3.0      0.0      tot_props = []
+   151         1          434    434.0      0.0      tot_props.append(get_propensities(k, state, psi)[1])
+   152                                               
+   153     19280        73260      3.8      0.7      while t < t_end:
+   154                                                   # Calculate propensities for current state
+   155     19279      4671872    242.3     43.3          propensities, total_prop = get_propensities(k, state, psi)
+   156                                                   
+   157     19279       385965     20.0      3.6          if total_prop <= 0:
+   158                                                       ## DEBUG
+   159                                                       logger.error("Propensities negative, path will be skipped.")
+   160                                                       is_success = 0
+   161                                                       break
+   162                                                   
+   163                                                   # Draw random samples for update of state and time step
+   164     19279      3221413    167.1     29.9          idx, tau = draw_ssa(propensities, total_prop)
+   165     19279       343290     17.8      3.2          if tau <= 0:
+   166                                                       ## DEBUG
+   167                                                       logger.error("Backward stepping in time now allowed. Skipping path.")
+   168                                                       is_success = 0
+   169                                                       break
+   170                                                       
+   171                                                   ## Find random change in state - see theory
+   172     19279      1440926     74.7     13.4          state, is_valid = validate_reaction(state, nu[idx, :])
+   173     19279        84737      4.4      0.8          if not is_valid:
+   174                                                       ## DEBUG
+   175                                                       logger.error("Encountered invalid reaction. Skipping path.\n state:{}\n nu:{}\n t:{}".format(state, nu[idx,:], t))
+   176                                                       is_success = 0
+   177                                                       break
+   178                                                       
+   179                                                   ## Find random time step size - see theory
+   180     19279        95332      4.9      0.9          t = t + tau
+   181     19279        82506      4.3      0.8          if t > time_int_tracker:
+   182                                                       ## DEBUG
+   183                                                       # TODO: Running average of tau to predict time till end.
+   184         4         3655    913.8      0.0              logger.debug("Relative time: {:.2f}.".format(t/t_end))
+   185         4           33      8.2      0.0              time_int_tracker = t + time_int_incr
+   186                                                   
+   187                                                   # Append values to arrays
+   188     19279        65938      3.4      0.6          if ((counter % keep_every) == 0):
+   189     19279        78108      4.1      0.7              time.append(t)
+   190     19279        61236      3.2      0.6              Q.append(state)
+   191     19279        59427      3.1      0.6              tot_props.append(total_prop)
+   192                                                   
+   193     19279        66040      3.4      0.6          counter += 1 
+   194                                                   
+   195                                               # Add singleton dimension for easier concatenation later
+   196         1        37566  37566.0      0.3      Q = np.asarray(Q)
+   197         1           94     94.0      0.0      Q = np.reshape(Q, Q.shape+(1,))
+   198         1         6268   6268.0      0.1      time = np.asarray(time)
+   199         1           81     81.0      0.0      time = np.reshape(time, time.shape+(1,))
+   200         1         5591   5591.0      0.1      tot_props = np.asarray(tot_props)
+   201         1           53     53.0      0.0      tot_props = np.reshape(tot_props, tot_props.shape+(1,))
+   202                                               
+   203         1            4      4.0      0.0      return Q, time, tot_props, is_success
