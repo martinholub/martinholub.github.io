@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Accelerating Drug Discovery - The Role of AI in Uncovering New Targets</title>
+    <meta name="description" content="Personal Blog">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/2024/11/10/AITargetIdentification.html">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="/css/academicons.css"/>
+    <link href="/css/lightbox.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/zenburn.css"/>
+
+    <!-- collect tags -->
+    
+      <!-- collect tags from blog posts -->
+<!-- source: https://longqian.me/2017/02/09/github-jekyll-tag/ --->
+
+
+
+
+
+
+
+    
+
+	<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Martin Holub Blog" />
+</head>
+
+
+  <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <nav class="site-nav">
+
+      <div class="trigger">
+        <!-- Martin Holub Blog instead of blog -->
+        <a class="page-link" href="/">about</a>
+
+        <!-- ( for page in site.pages )  was previously-->
+        
+          
+          <a class="page-link" href="/blog">blog</a>
+          
+        
+          
+          <a class="page-link" href="/research">research</a>
+          
+        
+          
+          <a class="page-link" href="/resources">resources</a>
+          
+        
+          
+          <a class="page-link" href="/subscribe">subscribe</a>
+          
+        
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Accelerating Drug Discovery - The Role of AI in Uncovering New Targets</h1>
+    <p class="post-meta">November 10, 2024 — 16:22 • <a href="https://martinholub.github.io/2024/11/10/AITargetIdentification.html#disqus_thread">0 Comments</a></p>
+    <span class="post-meta">[
+      
+        
+          <a href="/tag/biotech"><code class="highligher-rouge"><nobr>biotech</nobr></code>&nbsp;</a>
+      
+        
+          <a href="/tag/science"><code class="highligher-rouge"><nobr>science</nobr></code>&nbsp;</a>
+      
+    ]</span>
+  </header>
+  
+
+  <article class="post-content">
+    <p><i>This article was co-authored by <a href="https://www.linkedin.com/in/merchantkevinwb/">Kevin Merchant</a> and <a href="https://www.martinholub.com/">Martin Holub</a>.</i></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Development of novel drugs has been a critical contributor to extending healthspan and fighting diseases, but the process is complex. The involvement of multiple stakeholders and strict regulatory processes are responsible for some of it, but that contribution is dwarfed by our limited understanding of underlying biological processes. Over the past decade, artificial intelligence (AI) has progressed rapidly showing reasoning ability over large multidimensional datasets. AI, indeed, is transforming the drug discovery process as well.</p>
+
+<p>In this article, we highlight the role of AI in a critical task in the early drug discovery process: target identification. We first introduce the technical background. Next, we review the state-of-the-art using industry examples. Finally, we highlight challenges and directions for future development. Questions we address are: <strong>How is AI currently used in target identification?</strong> And: <strong>What future developments of AI would position it to make the largest positive impact on this task?</strong></p>
+
+<h2 id="understanding-target-identification">Understanding Target Identification</h2>
+
+<p>Drug development is a long and complex process, with average estimates of around 12 years from conceptualization to approval — although post-COVID-19, <a href="https://doi.org/10.1016/S0140-6736(22)01276-4">efforts have been made by approval bodies to shorten it</a> [1]. This is happening through a number of approaches, including <a href="https://doi.org/10.1111%2Fcts.12745">accelerated approval pathways</a> [2], leveraging <a href="https://www.statnews.com/2022/08/10/real-world-data-expedite-drug-approval-process/">real world data and evidence</a> as well as <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/master-protocols-efficient-clinical-trial-design-strategies-expedite-development-oncology-drugs-and">changes to clinical trial design</a> [3]. Lead discovery is the first step, including target identification &amp; screening for compounds or biologics against the target, followed by optimization of lead compound and preclinical testing. If the lead compound manages to get through these hoops, it can finally go into clinical trials, where success can pave the way for approval and the title “drug”.</p>
+
+<p>Target identification is an inherent part of academic and industry research. Traditionally, it describes the process of identifying proteins and their roles in specific disease conditions through different experimental methods (Fig.1). A common pipeline is discovering and knocking out the gene coding for the protein of interest and studying the effects on a disease model. Recently, a number of different target types have emerged. Coding and regulatory nucleic acids, both DNA and RNA, different metabolites, and even whole cell types (in the context of cell therapy) all represent potential targets for a drug candidate.</p>
+
+<p>With the arrival of methods like <a href="https://journals.asm.org/doi/full/10.1128/mmbr.67.4.657-685.2003">RNA interference</a> [4] (see also <a href="https://www.martinholub.com/2024/10/16/RNAi.html">my post on RNAi</a>), or more recently <a href="https://royalsocietypublishing.org/doi/full/10.1098/rstb.2015.0496">CRISPR-based tools</a> [5], large-scale screens for experimental target identification have become common in well-resourced labs. Using these methods, a range of genes in disease-model cell lines can be knocked out. Subsequent phenotypic and/or genotypic assaying allows the identification of new possible drug target candidates (Fig.1).</p>
+
+<div class="img_row"> 
+<img class="col three" src="/img/techbio_targetIdentification.png" alt="" title="Header" /> 
+</div>
+<div class="col three caption">Fig.1: Overview of target identification approaches. <a href="https://doi.org/10.1016/j.tips.2023.06.010">Adapted from Pun et al., 2023</a>. </div>
+
+<p>These experimental approaches widen our horizons by characterizing proteins whose functions were not previously known. Most commonly, this knowledge ends up accessible on the internet — through publications — and can be leveraged. Considerable efforts have been made to develop and maintain massive databases containing information on genes, their corresponding proteins, and their function. All of this plays a crucial role in the usage of sequencing technologies, which involve using these databases at some point in their downstream analysis.</p>
+
+<p>In the last decade, with the increased abundance of genomic data, genome-wide association studies (GWAS) have gained a lot of traction. Using GWAS, the genetic makeup of patients suffering from certain ailments can be compared to healthy individuals to identify targets specific to disease pathologies. Similarly, the availability of other omics datasets (transcriptomic, proteomic, epigenomic, metabolomic, etc.) (Fig.1) in the public domain has exponentially increased due to advancements in technologies and lower costs of the corresponding experiments. Consequently, while requiring bioinformatics expertise, leveraging publicly and commercially available multiomics datasets <em>in silico</em> has become a go-to strategy for identifying promising targets before testing them in the lab.</p>
+
+<h2 id="understanding-ai-in-target-identification">Understanding AI in Target Identification</h2>
+
+<p>With the plethora of data and the rapid advances in computer hardware, today there is no domain of biomedical research where AI doesn’t contribute – from information retrieval to clinical diagnoses, and from data processing &amp; integration to protein modeling (<a href="https://alphafold.ebi.ac.uk/about">AlphaFold</a>). AI is an umbrella term that has been used to denote traditional mathematical models such as regression, to abstract phenomena like artificial general intelligence (AGI). The use cases of AI discussed in this article are in between these two extremes. In the following text, we briefly introduce AI as it is being used in target discovery.</p>
+
+<p>Artificial intelligence, or AI, refers to a computer’s ability to perform tasks that are characteristic of intelligent beings. What these algorithms attempt to do is <em>learn</em> trends from swathes of data, and apply what they <em>learned</em> to new, unseen data. For example, an accurate skin cancer detection model has to be fed thousands of images of skin cancer and benign tumors, so that it can <em>learn</em> to discriminate between the two. Similarly, large language models (LLMs) like <a href="https://chat.openai.com/">ChatGPT</a> or <a href="https://www.anthropic.com/claude">Claude</a> are trained on books, articles, and pretty much every text available on the internet in the public domain, which makes them robust in answering a broad range of questions. On the other hand, specialist models like <a href="https://github.com/BioMedBERT/biomedbert">BioMedBERT</a> or <a href="https://www.perplexity.ai/hub/about">Perplexity AI</a>, are geared towards scientific conversations and provide resources and citations.  All these models are examples of deep learning.</p>
+
+<p>Deep learning is a vast subfield of AI that makes use of neural networks. Neurons form the fundamental unit of these networks and are similar to biological neurons: receiving multiple signals from surrounding neurons, processing them in a certain way, and having a single output that is then sent to another neuron. Using multiple layers of such neurons leads to neural networks that come in all <a href="https://www.asimovinstitute.org/neural-network-zoo/">shapes and sizes</a> and varying complexities.</p>
+
+<p>The deep learning models’ ability to learn &amp; generalize makes them extremely versatile in biomedical research. Companies discussed below are using different variations of deep learning to integrate publicly available and self-generated multi-omics datasets along with other types of data like microscopy images, text from biomedical literature, and patient data to capture intricacies and trends that are difficult to detect manually. By training such models biomarkers, perturbation effects, and novel targets can be predicted <em>in silico</em> and subsequently validated through experimentation. Hence, biomedical data in every available form is being leveraged with complex, computation-heavy, and often proprietary AI architectures for identifying new targets against diseases.</p>
+
+<h2 id="case-studies-and-real-world-examples">Case Studies and Real-world Examples</h2>
+
+<p>At the moment of writing, there are <a href="https://doi.org/10.1016/j.tips.2023.06.010">over 20 assets</a> in clinical trials where AI was leveraged for target identification, as well as along the downstream drug development process [6]. A number of them are already in phase II, and many more are in the Investigational New Drug (IND) enabling phase.</p>
+
+<p><a href="https://www.recursion.com/">Recursion Pharmaceuticals</a> is a pioneer in data-driven, platform-first biotech (known as <a href="https://medium.com/cantos-ventures/what-is-techbio-ef01cd61834d">TechBio</a>). Since its founding in 2013, the company built up the capacity to run over 2 million experiments every week and collected over 22 PB (that’s 10<sup>15</sup>) of data. Their pipeline generates lead candidates by applying reverse-genetic causal machine learning models on patient-specific sequencing data and integrating it with health records, databases on small molecule compounds, their target interaction predictions, and data from scientific publications. To facilitate this workflow, the company developed LOWE (Large Language Model-Orchestrated Workflow Engine) that allows users to interface with the pipeline with natural language.</p>
+
+<p>The lead molecules are screened in imaging-based and sc-RNA sequencing workflows, generating genome-wide perturbation datasets that are fed into deep learning models.  Recursion differentiates itself from its competition by being an early and bullish adopter of image-based data collection (phenomics). While <a href="https://www.rxrx.ai/rxrx3#about">a fraction of the generated dataset has been made public</a> [7], much of it remains proprietary to Recursion. Their phenomics foundation model (trained on the publicly available data) <a href="https://www.recursion.com/news/nothing-short-of-phenomenal-new-deep-learning-model-available-on-nvidias-bionemo-platform">Phenome-Beta</a> was released on NVIDIA’s <a href="https://www.nvidia.com/en-us/clara/bionemo/">BioNeMo platform</a> earlier this year. Recursion’s most advanced model, Phenome-1 remains proprietary.</p>
+
+<div class="img_row"> 
+<img class="col three" src="/img/techbio_recursionPhenomics.png" alt="" title="Header" /> 
+</div>
+<div class="col three caption">Fig.2: Overview of ‘phenomics’ for high-throughput screening. Top panel: Cell images are collected at different perturbations (middle) and across multiple color channels (right). Adapted from <a href="https://fintel.io/doc/sec-recursion-pharmaceuticals-inc-1601830-10k-2023-february-27-19415-6506">Recursion’s 2023 annual report</a>. Bottom panel: Multi-channel images are the training data for a deep learning model that learns their experimentally relevant features. The model can be used for future inference. Adapted from <a href="https://www.rxrx.ai/rxrx3">rxrx.ai</a>.</div>
+
+<p>Recursion currently has <a href="https://clinicaltrials.gov/search?spons=Recursion%20Pharmaceuticals%20Inc.">five small molecule drugs in phase II trials</a>. <a href="https://ir.recursion.com/news-releases/news-release-details/recursion-initiates-two-additional-clinical-trials-total-four">REC-4881</a> is an orally bioavailable, non-ATP-competitive allosteric small molecule inhibitor of <a href="https://en.wikipedia.org/wiki/MAP2K1">MAP2K1</a>/<a href="https://en.wikipedia.org/wiki/MAP2K2">2</a> being developed to reduce polyp burden and cancer progression in people living with FAP (familial adenomatous polyposis). FAP is an inherited disease that leads to formation of polyps in the rectum and colon, eventually manifesting in colorectal cancer (CRC). <a href="https://ir.recursion.com/news-releases/news-release-details/recursion-announces-completion-phase-1-study-rec-3964">REC-3964</a> is a non-antibiotic small molecule inhibitor of C.difficile toxins which is being developed for the potential treatment of gastrointestinal infection. It finished phase I in 2023, and started enrollment for phase II in October 2024. Most recently <a href="https://ichgcp.net/clinical-trials-registry/NCT06678659">REC-1245</a> entered phase I/II clinical trials for advanced metastatic tumors</p>
+
+<p><a href="https://insilico.com/">InSilico Medicine</a> is another early adopter of AI in small molecule drug discovery and design. The company leverages its end-to-end integrated Pharma.AI platform consisting of three components to drive its drug discovery and development: <a href="https://pubs.acs.org/doi/full/10.1021/acs.jcim.3c01619">PandaOmics</a>, <a href="https://pubs.acs.org/doi/full/10.1021/acs.jcim.2c01191">Chemistry42</a> and <a href="https://ascpt.onlinelibrary.wiley.com/doi/full/10.1002/cpt.3008">inClinico</a> [8-10]. PandaOmics is an AI target identification engine that combines a diverse range of omics data totalling over 10<sup>12</sup> data points across disease-specific and healthy tissue datasets. The platform further integrates text-based analysis on clinical trials, grants and publications, all together allowing for identification of novel targets that meet a large need. “Our target discovery philosophy is to find an optimal balance between commercial tractability, novelty, and confidence,” <a href="https://www.drugdiscoverytrends.com/insilico-ai-cancer-treatment-ism9274/?utm_source=TrendMD&amp;utm_medium=cpc&amp;utm_campaign=Drug_Discovery_and_Development__TrendMD_0">said</a> Alex Zhavoronkov, founder and CEO of Insilico Medicine for Drug Discovery &amp; Development.</p>
+
+<p>The company currently has one asset in a phase II trial, <a href="https://clinicaltrials.gov/search?spons=InSilico%20Medicine%20Hong%20Kong%20Limited">four more in phase I</a>, and one preclinical asset. <a href="https://www.nature.com/articles/s41587-024-02143-0">INS018_055</a> is an orally available small molecule TRAF2- and NCK-interacting kinase (TNIK) inhibitor with therapeutic potential in idiopathic pulmonary fibrosis currently in phase II trials [11]. <a href="https://www.businesswire.com/news/home/20230912041846/en/Exelixis-and-Insilico-Medicine-Enter-into-Exclusive-Global-License-Agreement-for-ISM3091-a-Potentially-Best-in-Class-USP1-Inhibitor">ISM3091/XL309</a> is a small molecule inhibitor of USP1, an enzyme implicated in DNA damage repair and relevant in the context of some forms of ovarian, prostate, and breast cancers, <a href="https://www.drugdiscoverytrends.com/insilico-medicines-latest-ai-engineered-drug-ism5411-could-provide-a-novel-approach-for-treating-ibd/">ISM5411</a> is an oral prolyl hydroxylase domain (PHD) inhibitor for the treatment of inflammatory bowel disease (IBD), this investigational drug is supposed to regulate levels of hypoxia-inducible factor 1alpha (HIF-1a), which should in turn control gut inflammation. Finally, the firm has a CDK12/13 inhibitor, <a href="https://www.drugdiscoverytrends.com/insilico-ai-cancer-treatment-ism9274/?utm_source=TrendMD&amp;utm_medium=cpc&amp;utm_campaign=Drug_Discovery_and_Development__TrendMD_0">ISM9274</a>, in the preclinical pipeline that shows promise against multiple cancers, particularly triple-negative breast cancer and pancreatic cancer.</p>
+
+<p>While others focus purely on target-identification (e.g. <a href="https://biorelate.com/company">Biorelate</a>), most companies integrate AI-driven target identification into a full drug development pipeline (further examples include  <a href="https://www.valohealth.com/">Valo Health</a>, <a href="https://relaytx.com/">Relay Therapeutics</a>, <a href="https://www.exscientia.ai/pipeline">Exscientia</a> (recently <a href="https://investors.exscientia.ai/press-releases/press-release-details/2024/Recursion-and-Exscientia-Enter-Definitive-Agreement-to-Create-a-Global-Technology-Enabled-Drug-Discovery-Leader-with-End-to-End-Capabilities/default.aspx">acquired</a> by Recursion), <a href="https://www.nimbustx.com/">Nimbus Therapeutics</a>, and <a href="https://www.benevolent.com/pipeline/">Benevolent A</a>. Finally, <a href="https://www.opentargets.org/">Open Targets</a> stands out as a notable example of open and collaborative science, bringing multiple industry stakeholders together to share disease and target annotation data in easily accessible format.</p>
+
+<h2 id="future-outlook-and-challenges">Future Outlook and Challenges</h2>
+
+<p>When applying AI to target discovery, a number of challenges emerge. First, any model is only as good as the data it has been trained on. Failing to collect data in areas of unmet needs or for underserved patient populations is at large risk of leading to biased models that exacerbate health inequality. Second, AI models have only limited transparency, and to an extent function as black boxes. Managing their regulatory compliance and data integrity requires teams to adapt to changing frameworks. Third, training AI models requires substantial computational resources. This presents challenges to equity of access, where well-resourced companies may benefit from preferential access to compute hardware. Finally, a culture of keeping these models, and the data they have been trained on, proprietary is likely to create silos of knowledge and hinder progress.</p>
+
+<p>Despite these challenges, AI has clearly taken a firm hold across the drug development pipeline, including target identification. The increased volume and modality of datasets, together with more computational power and advances in AI architectures, are increasing the rate at which new candidates are discovered and enter clinical trials. In the future, there is a hope that AI will substantially increase the success rate of these trials as well as be helpful in aiding the development of drugs for previously intractable targets. Examples in this article have focused on protein targets and small-molecule drugs. It is likely that AI-driven models optimized for discovery of different targets than proteins will emerge in the near future. Similarly, other modalities than small molecules are poised to gain more prominence. <a href="https://www.nature.com/articles/s41589-023-01524-x">Peptide-based therapeutics</a> [12], for example, have seen <a href="https://drughunter.com/articles/mk-0616-the-2023-molecule-of-the-year/">a number of successes</a> in the last year.</p>
+
+<p>The future of AI in drug discovery is bright. If you want to learn more about how AI is revolutionizing biotech and stay up to date, be sure to check <a href="https://linktr.ee/aixbiotech_nucleate">Nucleate’s AI in Biotech</a> initiative.</p>
+
+<p><i>We would like to thank Alice Martin, Natalie Losada, Samantha Avina and Shawn Rumrill for feedback on the draft.</i></p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<p>[1] Hwang, T. J.; Trinh, Q.-D.; Tibau, A.; Vokinger, K. N. Reforms to Accelerated Approval of New Medicines: Long Overdue. <em>The Lancet</em> <strong>2022</strong>, <em>400</em> (10349), 357–358. <a href="https://doi.org/10.1016/S0140-6736(22)01276-4">https://doi.org/10.1016/S0140-6736(22)01276-4</a>.</p>
+
+<p>[2] Cox, E. M.; Edmund, A. V.; Kratz, E.; Lockwood, S. H.; Shankar, A. Regulatory Affairs 101: Introduction to Expedited Regulatory Pathways. <em>Clinical Translational Sci</em> <strong>2020</strong>, <em>13</em> (3), 451–461. <a href="https://doi.org/10.1111/cts.12745">https://doi.org/10.1111/cts.12745</a>.</p>
+
+<p>[3] Master Protocols: Efficient Clinical Trial Design Strategies to Expedite Development of Oncology Drugs and Biologics. <em>Clinical Trial Design</em>. <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/master-protocols-efficient-clinical-trial-design-strategies-expedite-development-oncology-drugs-and">https://www.fda.gov/regulatory-information/search-fda-guidance-documents/master-protocols-efficient-clinical-trial-design-strategies-expedite-development-oncology-drugs-and</a></p>
+
+<p>[4] Agrawal, N.; Dasaradhi, P. V. N.; Mohmmed, A.; Malhotra, P.; Bhatnagar, R. K.; Mukherjee, S. K. RNA Interference: Biology, Mechanism, and Applications. <em>Microbiol Mol Biol Rev</em> <strong>2003</strong>, <em>67</em> (4), 657–685. <a href="https://doi.org/10.1128/MMBR.67.4.657-685.2003">https://doi.org/10.1128/MMBR.67.4.657-685.2003</a>.</p>
+
+<p>[5] Hille, F.; Charpentier, E. CRISPR-Cas: Biology, Mechanisms and Relevance. <em>Phil. Trans. R. Soc. B</em> <strong>2016</strong>, <em>371</em> (1707), 20150496. <a href="https://doi.org/10.1098/rstb.2015.0496">https://doi.org/10.1098/rstb.2015.0496</a>.</p>
+
+<p>[6] Pun, F. W.; Ozerov, I. V.; Zhavoronkov, A. AI-Powered Therapeutic Target Discovery. <em>Trends in Pharmacological Sciences</em> <strong>2023</strong>, <em>44</em> (9), 561–572. <a href="https://doi.org/10.1016/j.tips.2023.06.010">https://doi.org/10.1016/j.tips.2023.06.010</a>.</p>
+
+<p>[7] Fay, M. M.; Kraus, O.; Victors, M.; Arumugam, L.; Vuggumudi, K.; Urbanik, J.; Hansen, K.; Celik, S.; Cernek, N.; Jagannathan, G.; Christensen, J.; Earnshaw, B. A.; Haque, I. S.; Mabey, B. RxRx3: Phenomics Map of Biology. February 8, 2023. <a href="https://doi.org/10.1101/2023.02.07.527350">https://doi.org/10.1101/2023.02.07.527350</a>.</p>
+
+<p>[8] Kamya, P.; Ozerov, I. V.; Pun, F. W.; Tretina, K.; Fokina, T.; Chen, S.; Naumov, V.; Long, X.; Lin, S.; Korzinkin, M.; Polykovskiy, D.; Aliper, A.; Ren, F.; Zhavoronkov, A. PandaOmics: An AI-Driven Platform for Therapeutic Target and Biomarker Discovery. <em>J. Chem. Inf. Model.</em> <strong>2024</strong>, <em>64</em> (10), 3961–3969. <a href="https://doi.org/10.1021/acs.jcim.3c01619">https://doi.org/10.1021/acs.jcim.3c01619</a>.</p>
+
+<p>[9] Ivanenkov, Y. A.; Polykovskiy, D.; Bezrukov, D.; Zagribelnyy, B.; Aladinskiy, V.; Kamya, P.; Aliper, A.; Ren, F.; Zhavoronkov, A. Chemistry42: An AI-Driven Platform for Molecular Design and Optimization. <em>J. Chem. Inf. Model.</em> <strong>2023</strong>, <em>63</em> (3), 695–701. <a href="https://doi.org/10.1021/acs.jcim.2c01191">https://doi.org/10.1021/acs.jcim.2c01191</a>.</p>
+
+<p>[10] Aliper, A.; Kudrin, R.; Polykovskiy, D.; Kamya, P.; Tutubalina, E.; Chen, S.; Ren, F.; Zhavoronkov, A. Prediction of Clinical Trials Outcomes Based on Target Choice and Clinical Trial Design with Multi‐Modal Artificial Intelligence. <em>Clin Pharma and Therapeutics</em> <strong>2023</strong>, <em>114</em> (5), 972–980. <a href="https://doi.org/10.1002/cpt.3008">https://doi.org/10.1002/cpt.3008</a>.</p>
+
+<p>[11] Ren, F.; Aliper, A.; Chen, J.; Zhao, H.; Rao, S.; Kuppe, C.; Ozerov, I. V.; Zhang, M.; Witte, K.; Kruse, C.; Aladinskiy, V.; Ivanenkov, Y.; Polykovskiy, D.; Fu, Y.; Babin, E.; Qiao, J.; Liang, X.; Mou, Z.; Wang, H.; Pun, F. W.; Ayuso, P. T.; Veviorskiy, A.; Song, D.; Liu, S.; Zhang, B.; Naumov, V.; Ding, X.; Kukharenko, A.; Izumchenko, E.; Zhavoronkov, A. A Small-Molecule TNIK Inhibitor Targets Fibrosis in Preclinical and Clinical Models. <em>Nat Biotechnol</em> <strong>2024</strong>. <a href="https://doi.org/10.1038/s41587-024-02143-0">https://doi.org/10.1038/s41587-024-02143-0</a>.</p>
+
+<p>[12] Pal, S.; ‘T Hart, P. Imbuing Peptide Libraries with Drug-Likeness. <em>Nat Chem Biol</em> <strong>2024</strong>. <a href="https://doi.org/10.1038/s41589-023-01524-x">https://doi.org/10.1038/s41589-023-01524-x</a>.</p>
+
+
+  </article>
+
+  
+<!---
+Call Fontawesome in the head section or in the location where you place the share bar
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+--->
+<hr>
+<br/>
+<!---<center><p><script async src="https://eocampaign1.com/form/cfe45fdc-109a-11ef-a9e2-bf0899395051.js" data-form="cfe45fdc-109a-11ef-a9e2-bf0899395051"></script></p></center>--->
+<div class="share-box center" style="width: 60%; margin: 0px auto;">
+<h2 class="center">Share this:</h2>
+<br/>
+
+<a class="f" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/2024/11/10/AITargetIdentification.html" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook-official fa"></i><span> facebook</span></a>
+
+<a class="t" href="https://twitter.com/intent/tweet?text=Accelerating Drug Discovery - The Role of AI in Uncovering New Targets&url=http://localhost:4000/2024/11/10/AITargetIdentification.html" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter fa"></i><span> twitter</span></a>
+<!---
+<a class="g" href="https://plus.google.com/share?url=http://localhost:4000/2024/11/10/AITargetIdentification.html" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-google-plus fa"></i><span> google</span></a>
+
+<a class="r" href="http://www.reddit.com/submit?url=http://localhost:4000/2024/11/10/AITargetIdentification.html" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa"></i><span> reddit</span></a>
+--->
+<a class="l" href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2024/11/10/AITargetIdentification.html&title=Accelerating Drug Discovery - The Role of AI in Uncovering New Targets&summary=&source=martinholub" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin fa"></i><span> linkedin</span></a>
+
+<a class="e" href="mailto:?subject=Accelerating Drug Discovery - The Role of AI in Uncovering New Targets&amp;body=Check out this site http://localhost:4000/2024/11/10/AITargetIdentification.html"><i class="fa fa-envelope fa"></i><span> email</span></a>
+</div>
+<br/>
+<hr>
+
+
+  
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'martinholub'; // required: replace example with your forum shortname
+        /*var disqus_developer = 1; // Comment out when the site is live */
+        var disqus_identifier = "/2024/11/10/AITargetIdentification.html";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+</div>
+
+      </div>
+    </div>
+
+<!--
+    <span class="contacticon center">
+  <center><p><script async src="https://eocampaign1.com/form/cfe45fdc-109a-11ef-a9e2-bf0899395051.js" data-form="cfe45fdc-109a-11ef-a9e2-bf0899395051"></script></p></center>
+  <a href="mailto:mholub.ethz=gmail+com"><i class="fa fa-envelope-square"></i></a>
+  <a href="https://twitter.com/scimartinx" target="_blank"><i class="fa fa-twitter-square"></i></a>
+  <a href="https://www.instagram.com/scimartin/" target="_blank"><i class="fa fa-instagram"></i></a>
+  <a href="https://www.linkedin.com/in/scimartin" target="_blank"><i class="fa fa-linkedin-square"></i></a>
+  <a href="https://www.researchgate.net/profile/Martin_Holub2" target="_blank"><i class="ai ai-researchgate-square"></i></a>
+  <a href="https://orcid.org/0000-0002-8365-0927" target="_blank"><i class="ai ai-orcid"></i></a>
+  <a href="https://github.com/martinholub" target="_blank"><i class="fa fa-github-square"></i></a>
+  <a href="/feed.xml" target="_blank"><i class="fa fa-rss-square"></i></a>
+</span>
+
+<div class="col three caption">
+	This site was created using <a href="https://jekyllrb.com/" target="blank">Jekyll</a> and building on <a href="https://github.com/bogoli/-folio" target="blank">*folio theme</a>. Hosted on <a href="https://github.com/" target="blank">GitHub</a>.
+</div>
+
+-->
+  <script id="dsq-count-scr" src="//martinholub.disqus.com/count.js" async></script>
+  <script src="/css/lightbox.js"></script>
+
+  </body>
+
+
+    <span class="contacticon center">
+  <center><p><script async src="https://eocampaign1.com/form/cfe45fdc-109a-11ef-a9e2-bf0899395051.js" data-form="cfe45fdc-109a-11ef-a9e2-bf0899395051"></script></p></center>
+  <a href="mailto:mholub.ethz=gmail+com"><i class="fa fa-envelope-square"></i></a>
+  <a href="https://twitter.com/scimartinx" target="_blank"><i class="fa fa-twitter-square"></i></a>
+  <a href="https://www.instagram.com/scimartin/" target="_blank"><i class="fa fa-instagram"></i></a>
+  <a href="https://www.linkedin.com/in/scimartin" target="_blank"><i class="fa fa-linkedin-square"></i></a>
+  <a href="https://www.researchgate.net/profile/Martin_Holub2" target="_blank"><i class="ai ai-researchgate-square"></i></a>
+  <a href="https://orcid.org/0000-0002-8365-0927" target="_blank"><i class="ai ai-orcid"></i></a>
+  <a href="https://github.com/martinholub" target="_blank"><i class="fa fa-github-square"></i></a>
+  <a href="/feed.xml" target="_blank"><i class="fa fa-rss-square"></i></a>
+</span>
+
+<div class="col three caption">
+	This site was created using <a href="https://jekyllrb.com/" target="blank">Jekyll</a> and building on <a href="https://github.com/bogoli/-folio" target="blank">*folio theme</a>. Hosted on <a href="https://github.com/" target="blank">GitHub</a>.
+</div>
+
+
+</html>
