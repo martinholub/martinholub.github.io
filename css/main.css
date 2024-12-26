@@ -205,7 +205,7 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
 /*Positioning of Tags*/
 .undeposts-wrapper { display: flex; width: 100%; }
 
-.underpost-archive { width: 30%; /*use this with twitter window*/ }
+.underpost-archive { width: 100%; /*use 30% with twitter window*/ vertical-align: middle; }
 
 .overpost-archive { width: 100%; vertical-align: middle; }
 
@@ -251,7 +251,7 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
 
 .icon:hover { background-color: #995cd6; }
 
-div.iconwrapper { display: flex; justify-content: center; align-items: center; margin: 10px; width: .85em; height: .85em; border-radius: 5px; background-color: #828282; float: left; }
+div.iconwrapper { display: flex; justify-content: center; align-items: center; margin: 0px; width: .85em; height: .85em; border-radius: 5px; background-color: #828282; float: left; }
 
 div.iconwrapper:hover { background-color: #995cd6; }
 
