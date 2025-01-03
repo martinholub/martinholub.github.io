@@ -125,7 +125,7 @@ label { clear: both; display: block; margin: 8px 0; font-weight: bold; position:
 .paginationicon a { color: #8033CC; }
 
 /** Page content   ********************************************************** */
-.page-content { padding: 20px 0; /* VERTICAL PADDING FOR TITLE ON EVERY PAGE */ }
+.page-content { padding: 100px 0; /* VERTICAL PADDING FOR TITLE ON EVERY PAGE */ }
 
 .page-heading { font-size: 20px; }
 
