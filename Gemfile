@@ -7,7 +7,6 @@ gem 'jekyll-font-awesome-sass', group: :jekyll_plugins
 gem 'github-pages', group: :jekyll_plugins
 gem 'jekyll-github-metadata', group: :jekyll_plugins
 gem 'redcarpet'
-gem 'jekyll-twitter-plugin', group: :jekyll_plugins
 gem 'jekyll-paginate', group: :jekyll_plugins
 gem "jekyll-jupyter-notebook", group: :jekyll_plugins
 gem 'jekyll-gist', group: :jekyll_plugins

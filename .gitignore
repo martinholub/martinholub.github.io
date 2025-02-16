@@ -4,3 +4,5 @@
 .tweet-cache/*
 .directory
 /not_used
+Gemfile
+Gemfile.lock
